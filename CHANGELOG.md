@@ -1,3 +1,14 @@
+# v5.13.0
+[2025-02-03]
+
+### Changes
+
+* refactor: Updated dependencies ([`dca11c1`](https://github.com/panates/valgen/commit/dca11c1d094daca39974bbc9c70b8f30480c4d0a))
+* refactor: Changed error messages to "positive sentences" ([`3b746df`](https://github.com/panates/valgen/commit/3b746df70ab0e25e32e3f5b957f1c24f3f0fcc70))
+* chore: Updated github workflow ([`661738f`](https://github.com/panates/valgen/commit/661738f1fd90eed72ec2718e67159a8ab614e65e))
+* dev: Fixed ts config ([`e3251ce`](https://github.com/panates/valgen/commit/e3251ce7776de3bd4afeb0c2d0ed5d19f6aabd4f))
+* dev: Added missing script ([`dd019d9`](https://github.com/panates/valgen/commit/dd019d923f8305462e27cad1745564071c9c34bb))
+
 # v5.12.0
 [2024-11-04]
 
