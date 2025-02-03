@@ -20,7 +20,6 @@ export interface IsFQDNOptions extends ValidationOptions {
  */
 export function isFQDN(options?: IsFQDNOptions) {
   const opts: validatorJS.IsFQDNOptions = {
-    // eslint-disable-next-line camelcase
     allow_wildcard: options?.allowWildcard,
   };
   return validator<string, string>(

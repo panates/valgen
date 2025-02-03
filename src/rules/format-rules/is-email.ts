@@ -77,13 +77,9 @@ export interface IsEmailOptions extends ValidationOptions {
  */
 export function isEmail(options?: IsEmailOptions) {
   const emailOptions: validatorJS.IsEmailOptions = {
-    // eslint-disable-next-line camelcase
     allow_display_name: true,
-    // eslint-disable-next-line camelcase
     allow_utf8_local_part: options?.utf8LocalPart,
-    // eslint-disable-next-line camelcase
     ignore_max_length: true,
-    // eslint-disable-next-line camelcase
     allow_ip_domain: options?.allowIpDomain,
   };
   return validator<string, string>(
@@ -97,7 +93,6 @@ export function isEmail(options?: IsEmailOptions) {
           if (
             !validatorJS.isEmail(input, {
               ...emailOptions,
-              // eslint-disable-next-line camelcase
               require_display_name: true,
             })
           ) {
@@ -112,7 +107,6 @@ export function isEmail(options?: IsEmailOptions) {
           !options?.allowDisplayName &&
           !validatorJS.isEmail(input, {
             ...emailOptions,
-            // eslint-disable-next-line camelcase
             allow_display_name: false,
           })
         ) {
@@ -123,7 +117,6 @@ export function isEmail(options?: IsEmailOptions) {
           options?.hostBlacklist &&
           !validatorJS.isEmail(input, {
             ...emailOptions,
-            // eslint-disable-next-line camelcase
             host_blacklist: options.hostBlacklist,
           })
         ) {
@@ -134,7 +127,6 @@ export function isEmail(options?: IsEmailOptions) {
           options?.hostWhitelist &&
           !validatorJS.isEmail(input, {
             ...emailOptions,
-            // eslint-disable-next-line camelcase
             host_whitelist: options.hostWhitelist,
           })
         ) {
@@ -145,7 +137,6 @@ export function isEmail(options?: IsEmailOptions) {
           options?.blacklistedChars &&
           !validatorJS.isEmail(input, {
             ...emailOptions,
-            // eslint-disable-next-line camelcase
             blacklisted_chars: options.blacklistedChars,
           })
         ) {

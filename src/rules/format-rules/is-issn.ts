@@ -21,7 +21,6 @@ export interface IsISSNOptions extends ValidationOptions {
  */
 export function isISSN(options?: IsISSNOptions) {
   const opts: validatorJS.IsISSNOptions = {
-    // eslint-disable-next-line camelcase
     case_sensitive: options?.caseSensitive,
   };
   return validator<string, string>(

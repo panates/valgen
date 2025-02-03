@@ -29,7 +29,6 @@ export interface IsMACAddressOptions extends ValidationOptions {
  */
 export function isMACAddress(options?: IsMACAddressOptions) {
   const opts: validatorJS.IsMACAddressOptions = {
-    // eslint-disable-next-line camelcase
     no_separators: options?.noSeparators,
     eui: options?.eui,
   };
