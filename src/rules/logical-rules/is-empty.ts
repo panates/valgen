@@ -17,21 +17,21 @@ export function isEmpty(options?: ValidationOptions) {
       if (input == null) return input;
       if (typeof input === 'string') {
         if (!input) return input;
-        context.fail(_this, `Is not an empty string`, input);
+        context.fail(_this, `Value must be an empty string`, input);
       } else if (Array.isArray(input)) {
         if (!input.length) return input;
-        context.fail(_this, `Is not an empty array`, input);
+        context.fail(_this, `Value must be an empty array`, input);
       } else if (input instanceof Set) {
         if (!input.size) return input;
-        context.fail(_this, `Is not an empty Set`, input);
+        context.fail(_this, `Value must be an empty Set`, input);
       } else if (input instanceof Map) {
         if (!input.size) return input;
-        context.fail(_this, `Is not an empty Map`, input);
+        context.fail(_this, `Value must be an empty Map`, input);
       } else if (typeof input === 'object') {
         if (!Object.keys(input).length) return input;
-        context.fail(_this, `Is not an empty Object`, input);
+        context.fail(_this, `Value must be an empty Object`, input);
       }
-      context.fail(_this, `Is not empty`, input);
+      context.fail(_this, `Value must be empty`, input);
     },
     options,
   );
@@ -48,22 +48,22 @@ export function isNotEmpty(options?: ValidationOptions) {
       if (input != null) {
         if (typeof input === 'string') {
           if (input) return input;
-          context.fail(_this, `Value is an empty string`, input);
+          context.fail(_this, `Value must not be empty`, input);
         } else if (Array.isArray(input)) {
           if (input.length) return input;
-          context.fail(_this, `Value is an empty array`, input);
+          context.fail(_this, `Array must not be empty`, input);
         } else if (input instanceof Set) {
           if (input.size) return input;
-          context.fail(_this, `Value is an empty Set`, input);
+          context.fail(_this, `Set must not be empty`, input);
         } else if (input instanceof Map) {
           if (input.size) return input;
-          context.fail(_this, `Value is an empty Map`, input);
+          context.fail(_this, `Map must not be empty`, input);
         } else if (typeof input === 'object') {
           if (Object.keys(input).length) return input;
-          context.fail(_this, `Value is an empty Object`, input);
+          context.fail(_this, `Object must not be empty`, input);
         }
       }
-      context.fail(_this, `Value is empty`, input);
+      context.fail(_this, `Value must not be empty`, input);
     },
     options,
   );

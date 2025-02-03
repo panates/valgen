@@ -25,7 +25,7 @@ export function isPassportNumber(
       }
       context.fail(
         _this,
-        `"{{value}}" is not a valid ${countryCode} PassportNumber)`,
+        `Value must be a valid ${countryCode} PassportNumber)`,
         input,
       );
     },

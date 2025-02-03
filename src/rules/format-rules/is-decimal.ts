@@ -18,7 +18,7 @@ export function isDecimal(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isDecimal(input)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not an decimal number string`, input);
+      context.fail(_this, `Value must be a decimal number string`, input);
     },
     options,
   );

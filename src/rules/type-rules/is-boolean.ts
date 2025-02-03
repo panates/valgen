@@ -28,12 +28,7 @@ export function isBoolean(options?: ValidationOptions) {
         if (input === 1 || input === 0) output = !!input;
       }
       if (typeof output === 'boolean') return output;
-      const t = typeof input === 'string' ? 'String ' : '';
-      context.fail(
-        _this,
-        `${t}"{{value}}" is not a valid boolean value`,
-        input,
-      );
+      context.fail(_this, `Value must be a boolean`, input);
     },
     options,
   );

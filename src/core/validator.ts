@@ -71,12 +71,21 @@ export function validator(arg0: any, arg1?: any, arg2?: any) {
   const name = fn.name || camelCase(id);
 
   const _rule = {
-    [name](input: unknown, options?: ExecutionOptions | Context): any {
-      const ctx = options instanceof Context ? options : undefined;
-      const opts = ctx ? undefined : options;
-      const context =
-        ctx?.extend({ ...validatorOptions, ...opts }) ||
-        new Context({ ...validatorOptions, ...opts });
+    [name](
+      input: unknown,
+      options?: ExecutionOptions | Context,
+      context?: Context,
+    ): any {
+      if (context) {
+        if (options || validatorOptions)
+          context = context.extend({ ...validatorOptions, ...options });
+      } else {
+        context =
+          options instanceof Context
+            ? options.extend({ ...validatorOptions })
+            : new Context({ ...validatorOptions, ...options });
+      }
+
       let value: any;
       try {
         value = fn(input, context, _rule as any);
@@ -84,7 +93,7 @@ export function validator(arg0: any, arg1?: any, arg2?: any) {
         if (e instanceof ValidationError) throw e;
         context.fail(_rule, e, input);
       }
-      if (!ctx && context.errors.length) {
+      if (context.isRoot && context.errors.length) {
         throw new ValidationError(context.errors);
       }
       return value;

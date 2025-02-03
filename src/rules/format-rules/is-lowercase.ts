@@ -17,7 +17,7 @@ export function isLowercase(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isLowercase(input)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not a lowercase string`, input);
+      context.fail(_this, `Value must be a lowercase string`, input);
     },
     options,
   );
@@ -34,7 +34,7 @@ export function isUppercase(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isUppercase(input)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not an uppercase string`, input);
+      context.fail(_this, `Value must be an uppercase string`, input);
     },
     options,
   );

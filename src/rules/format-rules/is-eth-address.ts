@@ -17,11 +17,7 @@ export function isETHAddress(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isEthereumAddress(input)) {
         return input;
       }
-      context.fail(
-        _this,
-        `Value is not a valid a ETH (Ethereum) address`,
-        input,
-      );
+      context.fail(_this, `Value must be valid ETH (Ethereum) address`, input);
     },
     options,
   );

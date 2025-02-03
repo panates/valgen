@@ -1,5 +1,6 @@
 import {
   type Context,
+  ErrorIssue,
   type Nullish,
   type ValidationOptions,
   type Validator,
@@ -24,7 +25,7 @@ export function isRecord<TKeys extends string | number | symbol, TValues>(
       _this,
     ): Nullish<Record<TKeys, TValues>> => {
       if (!(input && typeof input === 'object')) {
-        context.fail(_this, `{{label}} must be an object`, input);
+        context.fail(_this, `Value must be an object`, input);
         return;
       }
       const keyContext = context.extend();
@@ -40,9 +41,15 @@ export function isRecord<TKeys extends string | number | symbol, TValues>(
         k = keys[i];
         v = input[k];
         // Validate key
-        keyContext.property = '@' + k;
-        keyContext.location = location + (location ? '.@' : '@') + k;
-        k = keyRule(k, keyContext);
+        k = keyRule(
+          k,
+          {
+            onFail(issue: ErrorIssue) {
+              return `${k} is not a valid key. ` + issue.message;
+            },
+          },
+          keyContext,
+        );
         // Validate value
         valueContext.property = k;
         valueContext.location = location + (location ? '.' : '') + k;

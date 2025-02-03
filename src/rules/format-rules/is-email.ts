@@ -149,11 +149,7 @@ export function isEmail(options?: IsEmailOptions) {
         }
         return input;
       }
-      context.fail(
-        _this,
-        `"{{value}}" does not match required e-mail format`,
-        input,
-      );
+      context.fail(_this, `Value must much required e-mail format`, input);
     },
     options,
   );

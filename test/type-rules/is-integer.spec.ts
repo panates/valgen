@@ -6,18 +6,16 @@ describe('isInteger', () => {
     expect(isInteger(-1)).toStrictEqual(-1);
     expect(isInteger(0)).toStrictEqual(0);
     expect(() => isInteger(undefined)).toThrow(
-      '"undefined" is not a valid integer value',
+      'Value must be a valid integer value',
     );
     expect(() => isInteger(null)).toThrow(
-      '"null" is not a valid integer value',
+      'Value must be a valid integer value',
     );
     expect(() => isInteger(BigInt(5))).toThrow(
-      'BigInt "5" is not a valid integer value',
+      'Value must be a valid integer value',
     );
-    expect(() => isInteger('1')).toThrow(
-      'String "1" is not a valid integer value',
-    );
-    expect(() => isInteger(NaN)).toThrow('"NaN" is not a valid integer value');
+    expect(() => isInteger('1')).toThrow('Value must be a valid integer value');
+    expect(() => isInteger(NaN)).toThrow('Value must be a valid integer value');
   });
 
   it('should coerce to integer', () => {

@@ -23,7 +23,7 @@ export function isString(options?: ValidationOptions) {
         } else output = String(output);
       }
       if (typeof output === 'string') return output;
-      context.fail(_this, `"{{value}}" is not a string`, input);
+      context.fail(_this, `Value must be a string`, input);
     },
     options,
   );

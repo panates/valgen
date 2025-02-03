@@ -4,16 +4,16 @@ describe('isEmail', () => {
   it('should validate value is a email', () => {
     expect(isEmail('me@domain.com')).toStrictEqual('me@domain.com');
     expect(() => isEmail(undefined)).toThrow(
-      '"undefined" does not match required e-mail format',
+      'Value must much required e-mail format',
     );
     expect(() => isEmail(null)).toThrow(
-      '"null" does not match required e-mail format',
+      'Value must much required e-mail format',
     );
     expect(() => isEmail(NaN as any)).toThrow(
-      '"NaN" does not match required e-mail format',
+      'Value must much required e-mail format',
     );
     expect(() => isEmail('invalid')).toThrow(
-      '"invalid" does not match required e-mail format',
+      'Value must much required e-mail format',
     );
   });
 
@@ -37,7 +37,7 @@ describe('isEmail', () => {
     const fn = vg.isEmail({ utf8LocalPart: false });
     expect(isEmail('şiir@domain.com')).toStrictEqual('şiir@domain.com');
     expect(() => fn('şiir@domain.com')).toThrow(
-      '"şiir@domain.com" does not match required e-mail format',
+      'Value must much required e-mail format',
     );
   });
 
@@ -45,7 +45,7 @@ describe('isEmail', () => {
     const fn = vg.isEmail({ allowIpDomain: true });
     expect(fn('me@192.168.0.1')).toStrictEqual('me@192.168.0.1');
     expect(() => isEmail('me@192.168.0.1')).toThrow(
-      '"me@192.168.0.1" does not match required e-mail format',
+      'Value must much required e-mail format',
     );
   });
 

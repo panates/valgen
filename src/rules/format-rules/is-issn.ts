@@ -29,7 +29,7 @@ export function isISSN(options?: IsISSNOptions) {
       if (typeof input === 'string' && validatorJS.isISSN(input, opts)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not a valid ISSN`, input);
+      context.fail(_this, `Value must be a valid ISSN`, input);
     },
     options,
   );

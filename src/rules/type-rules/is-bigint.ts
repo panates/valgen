@@ -22,8 +22,7 @@ export function isBigint(options?: ValidationOptions) {
       ) {
         return BigInt(input);
       }
-      const t = typeof input === 'string' ? 'String ' : '';
-      context.fail(_this, `${t}"{{value}}" is not a valid BigInt value`, input);
+      context.fail(_this, `Value must be a BigInt`, input);
     },
     options,
   );

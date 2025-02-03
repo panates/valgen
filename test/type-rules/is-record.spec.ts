@@ -10,13 +10,13 @@ describe('isRecord', () => {
   it('should validates keys according to given codec', () => {
     expect(() =>
       vg.isRecord(vg.matches(/^[a-z]+$/), isAny)({ UpperKey: 'a' }),
-    ).toThrow('does not match requested format');
+    ).toThrow('UpperKey is not a valid key. Value must match requested format');
   });
 
   it('should validates values according to given codec', () => {
     expect(() =>
       vg.isRecord(isString, vg.matches(/^[a-z]+$/))({ id: 'UpperValue' }),
-    ).toThrow('does not match requested format');
+    ).toThrow('Value must match requested format');
   });
 
   it('should coerce values according to given codec', () => {

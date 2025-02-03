@@ -26,7 +26,7 @@ export function isUUID(
       }
       context.fail(
         _this,
-        `{{label}} is not a valid UUID${version ? ' v' + version : ''}`,
+        `Value must be a valid UUID${version ? ' v' + version : ''}`,
         input,
       );
     },

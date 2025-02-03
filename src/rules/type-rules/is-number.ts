@@ -25,13 +25,7 @@ export function isNumber(options?: ValidationOptions) {
       }
 
       if (typeof output === 'number' && !isNaN(output)) return output;
-      const t =
-        typeof input === 'bigint'
-          ? 'BigInt '
-          : typeof input === 'string'
-            ? 'String '
-            : '';
-      context.fail(_this, `${t}"{{value}}" is not a valid number value`, input);
+      context.fail(_this, `Value must be a number`, input);
     },
     options,
   );

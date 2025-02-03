@@ -1,5 +1,6 @@
 import {
   type Context,
+  ErrorIssue,
   type Nullish,
   type ValidationOptions,
   type Validator,
@@ -22,7 +23,7 @@ export function isArray<T, I>(
       let output: any = input;
       if (output != null && coerce && !Array.isArray(output)) output = [output];
       if (!Array.isArray(output)) {
-        context.fail(_this, `"{{value}}" is not an array value`, input);
+        context.fail(_this, `Value must be an array`, input);
         return;
       }
       if (!itemValidator) return output as T[];
@@ -40,7 +41,15 @@ export function isArray<T, I>(
           ? context.location + `[${i}]`
           : `<Array>[${i}]`;
         itemContext.index = i;
-        v = itemValidator(v, itemContext) as T;
+        v = itemValidator(
+          v,
+          {
+            onFail(issue: ErrorIssue) {
+              return `Item at index [${i}] is not a valid. ` + issue.message;
+            },
+          },
+          itemContext,
+        ) as T;
         out.push(v);
       }
       return out;

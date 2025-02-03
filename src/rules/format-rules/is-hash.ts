@@ -19,7 +19,7 @@ export function isHash(algorithm: HashAlgorithm, options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isHash(input, algorithm)) {
         return input;
       }
-      context.fail(_this, `Value is not a valid ${algorithm} hash`, input);
+      context.fail(_this, `Value must be a valid ${algorithm} hash`, input);
     },
     options,
   );

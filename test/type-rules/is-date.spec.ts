@@ -3,12 +3,10 @@ import { isDate, isDateString, vg } from 'valgen';
 describe('isDate', () => {
   it('should validate value is an instance of Date', () => {
     expect(isDate(new Date(1))).toEqual(new Date(1));
-    expect(() => isDate(undefined)).toThrow(
-      '"undefined" is not a valid date value',
-    );
-    expect(() => isDate(null)).toThrow('"null" is not a valid date value');
+    expect(() => isDate(undefined)).toThrow('Value must be a valid date');
+    expect(() => isDate(null)).toThrow('Value must be a valid date');
     expect(() => isDate(new Date('invalid'))).toThrow(
-      '"Invalid Date" is not a valid date value',
+      'Value must be a valid date',
     );
   });
 
@@ -70,13 +68,13 @@ describe('isDateString', () => {
     expect(isDateString('2020-01')).toEqual('2020-01');
     expect(isDateString('2020')).toEqual('2020');
     expect(() => isDateString(undefined)).toThrow(
-      '"undefined" is not a valid date string',
+      'Value must be a valid date string',
     );
     expect(() => isDateString(null)).toThrow(
-      '"null" is not a valid date string',
+      'Value must be a valid date string',
     );
     expect(() => isDateString('invalid')).toThrow(
-      '"invalid" is not a valid date string',
+      'Value must be a valid date string',
     );
   });
 
@@ -100,7 +98,7 @@ describe('isDateString', () => {
       '2020-01',
     );
     expect(() => vg.isDateString({ precision: 'month' })('2020')).toThrow(
-      '"2020" is not a valid date string',
+      'Value must be a valid date string',
     );
   });
 
@@ -121,10 +119,10 @@ describe('isDateString', () => {
       '2020-01-10',
     );
     expect(() => vg.isDateString({ precision: 'date' })('2020-01')).toThrow(
-      '"2020-01" is not a valid date string',
+      'Value must be a valid date string',
     );
     expect(() => vg.isDateString({ precision: 'date' })('2020')).toThrow(
-      '"2020" is not a valid date string',
+      'Value must be a valid date string',
     );
   });
 
@@ -142,13 +140,13 @@ describe('isDateString', () => {
       '2020-01-10 08:30',
     );
     expect(() => vg.isDateString({ precision: 'time' })('2020-01-10')).toThrow(
-      '"2020-01-10" is not a valid date string',
+      'Value must be a valid date string',
     );
     expect(() => vg.isDateString({ precision: 'time' })('2020-01')).toThrow(
-      '"2020-01" is not a valid date string',
+      'Value must be a valid date string',
     );
     expect(() => vg.isDateString({ precision: 'time' })('2020')).toThrow(
-      '"2020" is not a valid date string',
+      'Value must be a valid date string',
     );
   });
 

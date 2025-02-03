@@ -17,7 +17,7 @@ export function isEAN(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isEAN(input)) return input;
       context.fail(
         _this,
-        `"{{value}}" is not a valid EAN (European Article Number)`,
+        `Value must be a valid EAN (European Article Number)`,
         input,
       );
     },

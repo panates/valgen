@@ -23,7 +23,7 @@ export function matches(format: string | RegExp, options?: IsRegExpOptions) {
       if (typeof input === 'string' && regExp.test(input)) return input;
       context.fail(
         _this,
-        `"{{value}}" does not match ${formatName || 'requested'} format`,
+        `Value must match ${formatName || 'requested'} format`,
         input,
         {
           format,

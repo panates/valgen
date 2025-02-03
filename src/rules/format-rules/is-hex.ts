@@ -17,7 +17,7 @@ export function isHex(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isHexadecimal(input)) {
         return input;
       }
-      context.fail(_this, `{{label}} is not an hexadecimal string`, input);
+      context.fail(_this, `Value must be an hexadecimal string`, input);
     },
     options,
   );

@@ -38,7 +38,7 @@ describe('validator', () => {
         {
           rule: 'isNumber',
           value: 'x',
-          message: 'String "x" is not a valid number value',
+          message: 'Value must be a number',
         },
       ],
     });

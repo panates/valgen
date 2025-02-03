@@ -5,22 +5,22 @@ describe('isTuple', () => {
     expect(vg.isTuple([isBoolean])([true])).toStrictEqual([true]);
     expect(vg.isTuple([isInteger])([1])).toStrictEqual([1]);
     expect(() => vg.isTuple([isBoolean])(undefined)).toThrow(
-      '"undefined" is not a valid tuple',
+      'Value must be a tuple',
     );
     expect(() => vg.isTuple([isBoolean])(null)).toThrow(
-      '"null" is not a valid tuple',
+      'Value must be a tuple',
     );
     expect(() => vg.isTuple([isBoolean])(5 as any)).toThrow(
-      '"5" is not a valid tuple',
+      'Value must be a tuple',
     );
     expect(() => vg.isTuple([isBoolean])(NaN as any)).toThrow(
-      '"NaN" is not a valid tuple',
+      'Value must be a tuple',
     );
   });
 
   it('should validate items according to item rule', () => {
     expect(() => vg.isTuple([isInteger])(['1'])).toThrow(
-      'String "1" is not a valid integer value',
+      'Value must be a valid integer value',
     );
   });
 

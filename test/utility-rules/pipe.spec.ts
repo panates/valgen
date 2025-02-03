@@ -6,7 +6,7 @@ describe('pipe', () => {
       'abc',
     );
     expect(() => vg.pipe([isString, vg.matches(/^[a-z]+$/)])('123')).toThrow(
-      'does not match requested format',
+      'Value must match requested format',
     );
     expect(
       vg.pipe([isString, isNumber, isBoolean])(1 as any, { coerce: true }),
@@ -34,7 +34,7 @@ describe('allOf', () => {
   it('should check all validation rules passes', () => {
     const codec = vg.allOf([isNumber, vg.isGt(5), vg.isLt(10)]);
     expect(() => codec(6)).not.toThrow();
-    expect(() => codec('x')).toThrow('String "x" is not a valid number value');
+    expect(() => codec('x')).toThrow('Value must be a number');
     expect(() => codec(5)).toThrow('must be greater than');
     expect(() => codec(10)).toThrow('must be lover than');
   });

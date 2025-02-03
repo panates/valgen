@@ -40,7 +40,7 @@ export function isDate(options?: isDate.Options) {
         if (precision === 'date') d.setHours(0, 0, 0, 0);
         return d;
       }
-      context.fail(_this, `"{{value}}" is not a valid date value`, input, {
+      context.fail(_this, `Value must be a valid date`, input, {
         ...options,
       });
     },
@@ -97,7 +97,7 @@ export function isDateString(options?: IsDateStringOptions) {
           : formatISO(input).substring(0, 19);
       }
 
-      context.fail(_this, `"{{value}}" is not a valid date string`, input, {
+      context.fail(_this, `Value must be a valid date string`, input, {
         ...options,
       });
     },

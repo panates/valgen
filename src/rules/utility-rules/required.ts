@@ -18,7 +18,7 @@ export function required<T, I>(
     'required',
     (input: I, context: Context, _this): Nullish<T> => {
       if (input == null) {
-        context.fail(_this, `{{label}} is required`, input);
+        context.fail(_this, `Value required`, input);
         return;
       }
       return nested(input, context) as T;

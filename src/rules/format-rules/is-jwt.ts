@@ -15,7 +15,7 @@ export function isJWT(options?: ValidationOptions) {
     'isJWT',
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isJWT(input)) return input;
-      context.fail(_this, `Value is not a valid JWT token`, input);
+      context.fail(_this, `Value must be valid JWT token`, input);
     },
     options,
   );

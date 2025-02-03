@@ -17,7 +17,7 @@ export function isVATNumber(countryCode: string, options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isVAT(input, countryCode)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not a valid VAT number`, input);
+      context.fail(_this, `Value must be a valid VAT number`, input);
     },
     options,
   );

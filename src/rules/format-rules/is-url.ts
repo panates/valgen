@@ -25,7 +25,7 @@ export function isURL(options?: IsURLOptions) {
       ) {
         return input;
       }
-      context.fail(_this, `{{value}} is not a valid URL`, input);
+      context.fail(_this, `Value must be a valid URL`, input);
     },
     options,
   );

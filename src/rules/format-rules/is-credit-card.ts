@@ -24,11 +24,7 @@ export function isCreditCard(options?: CreditCardValidatorOptions) {
       ) {
         return input;
       }
-      context.fail(
-        _this,
-        `"{{value}}" is not a valid Credit Card number`,
-        input,
-      );
+      context.fail(_this, `Value must be a valid Credit Card number`, input);
     },
     options,
   );

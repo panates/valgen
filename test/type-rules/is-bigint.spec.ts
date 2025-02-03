@@ -5,14 +5,10 @@ describe('isBigint', () => {
     expect(isBigint(1n)).toStrictEqual(1n);
     expect(isBigint(-1n)).toStrictEqual(-1n);
     expect(isBigint(0n)).toStrictEqual(0n);
-    expect(() => isBigint(undefined)).toThrow(
-      '"undefined" is not a valid BigInt value',
-    );
-    expect(() => isBigint(null)).toThrow('"null" is not a valid BigInt value');
-    expect(() => isBigint('1')).toThrow(
-      'String "1" is not a valid BigInt value',
-    );
-    expect(() => isBigint(NaN)).toThrow('"NaN" is not a valid BigInt value');
+    expect(() => isBigint(undefined)).toThrow('Value must be a BigInt');
+    expect(() => isBigint(null)).toThrow('Value must be a BigInt');
+    expect(() => isBigint('1')).toThrow('Value must be a BigInt');
+    expect(() => isBigint(NaN)).toThrow('Value must be a BigInt');
   });
 
   it('should coerce to BigInt', () => {

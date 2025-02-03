@@ -23,7 +23,7 @@ export function isIP(version?: 4 | 6, options?: ValidationOptions) {
       }
       context.fail(
         _this,
-        `"{{value}}" is not a valid IP${version ? ' v' + version : ''}`,
+        `Value must be a valid IP${version ? ' v' + version : ''}`,
         input,
       );
     },
@@ -48,7 +48,7 @@ export function isIPRange(version?: 4 | 6, options?: ValidationOptions) {
       }
       context.fail(
         _this,
-        `"{{value}}" is not a valid IP${version ? ' v' + version : ''} range`,
+        `Value must be a valid IP${version ? ' v' + version : ''} range`,
         input,
       );
     },

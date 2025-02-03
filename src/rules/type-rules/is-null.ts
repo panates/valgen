@@ -13,7 +13,7 @@ export function isNull(options?: ValidationOptions) {
     'isNull',
     (input: unknown, context: Context, _this) => {
       if (input === null) return input;
-      context.fail(_this, `{{label}} is not null`, input);
+      context.fail(_this, `Value must be null`, input);
     },
     options,
   );

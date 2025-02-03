@@ -28,7 +28,7 @@ export function isFQDN(options?: IsFQDNOptions) {
       if (typeof input === 'string' && validatorJS.isFQDN(input, opts)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not valid FQDN`, input);
+      context.fail(_this, `Value must be valid FQDN`, input);
     },
     options,
   );

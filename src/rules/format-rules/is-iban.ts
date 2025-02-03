@@ -17,7 +17,7 @@ export function isIBAN(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isIBAN(input)) return input;
       context.fail(
         _this,
-        `{{label}} is not a valid IBAN (International Bank Account Number)`,
+        `Value must be a valid IBAN (International Bank Account Number)`,
         input,
       );
     },
@@ -36,7 +36,7 @@ export function isSWIFT(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isBIC(input)) return input;
       context.fail(
         _this,
-        `{{label}}is not a valid a BIC (Bank Identification Code) or SWIFT code`,
+        `Value must be a valid a BIC (Bank Identification Code) or SWIFT code`,
         input,
       );
     },

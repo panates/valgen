@@ -30,17 +30,7 @@ export function isInteger(options?: ValidationOptions) {
       ) {
         return output;
       }
-      const t =
-        typeof input === 'bigint'
-          ? 'BigInt '
-          : typeof input === 'string'
-            ? 'String '
-            : '';
-      context.fail(
-        _this,
-        `${t}"{{value}}" is not a valid integer value`,
-        input,
-      );
+      context.fail(_this, `Value must be a valid integer value`, input);
     },
     options,
   );

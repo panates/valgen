@@ -41,11 +41,7 @@ export function isMobilePhone(options?: IsMobilePhoneOptions) {
       ) {
         return input;
       }
-      context.fail(
-        _this,
-        `"{{value}}" is not a valid a Mobile Phone Number`,
-        input,
-      );
+      context.fail(_this, `Value must be a valid a Mobile Phone Number`, input);
     },
     options,
   );

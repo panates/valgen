@@ -3,10 +3,10 @@ import { isUndefined } from 'valgen';
 describe('isUndefined', () => {
   it('should validate value is undefined', () => {
     expect(isUndefined(undefined)).toStrictEqual(undefined);
-    expect(() => isUndefined('' as any)).toThrow("Value mustn't be defined");
-    expect(() => isUndefined(5 as any)).toThrow("Value mustn't be defined");
-    expect(() => isUndefined(null as any)).toThrow("Value mustn't be defined");
-    expect(() => isUndefined(NaN as any)).toThrow("Value mustn't be defined");
+    expect(() => isUndefined('' as any)).toThrow('Value must be undefined');
+    expect(() => isUndefined(5 as any)).toThrow('Value must be undefined');
+    expect(() => isUndefined(null as any)).toThrow('Value must be undefined');
+    expect(() => isUndefined(NaN as any)).toThrow('Value must be undefined');
   });
 
   it('should coerce to undefined', () => {

@@ -17,7 +17,7 @@ export function isBtcAddress(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isBtcAddress(input)) {
         return input;
       }
-      context.fail(_this, `Value is not a valid a BTC address`, input);
+      context.fail(_this, `Value must be a valid BTC address`, input);
     },
     options,
   );

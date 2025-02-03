@@ -13,7 +13,7 @@ export function isDefined(options?: ValidationOptions) {
     'is-defined',
     (input: unknown, context: Context, _this) => {
       if (input !== undefined) return input;
-      context.fail(_this, `Is not defined`, input);
+      context.fail(_this, `Value must be defined`, input);
     },
     options,
   );

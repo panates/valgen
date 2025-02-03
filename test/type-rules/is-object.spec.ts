@@ -34,11 +34,9 @@ describe('isObject', () => {
   it('should validate value is an object', () => {
     const objValidate = vg.isObject({ a: isString });
     expect(objValidate({ a: '1' })).toStrictEqual({ a: '1' });
-    expect(() => objValidate(null)).toThrow('"null" is not an object');
-    expect(() => objValidate(undefined)).toThrow(
-      '"undefined" is not an object',
-    );
-    expect(() => objValidate(NaN as any)).toThrow('"NaN" is not an object');
+    expect(() => objValidate(null)).toThrow('Value must be an object');
+    expect(() => objValidate(undefined)).toThrow('Value must be an object');
+    expect(() => objValidate(NaN as any)).toThrow('Value must be an object');
   });
 
   it('should parse json if coerce=true', () => {
@@ -63,7 +61,7 @@ describe('isObject', () => {
   });
 
   it('should check required properties', () => {
-    expect(() => personValidate({ age: 22 })).toThrow('Full Name is required');
+    expect(() => personValidate({ age: 22 })).toThrow('Value required');
     expect(personValidate.silent({ age: 22 })).toMatchObject({
       errors: [
         {
@@ -77,7 +75,7 @@ describe('isObject', () => {
     });
     expect(() =>
       personValidate({ name: 'John', address: { city: 'New York' } }),
-    ).toThrow('Country is required');
+    ).toThrow('Value required');
     expect(
       personValidate.silent({ name: 'John', address: { city: 'New York' } }),
     ).toMatchObject({
@@ -88,7 +86,7 @@ describe('isObject', () => {
           label: 'Country',
           property: 'country',
           location: 'address.country',
-          message: 'Country is required',
+          message: 'Value required',
           value: undefined,
         },
         {
@@ -97,7 +95,7 @@ describe('isObject', () => {
           label: 'Age',
           property: 'age',
           location: 'age',
-          message: 'Age is required',
+          message: 'Value required',
           value: undefined,
         },
       ],

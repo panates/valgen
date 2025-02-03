@@ -32,7 +32,7 @@ export function getLength() {
       ) {
         return input.size;
       }
-      context.fail(_this, `Unable to get length of {{label}}`, input);
+      context.fail(_this, `Unable to get length`, input);
     },
   );
 }

@@ -15,7 +15,7 @@ export function isAlpha(options?: ValidationOptions) {
     'isLowercase',
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isAlpha(input)) return input;
-      context.fail(_this, `"{{value}}" is not an alpha string`, input);
+      context.fail(_this, `"Value must be an alpha string`, input);
     },
     options,
   );
@@ -32,7 +32,7 @@ export function isAlphanumeric(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isAlphanumeric(input)) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not an alphanumeric string`, input);
+      context.fail(_this, `"Value must be an alphanumeric string`, input);
     },
     options,
   );

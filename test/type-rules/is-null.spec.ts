@@ -3,10 +3,10 @@ import { isNotNull, isNotNullish, isNull, isNullish } from 'valgen';
 describe('isNull', () => {
   it('should validate value is null', () => {
     expect(isNull(null)).toStrictEqual(null);
-    expect(() => isNull(undefined)).toThrow('Value is not null');
-    expect(() => isNull('' as any)).toThrow('Value is not null');
-    expect(() => isNull(5 as any)).toThrow('Value is not null');
-    expect(() => isNull(NaN as any)).toThrow('Value is not null');
+    expect(() => isNull(undefined)).toThrow('Value must be null');
+    expect(() => isNull('' as any)).toThrow('Value must be null');
+    expect(() => isNull(5 as any)).toThrow('Value must be null');
+    expect(() => isNull(NaN as any)).toThrow('Value must be null');
   });
 });
 

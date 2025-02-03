@@ -33,7 +33,7 @@ export function isObjectId(options?: ValidationOptions) {
       ) {
         return input;
       }
-      context.fail(_this, `"{{value}}" is not a valid ObjectId`, input);
+      context.fail(_this, `Value must be a valid ObjectId`, input);
     },
     options,
   );

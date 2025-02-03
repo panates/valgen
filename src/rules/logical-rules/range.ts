@@ -113,7 +113,7 @@ export function isGt(
       }
       context.fail(
         _this,
-        `{{label}} must be greater than ${typeof minValue === 'string' ? `"${minValue}"` : minValue}`,
+        `Value must be greater than ${typeof minValue === 'string' ? `"${minValue}"` : minValue}`,
         input,
       );
     },
@@ -177,7 +177,7 @@ export function isGte(
       }
       context.fail(
         _this,
-        `{{label}} must be greater than or equal to ${typeof minValue === 'string' ? `"${minValue}"` : minValue}`,
+        `Value must be greater than or equal to ${typeof minValue === 'string' ? `"${minValue}"` : minValue}`,
         input,
       );
     },
@@ -241,7 +241,7 @@ export function isLt(
       }
       context.fail(
         _this,
-        `{{label}} must be lover than ${typeof maxValue === 'string' ? `"${maxValue}"` : maxValue}`,
+        `Value must be lover than ${typeof maxValue === 'string' ? `"${maxValue}"` : maxValue}`,
         input,
       );
     },
@@ -305,7 +305,7 @@ export function isLte(
       }
       context.fail(
         _this,
-        `{{label}} must be lover than or equal to ${typeof maxValue === 'string' ? `"${maxValue}"` : maxValue}`,
+        `Value must be lover than or equal to ${typeof maxValue === 'string' ? `"${maxValue}"` : maxValue}`,
         input,
       );
     },
@@ -322,7 +322,7 @@ export const lengthMin = (minValue: number) =>
     pipe([
       getLength(),
       isGte(minValue, {
-        onFail: () => `The length of {{label}} must be at least ${minValue}`,
+        onFail: () => `Value length must be at least ${minValue}`,
       }),
     ]),
   ]);

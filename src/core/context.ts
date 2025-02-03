@@ -7,6 +7,7 @@ const VARIABLE_REPLACE_PATTERN = /{{([^}]*)}}/g;
 const OPTIONAL_VAR_PATTERN = /^([^?]+)(?:\||(.*))?$/;
 
 export class Context implements ExecutionOptions {
+  isRoot = true;
   errors: ErrorIssue[] = [];
   maxErrors?: number;
   onFail?: OnFailFunction;
@@ -84,6 +85,7 @@ export class Context implements ExecutionOptions {
         if (v !== undefined) extended[k] = v;
       }
     }
+    extended.isRoot = false;
     Object.setPrototypeOf(extended, this);
     return extended;
   }

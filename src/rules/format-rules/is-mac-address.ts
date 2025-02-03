@@ -42,7 +42,7 @@ export function isMACAddress(options?: IsMACAddressOptions) {
       ) {
         return input;
       }
-      context.fail(_this, `{{label}} is not a valid MAC address`, input);
+      context.fail(_this, `Value must be a valid MAC address`, input);
     },
     options,
   );

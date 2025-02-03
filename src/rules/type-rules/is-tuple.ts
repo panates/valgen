@@ -73,7 +73,7 @@ export function isTuple(items: Validator[], options?: ValidationOptions) {
       let output: any = input;
       if (output != null && coerce && !Array.isArray(output)) output = [output];
       if (!Array.isArray(input)) {
-        context.fail(_this, `"{{value}}" is not a valid tuple`, input);
+        context.fail(_this, `Value must be a tuple`, input);
         return;
       }
       const location = context.location || '';

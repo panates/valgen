@@ -17,7 +17,7 @@ export function isHexColor(options?: ValidationOptions) {
       if (typeof input === 'string' && validatorJS.isHexColor(input)) {
         return input;
       }
-      context.fail(_this, `{{label}} is not a valid Hex Color`, input);
+      context.fail(_this, `Value must be a valid Hex Color`, input);
     },
     options,
   );

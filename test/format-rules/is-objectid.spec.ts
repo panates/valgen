@@ -15,11 +15,11 @@ describe('isObjectId', () => {
     expect(isObjectId(idArray)).toStrictEqual(idArray);
     expect(isObjectId(idObject)).toStrictEqual(idObject);
     expect(() => isObjectId(undefined)).toThrow(
-      '"undefined" is not a valid ObjectId',
+      'Value must be a valid ObjectId',
     );
-    expect(() => isObjectId(null)).toThrow('"null" is not a valid ObjectId');
+    expect(() => isObjectId(null)).toThrow('Value must be a valid ObjectId');
     expect(() => isObjectId(NaN as any)).toThrow(
-      '"NaN" is not a valid ObjectId',
+      'Value must be a valid ObjectId',
     );
   });
 });

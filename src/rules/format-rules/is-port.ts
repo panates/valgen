@@ -22,7 +22,7 @@ export function isPort(options?: ValidationOptions) {
       ) {
         return parseInt(input, 10);
       }
-      context.fail(_this, `{{label}} is not a valid port number`, input);
+      context.fail(_this, `Value must be a valid port number`, input);
     },
     options,
   );

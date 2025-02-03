@@ -223,10 +223,10 @@ describe('lengthMin', () => {
     expect(vg.lengthMin(3)('123')).toStrictEqual('123');
     expect(vg.lengthMin(3)([1, 2, 3, 4])).toStrictEqual([1, 2, 3, 4]);
     expect(() => vg.lengthMin(3)('ab')).toThrow(
-      'The length of Value must be at least 3',
+      'Value length must be at least 3',
     );
     expect(() => vg.lengthMin(3)([1, 2])).toThrow(
-      'The length of Value must be at least 3',
+      'Value length must be at least 3',
     );
   });
 });
