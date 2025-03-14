@@ -27,8 +27,14 @@ export function isEmpty(options?: ValidationOptions) {
       } else if (input instanceof Map) {
         if (!input.size) return input;
         context.fail(_this, `Value must be an empty Map`, input);
+      } else if (Buffer.isBuffer(input)) {
+        if (!input.length) return input;
+        context.fail(_this, `Value must be an empty Buffer`, input);
+      } else if (input instanceof ArrayBuffer) {
+        if (!input.byteLength) return input;
+        context.fail(_this, `Value must be an empty ArrayBuffer`, input);
       } else if (typeof input === 'object') {
-        if (!Object.keys(input).length) return input;
+        if (input instanceof Date || !Object.keys(input).length) return input;
         context.fail(_this, `Value must be an empty Object`, input);
       }
       context.fail(_this, `Value must be empty`, input);
@@ -58,8 +64,14 @@ export function isNotEmpty(options?: ValidationOptions) {
         } else if (input instanceof Map) {
           if (input.size) return input;
           context.fail(_this, `Map must not be empty`, input);
+        } else if (Buffer.isBuffer(input)) {
+          if (input.length) return input;
+          context.fail(_this, `Buffer must not be empty`, input);
+        } else if (input instanceof ArrayBuffer) {
+          if (input.byteLength) return input;
+          context.fail(_this, `ArrayBuffer must not be empty`, input);
         } else if (typeof input === 'object') {
-          if (Object.keys(input).length) return input;
+          if (input instanceof Date || Object.keys(input).length) return input;
           context.fail(_this, `Object must not be empty`, input);
         }
       }

@@ -11,6 +11,13 @@ describe('isEmpty', () => {
     expect(() => isEmpty([0])).toThrow('Value must be an empty array');
   });
 
+  it('should validate value is an empty array', () => {
+    expect(() => isEmpty(new ArrayBuffer(0))).not.toThrow();
+    expect(() => isEmpty(new ArrayBuffer(1))).toThrow(
+      'Value must be an empty ArrayBuffer',
+    );
+  });
+
   it('should validate value is an empty Object', () => {
     expect(isEmpty({})).toStrictEqual({});
     expect(() => isEmpty({ a: 1 })).toThrow('Value must be an empty Object');
@@ -26,6 +33,17 @@ describe('isEmpty', () => {
     expect(() => isEmpty(new Map([['a', 0]]))).toThrow(
       'Value must be an empty Map',
     );
+  });
+
+  it('should validate value is an empty Buffer', () => {
+    expect(() => isEmpty(Buffer.from([]))).not.toThrow();
+    expect(() => isEmpty(Buffer.from([0, 1]))).toThrow(
+      'Value must be an empty Buffer',
+    );
+  });
+
+  it('should validate value is an Date', () => {
+    expect(() => isEmpty(new Date())).not.toThrow();
   });
 
   it('should throw if unknown type passed', () => {
