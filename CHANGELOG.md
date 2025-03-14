@@ -1,3 +1,15 @@
+# v5.13.1
+[2025-03-14]
+
+### Fixes
+
+* fix: Fixed validation of Date, Buffer and ArrayBuffer objects of isEmpty and isNotEmpty rules ([`24992b8`](https://github.com/panates/valgen/commit/24992b845f229c8cd1e5d0049704e6c99bf5a6be))
+* fix: Fixed validation of Date, Buffer and ArrayBuffer objects of isEmpty and isNotEmpty rules ([`37681bf`](https://github.com/panates/valgen/commit/37681bf88f5c0adf4f102856791b0b3a547aea74))
+
+### Changes
+
+* chore: Removed Node 16 tests ([`606e01a`](https://github.com/panates/valgen/commit/606e01abb6cefd11e0dfdc6a20cb4e26371bb6e9))
+
 # v5.13.0
 [2025-02-03]
 
