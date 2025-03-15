@@ -1,3 +1,10 @@
+# v5.13.2
+[2025-03-15]
+
+### Fixes
+
+* fix: Fixed ignoring pipe validators if context.errors has items. ([`0b02ca1`](https://github.com/panates/valgen/commit/0b02ca17762f9512542bc79ad044d1072805f857))
+
 # v5.13.1
 [2025-03-14]
 
