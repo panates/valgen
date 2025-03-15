@@ -27,11 +27,12 @@ export function pipe<T>(
       let c: Validator;
       let v = input;
       let returnValue: any = input;
+      const oldErrors = context.errors.length;
       for (i = 0; i < l; i++) {
         c = rules[i];
         v = c(v, context);
         if (returnIndex == null || i <= returnIndex) returnValue = v;
-        if (context.errors.length) return;
+        if (context.errors.length > oldErrors) return;
       }
       return returnValue as T;
     },
