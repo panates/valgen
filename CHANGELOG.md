@@ -1,3 +1,10 @@
+# v5.13.3
+[2025-03-17]
+
+### Fixes
+
+* fix: isEmpty and isNotEmpty rules adds error issue twice ([`d74b9af`](https://github.com/panates/valgen/commit/d74b9afed10e5d93a97298879c68de8937d55321))
+
 # v5.13.2
 [2025-03-15]
 
