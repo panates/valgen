@@ -16,26 +16,33 @@ export function isEmpty(options?: ValidationOptions) {
     (input: unknown, context: Context, _this) => {
       if (input == null) return input;
       if (typeof input === 'string') {
-        if (!input) return input;
-        context.fail(_this, `Value must be an empty string`, input);
+        if (input) context.fail(_this, `Value must be an empty string`, input);
+        return input;
       } else if (Array.isArray(input)) {
-        if (!input.length) return input;
-        context.fail(_this, `Value must be an empty array`, input);
+        if (input.length)
+          context.fail(_this, `Value must be an empty array`, input);
+        return input;
       } else if (input instanceof Set) {
-        if (!input.size) return input;
-        context.fail(_this, `Value must be an empty Set`, input);
+        if (input.size)
+          context.fail(_this, `Value must be an empty Set`, input);
+        return input;
       } else if (input instanceof Map) {
-        if (!input.size) return input;
-        context.fail(_this, `Value must be an empty Map`, input);
+        if (input.size)
+          context.fail(_this, `Value must be an empty Map`, input);
+        return input;
       } else if (Buffer.isBuffer(input)) {
-        if (!input.length) return input;
-        context.fail(_this, `Value must be an empty Buffer`, input);
+        if (input.length)
+          context.fail(_this, `Value must be an empty Buffer`, input);
+        return input;
       } else if (input instanceof ArrayBuffer) {
-        if (!input.byteLength) return input;
-        context.fail(_this, `Value must be an empty ArrayBuffer`, input);
+        if (input.byteLength)
+          context.fail(_this, `Value must be an empty ArrayBuffer`, input);
+        return input;
       } else if (typeof input === 'object') {
-        if (input instanceof Date || !Object.keys(input).length) return input;
-        context.fail(_this, `Value must be an empty Object`, input);
+        if (input instanceof Date) return input;
+        if (Object.keys(input).length)
+          context.fail(_this, `Value must be an empty Object`, input);
+        return input;
       }
       context.fail(_this, `Value must be empty`, input);
     },
@@ -53,29 +60,35 @@ export function isNotEmpty(options?: ValidationOptions) {
     (input: unknown, context: Context, _this) => {
       if (input != null) {
         if (typeof input === 'string') {
-          if (input) return input;
-          context.fail(_this, `Value must not be empty`, input);
+          if (!input) context.fail(_this, `Value must not be empty`, input);
+          return input;
         } else if (Array.isArray(input)) {
-          if (input.length) return input;
-          context.fail(_this, `Array must not be empty`, input);
+          if (!input.length)
+            context.fail(_this, `Array must not be empty`, input);
+          return input;
         } else if (input instanceof Set) {
-          if (input.size) return input;
-          context.fail(_this, `Set must not be empty`, input);
+          if (!input.size) context.fail(_this, `Set must not be empty`, input);
+          return input;
         } else if (input instanceof Map) {
-          if (input.size) return input;
-          context.fail(_this, `Map must not be empty`, input);
+          if (!input.size) context.fail(_this, `Map must not be empty`, input);
+          return input;
         } else if (Buffer.isBuffer(input)) {
-          if (input.length) return input;
-          context.fail(_this, `Buffer must not be empty`, input);
+          if (!input.length)
+            context.fail(_this, `Buffer must not be empty`, input);
+          return input;
         } else if (input instanceof ArrayBuffer) {
-          if (input.byteLength) return input;
-          context.fail(_this, `ArrayBuffer must not be empty`, input);
+          if (!input.byteLength)
+            context.fail(_this, `ArrayBuffer must not be empty`, input);
+          return input;
         } else if (typeof input === 'object') {
-          if (input instanceof Date || Object.keys(input).length) return input;
-          context.fail(_this, `Object must not be empty`, input);
+          if (input instanceof Date) return input;
+          if (!Object.keys(input).length)
+            context.fail(_this, `Object must not be empty`, input);
+          return input;
         }
       }
       context.fail(_this, `Value must not be empty`, input);
+      return input as any;
     },
     options,
   );
