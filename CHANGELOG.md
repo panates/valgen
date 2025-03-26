@@ -1,3 +1,10 @@
+# v5.13.4
+[2025-03-26]
+
+### Fixes
+
+* fix: isNotEmpty do not work for number and boolean types ([`e5175d8`](https://github.com/panates/valgen/commit/e5175d82f532a0a8370754fa6739a13221401788))
+
 # v5.13.3
 [2025-03-17]
 
