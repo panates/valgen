@@ -4,7 +4,7 @@ import {
   validator,
 } from '../../core/index.js';
 
-type IsEmptyInput = string | any[] | object | Set<any> | Map<any, any>;
+type IsEmptyInput = any;
 
 /**
  * Checks if value is an empty. Value should be string, array, set, map or object
@@ -62,30 +62,39 @@ export function isNotEmpty(options?: ValidationOptions) {
         if (typeof input === 'string') {
           if (!input) context.fail(_this, `Value must not be empty`, input);
           return input;
-        } else if (Array.isArray(input)) {
-          if (!input.length)
-            context.fail(_this, `Array must not be empty`, input);
-          return input;
-        } else if (input instanceof Set) {
-          if (!input.size) context.fail(_this, `Set must not be empty`, input);
-          return input;
-        } else if (input instanceof Map) {
-          if (!input.size) context.fail(_this, `Map must not be empty`, input);
-          return input;
-        } else if (Buffer.isBuffer(input)) {
-          if (!input.length)
-            context.fail(_this, `Buffer must not be empty`, input);
-          return input;
-        } else if (input instanceof ArrayBuffer) {
-          if (!input.byteLength)
-            context.fail(_this, `ArrayBuffer must not be empty`, input);
+        } else if (typeof input === 'number') {
+          if (Number.isNaN(input))
+            context.fail(_this, `Value must not be NaN`, input);
           return input;
         } else if (typeof input === 'object') {
-          if (input instanceof Date) return input;
-          if (!Object.keys(input).length)
-            context.fail(_this, `Object must not be empty`, input);
-          return input;
+          if (Array.isArray(input)) {
+            if (!input.length)
+              context.fail(_this, `Array must not be empty`, input);
+            return input;
+          } else if (input instanceof Set) {
+            if (!input.size)
+              context.fail(_this, `Set must not be empty`, input);
+            return input;
+          } else if (input instanceof Map) {
+            if (!input.size)
+              context.fail(_this, `Map must not be empty`, input);
+            return input;
+          } else if (Buffer.isBuffer(input)) {
+            if (!input.length)
+              context.fail(_this, `Buffer must not be empty`, input);
+            return input;
+          } else if (input instanceof ArrayBuffer) {
+            if (!input.byteLength)
+              context.fail(_this, `ArrayBuffer must not be empty`, input);
+            return input;
+          } else {
+            if (input instanceof Date) return input;
+            if (!Object.keys(input).length)
+              context.fail(_this, `Object must not be empty`, input);
+            return input;
+          }
         }
+        return input;
       }
       context.fail(_this, `Value must not be empty`, input);
       return input as any;

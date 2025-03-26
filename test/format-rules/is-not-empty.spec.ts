@@ -6,6 +6,15 @@ describe('isNotEmpty', () => {
     expect(() => isNotEmpty('')).toThrow('Value must not be empty');
   });
 
+  it('should validate value is an empty number', () => {
+    expect(isNotEmpty(123)).toStrictEqual(123);
+  });
+
+  it('should validate value is an empty boolean', () => {
+    expect(isNotEmpty(true)).toStrictEqual(true);
+    expect(isNotEmpty(false)).toStrictEqual(false);
+  });
+
   it('should validate value is an empty array', () => {
     expect(isNotEmpty([0])).toStrictEqual([0]);
     expect(() => isNotEmpty([])).toThrow('Array must not be empty');
@@ -45,6 +54,6 @@ describe('isNotEmpty', () => {
   });
 
   it('should throw if unknown type passed', () => {
-    expect(() => isNotEmpty(NaN as any)).toThrow('Value must not be empty');
+    expect(() => isNotEmpty(NaN as any)).toThrow('Value must not be NaN');
   });
 });
