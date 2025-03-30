@@ -60,4 +60,4 @@ jobs:
         # Run only once
         if: ${{ matrix.node == '22' }}
         with:
-          github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
