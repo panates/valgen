@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/nyc.json",
   "extension": [".ts"],
-  "include": ["packages/*/src/**/*.ts"],
-  "exclude": ["**/*.spec.ts", "test/**"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["test/**"],
   "reporter": ["text", "html", "lcov"],
   "temp-dir": "./coverage/.nyc_output",
   "all": true
