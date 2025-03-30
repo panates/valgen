@@ -102,5 +102,8 @@
     "converter",
     "transform",
     "type"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
