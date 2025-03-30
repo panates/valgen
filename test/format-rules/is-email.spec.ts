@@ -1,12 +1,13 @@
+import { expect } from 'expect';
 import { isEmail, vg } from 'valgen';
 
 describe('isEmail', () => {
   it('should validate value is a email', () => {
     expect(isEmail('me@domain.com')).toStrictEqual('me@domain.com');
-    expect(() => isEmail(undefined)).toThrow(
+    expect(() => isEmail(undefined as any)).toThrow(
       'Value must much required e-mail format',
     );
-    expect(() => isEmail(null)).toThrow(
+    expect(() => isEmail(null as any)).toThrow(
       'Value must much required e-mail format',
     );
     expect(() => isEmail(NaN as any)).toThrow(

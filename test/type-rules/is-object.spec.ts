@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import {
   forwardRef,
   isNumber,
@@ -10,13 +11,13 @@ import {
 
 class Address {
   city?: string;
-  country: string;
+  declare country: string;
 }
 
 class Person {
-  name: string;
-  age: number;
-  address?: Address;
+  declare name: string;
+  declare age: number;
+  declare address?: Address;
 }
 
 const addressDef: IsObject.Schema = {
@@ -34,8 +35,10 @@ describe('isObject', () => {
   it('should validate value is an object', () => {
     const objValidate = vg.isObject({ a: isString });
     expect(objValidate({ a: '1' })).toStrictEqual({ a: '1' });
-    expect(() => objValidate(null)).toThrow('Value must be an object');
-    expect(() => objValidate(undefined)).toThrow('Value must be an object');
+    expect(() => objValidate(null as any)).toThrow('Value must be an object');
+    expect(() => objValidate(undefined as any)).toThrow(
+      'Value must be an object',
+    );
     expect(() => objValidate(NaN as any)).toThrow('Value must be an object');
   });
 

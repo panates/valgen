@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isNotNull, isNotNullish, isNull, isNullish } from 'valgen';
 
 describe('isNull', () => {

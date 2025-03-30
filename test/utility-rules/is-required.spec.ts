@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isNumber, isString, vg } from 'valgen';
 
 describe('isRequired', () => {

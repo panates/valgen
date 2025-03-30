@@ -1,9 +1,10 @@
+import { expect } from 'expect';
 import { vg } from 'valgen';
 
 describe('isRegExp', () => {
   it('should return undefined if nullish', () => {
-    expect(vg.matches('\\d+')(null)).toStrictEqual(undefined);
-    expect(vg.matches('\\d+')(undefined)).toStrictEqual(undefined);
+    expect(vg.matches('\\d+')(null as any)).toStrictEqual(undefined);
+    expect(vg.matches('\\d+')(undefined as any)).toStrictEqual(undefined);
   });
 
   it('should validate value matches given pattern', () => {

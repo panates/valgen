@@ -2,16 +2,11 @@
   "extends": "../tsconfig-base.json",
   "include": ["**/*.ts"],
   "compilerOptions": {
-    "types": ["node", "jest"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictNullChecks": false,
-    "strict": false,
-    "noEmit": true,
+    "types": ["node", "mocha"],
     "sourceMap": true,
-    "baseUrl": "../test",
+    "baseUrl": "./",
     "paths": {
-      "valgen": ["../src"]
+      "valgen": ["../src/index.js"]
     }
   }
 }

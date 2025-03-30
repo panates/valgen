@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { forwardRef, isString } from 'valgen';
 
 describe('forwardRef', () => {

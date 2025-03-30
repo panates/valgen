@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isNotEmpty } from 'valgen';
 
 describe('isNotEmpty', () => {

@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isUUID, isUUID1, isUUID2, isUUID3, isUUID4, isUUID5 } from 'valgen';
 
 describe('isUUID', () => {
@@ -13,8 +14,10 @@ describe('isUUID', () => {
     expect(isUUID(uuidV3)).toStrictEqual(uuidV3);
     expect(isUUID(uuidV4)).toStrictEqual(uuidV4);
     expect(isUUID(uuidV5)).toStrictEqual(uuidV5);
-    expect(() => isUUID(undefined)).toThrow('Value must be a valid UUID');
-    expect(() => isUUID(null)).toThrow('Value must be a valid UUID');
+    expect(() => isUUID(undefined as any)).toThrow(
+      'Value must be a valid UUID',
+    );
+    expect(() => isUUID(null as any)).toThrow('Value must be a valid UUID');
     expect(() => isUUID(NaN as any)).toThrow('Value must be a valid UUID');
   });
 

@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { iif, isDefined, isEmpty, isNumber, isString } from 'valgen';
 
 describe('iif', () => {

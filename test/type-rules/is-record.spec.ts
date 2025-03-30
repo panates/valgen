@@ -1,10 +1,11 @@
+import { expect } from 'expect';
 import { isAny, isString, vg } from 'valgen';
 
 describe('isRecord', () => {
   it('should validate value is an object', () => {
     const validate = vg.isRecord(isString, isAny);
-    expect(() => validate(null)).toThrow('must be an object');
-    expect(() => validate(undefined)).toThrow('must be an object');
+    expect(() => validate(null as any)).toThrow('must be an object');
+    expect(() => validate(undefined as any)).toThrow('must be an object');
   });
 
   it('should validates keys according to given codec', () => {

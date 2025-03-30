@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isUndefined } from 'valgen';
 
 describe('isUndefined', () => {

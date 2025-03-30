@@ -1,13 +1,14 @@
+import { expect } from 'expect';
 import { isBoolean, isInteger, isNumber, isString, vg } from 'valgen';
 
 describe('isTuple', () => {
   it('should validate value is an array', () => {
     expect(vg.isTuple([isBoolean])([true])).toStrictEqual([true]);
     expect(vg.isTuple([isInteger])([1])).toStrictEqual([1]);
-    expect(() => vg.isTuple([isBoolean])(undefined)).toThrow(
+    expect(() => vg.isTuple([isBoolean])(undefined as any)).toThrow(
       'Value must be a tuple',
     );
-    expect(() => vg.isTuple([isBoolean])(null)).toThrow(
+    expect(() => vg.isTuple([isBoolean])(null as any)).toThrow(
       'Value must be a tuple',
     );
     expect(() => vg.isTuple([isBoolean])(5 as any)).toThrow(

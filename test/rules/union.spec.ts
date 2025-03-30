@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isNull, isNumber, vg } from 'valgen';
 
 describe('union', () => {

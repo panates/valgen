@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import {
   isNumber,
   kOptions,
@@ -8,7 +9,7 @@ import {
 
 describe('validator', () => {
   it('should create new validator', () => {
-    const options: ValidationOptions = { onFail: () => undefined };
+    const options: ValidationOptions = { onFail: () => '' };
     const val = validator('validator1', () => 1, options);
     expect(val).toBeInstanceOf(Function);
     expect(val[kValidatorFn]).toBeInstanceOf(Function);

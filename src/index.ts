@@ -2,7 +2,7 @@ import * as vg from './rules/index.js';
 
 export * from './constants.js';
 export * from './core/index.js';
-export { IsObject } from './rules/type-rules/is-object.js';
+export type { IsObject } from './rules/type-rules/is-object.js';
 
 const isAny = vg.isAny();
 const isArray = vg.isArray();

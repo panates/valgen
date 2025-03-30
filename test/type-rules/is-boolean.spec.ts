@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isBoolean } from 'valgen';
 
 describe('isBoolean', () => {

@@ -1,8 +1,10 @@
+import { expect } from 'expect';
 import { isObjectId } from 'valgen';
 
 describe('isObjectId', () => {
   const idString: string = '64897efbdf01a60ac1b678ea';
   const idArray: Uint8Array = Uint8Array.from(
+    // @ts-ignore
     idString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)),
   );
   const idObject: any = {

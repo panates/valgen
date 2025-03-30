@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isBigint } from 'valgen';
 
 describe('isBigint', () => {

@@ -1,3 +1,4 @@
+import { expect } from 'expect';
 import { isArray, isBoolean, isInteger, isString, vg } from 'valgen';
 
 describe('isArray', () => {
