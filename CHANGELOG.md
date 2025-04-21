@@ -1,6 +1,24 @@
 ## Changelog
 
-### [v5.14.0](https://github.com/panates/valgen/compare/v5.13.4...v5.14.0) - 
+### [v5.14.1](https://github.com/panates/valgen/compare/v5.14.0...v5.14.1) - 
+
+#### 🪲 Fixes
+
+- fix: Fixed validation issue while using silent mode @Eray Hanoğlu 
+
+#### 💬 General Changes
+
+- dev: Moved from nyc to c8 @Eray Hanoğlu 
+- ci: Added workflows @Eray Hanoğlu 
+- dev: Fixed nycrc file @Eray Hanoğlu 
+- dev: Added publishConfig @Eray Hanoğlu 
+- dev: Fixed nycrc file @Eray Hanoğlu 
+- dev: Fixed paths @Eray Hanoğlu 
+- dev: Fixed nycrc file @Eray Hanoğlu 
+- dev: Fixed nycrc file @Eray Hanoğlu 
+- dev: Added qc script @Eray Hanoğlu 
+
+### [v5.14.0](https://github.com/panates/valgen/compare/v5.13.4...v5.14.0) -  30 March 2025 
 
 #### 🛠 Refactoring and Updates
 

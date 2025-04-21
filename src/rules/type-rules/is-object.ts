@@ -91,7 +91,7 @@ export function isObject<T extends object = object, I = object | string>(
         return;
       }
 
-      const keys = [...Object.keys(output), ...schemaKeys];
+      const keys = Array.from(new Set([...Object.keys(output), ...schemaKeys]));
       const l = keys.length;
       let i = 0;
       let inputKey: string;
@@ -148,8 +148,6 @@ export function isObject<T extends object = object, I = object | string>(
           out[propertyOptions[schemaKey]?.as || schemaKey] = v;
         }
       }
-      if (context.errors.length) return undefined;
-
       if (ctor && ctor[postValidation]) {
         ctor[postValidation](out, context, _this);
         return out;

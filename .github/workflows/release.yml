@@ -13,7 +13,7 @@ on:
     branches:
       - main
     paths:
-      - 'packages/*/package.json'
+      - './package.json'
 
 # Only one run at a time
 concurrency:
