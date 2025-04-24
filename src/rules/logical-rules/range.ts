@@ -5,8 +5,9 @@ import {
   type Validator,
   validator,
 } from '../../core/index.js';
+import { allOf } from '../utility-rules/all-of.js';
 import { getLength } from '../utility-rules/get-length.js';
-import { allOf, pipe } from '../utility-rules/pipe.js';
+import { pipe } from '../utility-rules/pipe.js';
 
 type RangeInput = number | bigint | Date | string;
 
