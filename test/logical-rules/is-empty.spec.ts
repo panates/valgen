@@ -1,5 +1,5 @@
 import { expect } from 'expect';
-import { isEmpty } from 'valgen';
+import { isEmpty } from '../../src/index.js';
 
 describe('isEmpty', () => {
   it('should validate value is an empty string', () => {
