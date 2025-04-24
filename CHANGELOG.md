@@ -1,6 +1,18 @@
 ## Changelog
 
-### [v5.14.1](https://github.com/panates/valgen/compare/v5.14.0...v5.14.1) - 
+### [v5.15.0](https://github.com/panates/valgen/compare/v5.14.1...v5.15.0) - 
+
+#### 🚀 New Features
+
+- feat: Added discriminator validation to oneOf rule @Eray Hanoğlu 
+- feat: Added isEqual, isNotEqual rules @Eray Hanoğlu 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Fixes and improvements @Eray Hanoğlu 
+- refactor: Removed union rule. Use oneOf rule instead @Eray Hanoğlu 
+
+### [v5.14.1](https://github.com/panates/valgen/compare/v5.14.0...v5.14.1) -  21 April 2025 
 
 #### 🪲 Fixes
 
