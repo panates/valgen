@@ -14,7 +14,7 @@ describe('isArray', () => {
   it('should validate items according to item rule', () => {
     expect(vg.isArray(isInteger)([1, 2])).toStrictEqual([1, 2]);
     expect(() => vg.isArray(isInteger)(['1', '2'])).toThrow(
-      'Item at index [0] is not a valid. Value must be a valid integer value',
+      'Item at index [0] is not valid. Value must be a valid integer value',
     );
   });
 

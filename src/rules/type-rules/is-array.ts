@@ -45,7 +45,7 @@ export function isArray<T, I>(
           v,
           {
             onFail(issue: ErrorIssue) {
-              return `Item at index [${i}] is not a valid. ` + issue.message;
+              return `Item at index [${i}] is not valid. ` + issue.message;
             },
           },
           itemContext,
