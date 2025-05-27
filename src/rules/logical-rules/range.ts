@@ -64,31 +64,13 @@ export function range<T extends RangeInput>(
  * Checks if value is grater than "minValue"
  * @validator iGt
  */
-export function isGt(
-  minValue: number,
-  options?: ValidationOptions,
-): Validator<number, number>;
-export function isGt(
-  minValue: bigint,
-  options?: ValidationOptions,
-): Validator<bigint, bigint | number>;
-export function isGt(
-  minValue: Date,
-  options?: ValidationOptions,
-): Validator<Date, Date>;
-export function isGt(
-  minValue: string,
-  options?: ValidationOptions & {
-    caseInsensitive?: boolean;
-  },
-): Validator<string, string>;
-export function isGt(
-  minValue: any,
+export function isGt<T extends RangeInput>(
+  minValue: T,
   options?: ValidationOptions & { caseInsensitive?: boolean },
 ): Validator {
-  return validator<RangeInput, RangeInput>(
+  return validator<T, T>(
     'isGt',
-    (input: RangeInput, context: Context, _this): Nullish<RangeInput> => {
+    (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof minValue === 'number' || typeof minValue === 'bigint') &&
         (typeof input === 'number' || typeof input === 'bigint') &&
@@ -128,31 +110,13 @@ export function isGt(
  * Checks if value is grater than or equal to minValue
  * @validator isGte
  */
-export function isGte(
-  minValue: number,
-  options?: ValidationOptions,
-): Validator<number, number>;
-export function isGte(
-  minValue: bigint,
-  options?: ValidationOptions,
-): Validator<bigint, bigint | number>;
-export function isGte(
-  minValue: Date,
-  options?: ValidationOptions,
-): Validator<Date, Date>;
-export function isGte(
-  minValue: string,
-  options?: ValidationOptions & {
-    caseInsensitive?: boolean;
-  },
-): Validator<string, string>;
-export function isGte(
-  minValue: any,
+export function isGte<T extends RangeInput>(
+  minValue: T,
   options?: ValidationOptions & { caseInsensitive?: boolean },
-): Validator {
-  return validator<RangeInput, RangeInput>(
+): Validator<T, T> {
+  return validator<T, T>(
     'isGte',
-    (input: unknown, context: Context, _this): Nullish<RangeInput> => {
+    (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof minValue === 'number' || typeof minValue === 'bigint') &&
         (typeof input === 'number' || typeof input === 'bigint') &&
@@ -192,31 +156,13 @@ export function isGte(
  * Checks if number value is lover than maxValue
  * @validator isLt
  */
-export function isLt(
-  maxValue: number,
-  options?: ValidationOptions,
-): Validator<number, number>;
-export function isLt(
-  maxValue: bigint,
-  options?: ValidationOptions,
-): Validator<bigint, bigint | number>;
-export function isLt(
-  maxValue: Date,
-  options?: ValidationOptions,
-): Validator<Date, Date>;
-export function isLt(
-  maxValue: string,
-  options?: ValidationOptions & {
-    caseInsensitive?: boolean;
-  },
-): Validator<string, string>;
-export function isLt(
-  maxValue: any,
+export function isLt<T extends RangeInput>(
+  maxValue: T,
   options?: ValidationOptions & { caseInsensitive?: boolean },
 ): Validator {
-  return validator<RangeInput, RangeInput>(
+  return validator<T, T>(
     'isLt',
-    (input: unknown, context: Context, _this): Nullish<RangeInput> => {
+    (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof maxValue === 'number' || typeof maxValue === 'bigint') &&
         (typeof input === 'number' || typeof input === 'bigint') &&
@@ -256,31 +202,13 @@ export function isLt(
  * Checks if value is lover than or equal to maxValue
  * @validator isLte
  */
-export function isLte(
-  maxValue: number,
-  options?: ValidationOptions,
-): Validator<number, number>;
-export function isLte(
-  maxValue: bigint,
-  options?: ValidationOptions,
-): Validator<bigint, bigint | number>;
-export function isLte(
-  maxValue: Date,
-  options?: ValidationOptions,
-): Validator<Date, Date>;
-export function isLte(
-  maxValue: string,
-  options?: ValidationOptions & {
-    caseInsensitive?: boolean;
-  },
-): Validator<string, string>;
-export function isLte(
-  maxValue: any,
+export function isLte<T extends RangeInput>(
+  maxValue: T,
   options?: ValidationOptions & { caseInsensitive?: boolean },
 ): Validator {
-  return validator<RangeInput, RangeInput>(
+  return validator<T, T>(
     'isLte',
-    (input: unknown, context: Context, _this): Nullish<RangeInput> => {
+    (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof maxValue === 'number' || typeof maxValue === 'bigint') &&
         (typeof input === 'number' || typeof input === 'bigint') &&
