@@ -1,6 +1,20 @@
 ## Changelog
 
-### [v5.15.0](https://github.com/panates/valgen/compare/v5.14.1...v5.15.0) - 
+### [v5.15.1](https://github.com/panates/valgen/compare/v5.15.0...v5.15.1) - 
+
+#### 🚀 New Features
+
+- feat: Added isTime rule @Eray Hanoğlu 
+
+#### 🪲 Fixes
+
+- fix: Error message fix @Eray Hanoğlu 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Removed path filter @Eray Hanoğlu 
+
+### [v5.15.0](https://github.com/panates/valgen/compare/v5.14.1...v5.15.0) -  24 April 2025 
 
 #### 🚀 New Features
 
