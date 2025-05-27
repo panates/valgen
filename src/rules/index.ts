@@ -21,6 +21,7 @@ export * from './format-rules/is-mobile-phone.js';
 export * from './format-rules/is-object-id.js';
 export * from './format-rules/is-passport-number.js';
 export * from './format-rules/is-port.js';
+export * from './format-rules/is-time.js';
 export * from './format-rules/is-url.js';
 export * from './format-rules/is-uuid.js';
 export * from './format-rules/is-vat-number.js';
