@@ -11,8 +11,8 @@ const DATE_PATTERN =
   /^(\d{4})(?:-(0[0-9]|1[0-2]))?(?:-([0-2][0-9]|3[0-1]))?(?:[T ](([0-1][0-9]|2[0-4]):([0-5][0-9])(?::([0-5][0-9]))?(?:\.(\d{0,3}))?)?((?:[+-](0[0-9]|1[0-2])(?::(\d{2}))?)|Z)?)?$/;
 
 /**
- * Validates if value is instance of "Date".
- * Converts input value to Date if coerce option is set to 'true'.
+ * Validates if value is an instance of "Date".
+ * Converts input value to Date if a coerce option is set to 'true'.
  * @validator isDate
  */
 export function isDate(options?: isDate.Options) {
