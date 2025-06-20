@@ -7,16 +7,17 @@ import {
 } from '../../core/index.js';
 
 /**
- * Makes sub-rule required
+ * Check if value is not nullish before calling nested rule
  * @validator required
  */
 export function required<T, I>(
   nested: Validator<T, I>,
-  options?: ValidationOptions,
+  options?: RequiredValidatorOptions,
 ) {
   return validator<Nullish<T>, I>(
     'required',
     (input: I, context: Context, _this): Nullish<T> => {
+      if (input == null) input = options?.default;
       if (input == null) {
         context.fail(_this, `Value required`, input);
         return;
@@ -25,4 +26,8 @@ export function required<T, I>(
     },
     options,
   );
+}
+
+export interface RequiredValidatorOptions extends ValidationOptions {
+  default?: any;
 }

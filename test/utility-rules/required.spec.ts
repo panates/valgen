@@ -8,4 +8,11 @@ describe('isRequired', () => {
     expect(() => vg.required(isString)(undefined)).toThrow('Value required');
     expect(() => vg.required(isString)(null)).toThrow('Value required');
   });
+
+  it('should set default value', () => {
+    expect(vg.required(isNumber, { default: 0 })(undefined)).toStrictEqual(0);
+    expect(
+      vg.required(isString, { default: 'hello world' })(undefined),
+    ).toStrictEqual('hello world');
+  });
 });

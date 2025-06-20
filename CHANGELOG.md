@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.15.2](https://github.com/panates/valgen/compare/v5.15.1...v5.15.2) - 
+### [v5.15.3](https://github.com/panates/valgen/compare/v5.15.2...v5.15.3) - 
+
+#### 🚀 New Features
+
+- feat: Adde default value option to "required" rule @Eray Hanoğlu 
+
+### [v5.15.2](https://github.com/panates/valgen/compare/v5.15.1...v5.15.2) -  27 May 2025 
 
 #### 🛠 Refactoring and Updates
 

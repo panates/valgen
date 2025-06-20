@@ -1,7 +1,7 @@
 import { expect } from 'expect';
 import { vg } from 'valgen';
 
-describe('isRegExp', () => {
+describe('matches', () => {
   it('should return undefined if nullish', () => {
     expect(vg.matches('\\d+')(null as any)).toStrictEqual(undefined);
     expect(vg.matches('\\d+')(undefined as any)).toStrictEqual(undefined);
