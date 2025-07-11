@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.15.3](https://github.com/panates/valgen/compare/v5.15.2...v5.15.3) - 
+### [v5.15.4](https://github.com/panates/valgen/compare/v5.15.3...v5.15.4) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Exported default isTime rule @Eray Hanoğlu 
+
+### [v5.15.3](https://github.com/panates/valgen/compare/v5.15.2...v5.15.3) -  20 June 2025 
 
 #### 🚀 New Features
 
