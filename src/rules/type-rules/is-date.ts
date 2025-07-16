@@ -1,4 +1,4 @@
-import { formatISO, parseISO } from 'date-fns';
+import * as dateFns from 'date-fns';
 import { type Nullish } from 'ts-gems';
 import {
   type Context,
@@ -6,39 +6,52 @@ import {
   validator,
 } from '../../core/index.js';
 
-// noinspection RegExpUnnecessaryNonCapturingGroup
-const DATE_PATTERN =
-  /^(\d{4})(?:-(0[0-9]|1[0-2]))?(?:-([0-2][0-9]|3[0-1]))?(?:[T ](([0-1][0-9]|2[0-4]):([0-5][0-9])(?::([0-5][0-9]))?(?:\.(\d{0,3}))?)?((?:[+-](0[0-9]|1[0-2])(?::(\d{2}))?)|Z)?)?$/;
+export interface IsDateOptions extends ValidationOptions {
+  /**
+   * Format(s) to be used for parsing
+   */
+  format?: string | string[];
+  /**
+   * Tries to parse date against all ISO 8601 formats. Default "true" if no format is given
+   */
+  parseISO?: boolean;
+  precision?: 'year' | 'month' | 'date' | 'hours' | 'minutes' | 'seconds';
+}
 
 /**
  * Validates if value is an instance of "Date".
  * Converts input value to Date if a coerce option is set to 'true'.
  * @validator isDate
  */
-export function isDate(options?: isDate.Options) {
+export function isDate(options?: IsDateOptions) {
   const precision = options?.precision;
+  const parser = dateParser(options);
   return validator<Date, Date | number | string>(
     'isDate',
-    (input: unknown, context: Context, _this): Nullish<Date> => {
+    (input: any, context: Context, _this) => {
       const coerce = options?.coerce || context.coerce;
-      let d: Date | undefined;
-      if (input instanceof Date) d = input;
-      else if (input != null && coerce) {
-        if (typeof input === 'string' && coerce) {
-          d = parseISO(input);
-        } else if (typeof input === 'number') d = new Date(input);
-      }
-      if (d && !isNaN(d.getTime())) {
-        if (precision === 'year') {
-          d.setHours(0, 0, 0, 0);
-          d.setMonth(0, 1);
+      const d = parser(input);
+      if (d) {
+        if (coerce) {
+          if (precision) {
+            switch (precision) {
+              case 'year':
+                d.setHours(0, 0, 0, 0);
+                d.setMonth(0, 1);
+                break;
+              case 'month':
+                d.setHours(0, 0, 0, 0);
+                d.setDate(1);
+                break;
+            }
+            if (precision === 'date') d.setHours(0, 0, 0, 0);
+            if (precision === 'hours') d.setMinutes(0, 0, 0);
+            if (precision === 'minutes') d.setSeconds(0, 0);
+            if (precision === 'seconds') d.setMilliseconds(0);
+          }
+          return d;
         }
-        if (precision === 'month') {
-          d.setHours(0, 0, 0, 0);
-          d.setDate(1);
-        }
-        if (precision === 'date') d.setHours(0, 0, 0, 0);
-        return d;
+        return input;
       }
       context.fail(_this, `Value must be a valid date`, input, {
         ...options,
@@ -49,54 +62,35 @@ export function isDate(options?: isDate.Options) {
 }
 
 export interface IsDateStringOptions extends ValidationOptions {
-  precision?: 'year' | 'month' | 'date' | 'time';
-  trim?: 'date' | 'time';
+  /**
+   * Format(s) to be tested. If multiple formats are given, the first one will be used to coerce operation
+   */
+  format?: string | string[];
+  /**
+   * Tries to parse date against all ISO 8601 formats. Default "true" if no format is given
+   */
+  parseISO?: boolean;
 }
 
 /**
  * Validates if value is DFS (date formatted string).
- * Converts input value to DFS if coerce option is set to 'true'.
+ * Converts input value to DFS if the "coerce" option is set to 'true'.
  * @validator isDateString
  */
 export function isDateString(options?: IsDateStringOptions) {
-  const precision = options?.precision;
-  const trim = options?.trim;
+  const format = Array.isArray(options?.format)
+    ? options.format[0]
+    : options?.format;
+  const parser = dateParser(options);
   return validator<string, Date | number | string>(
     'isDateString',
     (input: any, context: Context, _this): Nullish<string> => {
       const coerce = options?.coerce || context.coerce;
-      if (typeof input === 'string') {
-        const m = DATE_PATTERN.exec(input);
-        if (m) {
-          const d = parseISO(input);
-          if (d && !isNaN(d.getTime())) {
-            if (
-              !precision ||
-              precision === 'year' ||
-              (precision === 'month' && m[2]) ||
-              (precision === 'date' && m[2] && m[3]) ||
-              (precision === 'time' && m[2] && m[3] && m[4])
-            ) {
-              if (!coerce) return input;
-              let s = m[1];
-              if (m[2]) s += '-' + m[2];
-              else return s;
-              if (m[3]) s += '-' + m[3];
-              else return s;
-              if (trim === 'date' || !m[4]) return s;
-              s += 'T' + m[4].substring(0, 8);
-              if (trim === 'time') return s;
-              if (m[9]) s += m[9];
-              return s;
-            }
-          }
-        }
-      } else if (input instanceof Date) {
-        return trim === 'date'
-          ? formatISO(input, { representation: 'date' })
-          : formatISO(input).substring(0, 19);
+      const d = parser(input);
+      if (d) {
+        if (!coerce || typeof input === 'string') return input;
+        return dateFns.format(d!, format || "yyyy-MM-dd'T'HH:mm:ss.SSS");
       }
-
       context.fail(_this, `Value must be a valid date string`, input, {
         ...options,
       });
@@ -105,8 +99,27 @@ export function isDateString(options?: IsDateStringOptions) {
   );
 }
 
-export namespace isDate {
-  export interface Options extends ValidationOptions {
-    precision?: 'year' | 'month' | 'date' | 'time';
-  }
+function dateParser(options?: IsDateStringOptions) {
+  const formats = options?.format
+    ? Array.isArray(options.format)
+      ? options.format
+      : [options.format]
+    : [];
+  const refDate = new Date();
+  const parseISO = options?.parseISO ?? formats.length === 0;
+  return (input: any): Nullish<Date> => {
+    let d: Date | undefined;
+    if (typeof input === 'number') {
+      return new Date(input);
+    }
+    if (typeof input === 'string') {
+      for (let i = 0; i < formats.length; i++) {
+        const format = formats[i];
+        d = dateFns.parse(input, format, refDate);
+        if (dateFns.isValid(d)) return d;
+      }
+      if (!d && parseISO) d = dateFns.parseISO(input);
+      if (dateFns.isValid(d)) return d;
+    } else if (input instanceof Date && dateFns.isValid(input)) return input;
+  };
 }
