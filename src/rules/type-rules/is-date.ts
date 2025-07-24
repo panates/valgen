@@ -125,13 +125,13 @@ function coerceDateString(
   if (input instanceof Date || typeof input === 'number') {
     const d = typeof input === 'number' ? new Date(input) : input;
     dateParts = [
-      padString(d.getFullYear(), 4),
-      padString(d.getMonth() + 1, 2),
-      padString(d.getDate(), 2),
-      padString(d.getHours(), 2),
-      padString(d.getMinutes(), 2),
-      padString(d.getSeconds(), 2),
-      String(d.getMilliseconds()),
+      String(d.getFullYear()).padStart(4, '0'),
+      String(d.getMonth() + 1).padStart(2, '0'),
+      String(d.getDate()).padStart(2, '0'),
+      String(d.getHours()).padStart(2, '0'),
+      String(d.getMinutes()).padStart(2, '0'),
+      String(d.getSeconds()).padStart(2, '0'),
+      String(d.getMilliseconds()).padStart(3, '0'),
     ];
   } else if (typeof input === 'string') {
     const d = datefns.parseISO(input);
@@ -176,31 +176,6 @@ const PRECISION_INDEX: Record<Precision, number> = {
   ms: 7,
   tz: 8,
 };
-
-/**
- * Pads a string to the specified length
- * @param value - The string to pad
- * @param len - The desired total length of the resulting string
- * @param padChar - The character to pad with (defaults to '0')
- * @returns The padded string
- */
-function padString(
-  value: string | number,
-  len: number,
-  padChar: string = '0',
-): string {
-  // Convert value to string if it's a number
-  const str = String(value);
-
-  // Return original string if it's already longer or equal to target length
-  if (str.length >= len) {
-    return str;
-  }
-
-  // Create padding and concatenate with original string
-  const padding = padChar.repeat(len - str.length);
-  return padding + str;
-}
 
 function setPrecision(d: Date, precision?: string) {
   switch (precision) {

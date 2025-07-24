@@ -1,13 +1,12 @@
 {
   "name": "valgen",
   "description": "Fast runtime type validator, converter and io (encoding/decoding) library",
-  "version": "5.17.0",
+  "version": "5.17.1",
   "author": "Panates",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "@browsery/validator": "^13.12.0-r3",
-    "@js-temporal/polyfill": "^0.5.1",
     "date-fns": "^4.1.0",
     "reflect-metadata": "^0.2.2",
     "ts-gems": "^3.11.3",
