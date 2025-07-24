@@ -14,7 +14,7 @@ export function isInteger(options?: ValidationOptions) {
   return validator<number, unknown>(
     'isInteger',
     (input: unknown, context: Context, _this): Nullish<number> => {
-      const coerce = options?.coerce || context.coerce;
+      const coerce = options?.coerce ?? context.coerce;
       let output: any = input;
       if (output != null && typeof output !== 'number' && coerce) {
         if (typeof input === 'string') output = parseFloat(input);

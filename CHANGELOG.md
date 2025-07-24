@@ -1,6 +1,22 @@
 ## Changelog
 
-### [v5.15.4](https://github.com/panates/valgen/compare/v5.15.3...v5.15.4) - 
+### [v5.17.0](https://github.com/panates/valgen/compare/v5.16.0...v5.17.0) - 
+
+#### 🪲 Fixes
+
+- refactor: Refactored isDate and isDateString validation rules @Eray Hanoğlu 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Refactored isDate and isDateString validation rules @Eray Hanoğlu 
+
+### [v5.16.0](https://github.com/panates/valgen/compare/v5.15.4...v5.16.0) -  16 July 2025 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Refactored isDate and isDateString validation rules @Eray Hanoğlu 
+
+### [v5.15.4](https://github.com/panates/valgen/compare/v5.15.3...v5.15.4) -  11 July 2025 
 
 #### 🛠 Refactoring and Updates
 

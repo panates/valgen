@@ -19,7 +19,7 @@ export function isArray<T, I>(
   return validator<T[], I[] | I>(
     'isArray',
     (input: unknown, context: Context, _this): Nullish<T[]> => {
-      const coerce = options?.coerce || context.coerce;
+      const coerce = options?.coerce ?? context.coerce;
       let output: any = input;
       if (output != null && coerce && !Array.isArray(output)) output = [output];
       if (!Array.isArray(output)) {

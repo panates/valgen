@@ -14,7 +14,7 @@ export function isBigint(options?: ValidationOptions) {
   return validator<bigint, unknown>(
     'isBigint',
     (input: unknown, context: Context, _this): Nullish<bigint> => {
-      const coerce = options?.coerce || context.coerce;
+      const coerce = options?.coerce ?? context.coerce;
       if (typeof input === 'bigint') return input;
       if (
         (typeof input === 'number' && !isNaN(input)) ||

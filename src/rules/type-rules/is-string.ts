@@ -14,7 +14,7 @@ export function isString(options?: ValidationOptions) {
   return validator<string, unknown>(
     'isString',
     (input: any, context: Context, _this): Nullish<string> => {
-      const coerce = options?.coerce || context.coerce;
+      const coerce = options?.coerce ?? context.coerce;
       let output: any = input;
       if (output != null && typeof output !== 'string' && coerce) {
         if (typeof output === 'object') {
