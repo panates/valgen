@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.17.0](https://github.com/panates/valgen/compare/v5.16.0...v5.17.0) - 
+### [v5.17.1](https://github.com/panates/valgen/compare/v5.17.0...v5.17.1) - 
+
+#### 🪲 Fixes
+
+- fix: isDate milliseconds padding @Eray Hanoğlu 
+
+### [v5.17.0](https://github.com/panates/valgen/compare/v5.16.0...v5.17.0) -  24 July 2025 
 
 #### 🪲 Fixes
 
