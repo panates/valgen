@@ -4,12 +4,13 @@ import { isDate, isDateString, vg } from 'valgen';
 describe('isDate', () => {
   it('should validate value is an instance of Date', () => {
     expect(isDate(new Date(1))).toEqual(new Date(1));
-    expect(() => isDate(undefined as any)).toThrow(
-      'Value must be a valid date',
-    );
-    expect(() => isDate(null as any)).toThrow('Value must be a valid date');
+    expect(() => isDate(undefined as any)).toThrow('Value is not valid date');
+    expect(() => isDate(null as any)).toThrow('Value is not valid date');
     expect(() => isDate(new Date('invalid'))).toThrow(
-      'Value must be a valid date',
+      'Value is not valid date',
+    );
+    expect(() => isDate('2020-01-10T08:30:15Z')).toThrow(
+      'Value is not valid date',
     );
   });
 
@@ -31,43 +32,20 @@ describe('isDate', () => {
 
   it('should apply precision', () => {
     const d = '2020-05-10T08:30:15.123';
-    expect(vg.isDate({ precision: 'year', coerce: true })(d)).toEqual(
+    expect(vg.isDate({ trim: 'year', coerce: true })(d)).toEqual(
       new Date('2020-01-01T00:00:00'),
     );
-    expect(vg.isDate({ precision: 'month', coerce: true })(d)).toEqual(
+    expect(vg.isDate({ trim: 'month', coerce: true })(d)).toEqual(
       new Date('2020-05-01T00:00:00'),
     );
-    expect(vg.isDate({ precision: 'date', coerce: true })(d)).toEqual(
+    expect(vg.isDate({ trim: 'day', coerce: true })(d)).toEqual(
       new Date('2020-05-10T00:00:00'),
     );
-    expect(vg.isDate({ precision: 'hours', coerce: true })(d)).toEqual(
+    expect(vg.isDate({ trim: 'hours', coerce: true })(d)).toEqual(
       new Date('2020-05-10T08:00:00'),
     );
-    expect(vg.isDate({ precision: 'minutes', coerce: true })(d)).toEqual(
+    expect(vg.isDate({ trim: 'minutes', coerce: true })(d)).toEqual(
       new Date('2020-05-10T08:30:00'),
-    );
-  });
-
-  it('should parse string using given formats', () => {
-    const d = vg.isDate({
-      format: 'dd_MM_yyyy',
-    })('12_03_2020', { coerce: true });
-    expect(d).toEqual(new Date('2020-03-12T00:00:00'));
-  });
-
-  it('should validate string format', () => {
-    expect(isDate(1, { coerce: true })).toEqual(new Date(1));
-    expect(isDate('2020-01-10T08:30:15Z', { coerce: true })).toEqual(
-      new Date('2020-01-10T08:30:15Z'),
-    );
-    expect(isDate('2020-01-10T08:30:15', { coerce: true })).toEqual(
-      new Date('2020-01-10T08:30:15'),
-    );
-    expect(isDate('2020-01-10', { coerce: true })).toEqual(
-      new Date('2020-01-10T00:00:00'),
-    );
-    expect(isDate('2020', { coerce: true })).toEqual(
-      new Date('2020-01-01T00:00:00'),
     );
   });
 });
@@ -78,38 +56,69 @@ describe('isDateString', () => {
       '2020-01-10T08:30:15Z',
     );
     expect(isDateString('2020-01-10T08:30:15')).toEqual('2020-01-10T08:30:15');
+    expect(isDateString('2020-01-10T08:30:15')).toEqual('2020-01-10T08:30:15');
     expect(isDateString('2020-01-10T08:30')).toEqual('2020-01-10T08:30');
     expect(isDateString('2020-01-10 08:30')).toEqual('2020-01-10 08:30');
-    expect(isDateString('2020-01-10')).toEqual('2020-01-10');
-    expect(isDateString('2020-01')).toEqual('2020-01');
-    expect(isDateString('2020', { coerce: true })).toEqual('2020');
+
+    expect(() => isDateString('2020-01-10T08')).toThrow(
+      'Value is not valid date string',
+    );
+    expect(() => isDateString('2020-01-10')).toThrow(
+      'Value is not valid date string',
+    );
     expect(() => isDateString(undefined as any)).toThrow(
-      'Value must be a valid date string',
+      'Value is not valid date string',
     );
     expect(() => isDateString(null as any)).toThrow(
-      'Value must be a valid date string',
+      'Value is not valid date string',
     );
     expect(() => isDateString('invalid')).toThrow(
-      'Value must be a valid date string',
+      'Value is not valid date string',
     );
   });
 
-  it('should validate date string using given formats', () => {
-    expect(vg.isDateString({ format: 'dd_MM_yyyy' })('12_03_2020')).toEqual(
-      '12_03_2020',
+  it('should validate date string with precisionMin', () => {
+    expect(vg.isDateString({ precisionMin: 'day' })('2020-11-01')).toEqual(
+      '2020-11-01',
     );
-    expect(
-      vg.isDateString({ format: ['dd_MM_yyyy', 'dd_MM_yyyy HH_mm'] })(
-        '12_03_2020 13_40',
-      ),
-    ).toEqual('12_03_2020 13_40');
+    expect(() => vg.isDateString({ precisionMin: 'day' })('2020')).toThrow(
+      'Value is not valid date string with required precision',
+    );
+
+    expect(vg.isDateString({ precisionMin: 'month' })('2020-11')).toEqual(
+      '2020-11',
+    );
+    expect(() => vg.isDateString({ precisionMin: 'month' })('2020')).toThrow(
+      'Value is not valid date string with required precision',
+    );
   });
 
-  it('should coerce date instance to date string', () => {
+  it('should validate date string with precisionMax', () => {
+    expect(vg.isDateString({ precisionMax: 'day' })('2020-11-01')).toEqual(
+      '2020-11-01',
+    );
+    expect(() =>
+      vg.isDateString({ precisionMax: 'day' })('2020-01-01T13:30'),
+    ).toThrow('Value is not valid date string with required precision');
+  });
+
+  it('should coerce to date with given precision', () => {
     expect(
-      vg.isDateString({ format: 'dd_MM_yyyy', coerce: true })(
-        new Date('2020-03-12T10:40:52'),
-      ),
-    ).toEqual('12_03_2020');
+      vg.isDateString({
+        coerce: true,
+        trim: 'min',
+        precisionMin: 'yr',
+      })('2020-11-01'),
+    ).toEqual('2020-11-01T00:00');
+    expect(
+      vg.isDateString({
+        coerce: true,
+        trim: 'ms',
+        precisionMin: 'yr',
+      })(new Date('2020-11-01T00:00:00.1')),
+    ).toEqual('2020-11-01T00:00:00.100');
+    expect(
+      vg.isDateString({ coerce: true, precisionMin: 'yr' })('2020-11-01'),
+    ).toEqual('2020-11-01T00:00:00');
   });
 });

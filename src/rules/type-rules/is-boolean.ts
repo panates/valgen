@@ -17,7 +17,7 @@ export function isBoolean(options?: ValidationOptions) {
   return validator<boolean | undefined, unknown>(
     'isBoolean',
     (input: unknown, context: Context, _this): Nullish<boolean> => {
-      const coerce = options?.coerce || context.coerce;
+      const coerce = options?.coerce ?? context.coerce;
       let output: any = input;
       if (output != null && typeof output !== 'boolean' && coerce) {
         if (typeof input === 'string') {
