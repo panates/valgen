@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.17.1](https://github.com/panates/valgen/compare/v5.17.0...v5.17.1) - 
+### [v5.17.2](https://github.com/panates/valgen/compare/v5.17.1...v5.17.2) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Minor date rule optimization @Eray Hanoğlu 
+
+### [v5.17.1](https://github.com/panates/valgen/compare/v5.17.0...v5.17.1) -  24 July 2025 
 
 #### 🪲 Fixes
 
