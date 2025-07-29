@@ -131,8 +131,9 @@ function coerceDateString(
       String(d.getHours()).padStart(2, '0'),
       String(d.getMinutes()).padStart(2, '0'),
       String(d.getSeconds()).padStart(2, '0'),
-      String(d.getMilliseconds()).padStart(3, '0'),
     ];
+    if (d.getMilliseconds() > 0)
+      dateParts.push(String(d.getMilliseconds()).padStart(3, '0'));
   } else if (typeof input === 'string') {
     const d = datefns.parseISO(input);
     const m = DATE_PATTERN.exec(input);

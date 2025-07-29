@@ -1,7 +1,7 @@
 {
   "name": "valgen",
   "description": "Fast runtime type validator, converter and io (encoding/decoding) library",
-  "version": "5.17.1",
+  "version": "5.17.2",
   "author": "Panates",
   "license": "MIT",
   "private": true,
@@ -17,7 +17,7 @@
     "@panates/eslint-config-ts": "^2.0.6",
     "@panates/tsconfig": "^2.0.6",
     "@swc-node/register": "^1.10.10",
-    "@swc/core": "^1.13.2",
+    "@swc/core": "^1.13.3",
     "@swc/helpers": "^0.5.17",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.1.0",
