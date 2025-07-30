@@ -112,6 +112,7 @@ export function isDateString(options?: IsDateStringOptions) {
 // noinspection RegExpUnnecessaryNonCapturingGroup
 const DATE_PATTERN =
   /^(\d{4})(?:-(0[0-9]|1[0-2]))?(?:-([0-2][0-9]|3[0-1]))?(?:[T ](?:([0-1][0-9]|2[0-4]):([0-5][0-9])(?::([0-5][0-9]))?(?:\.(\d{0,3}))?)?((?:[+-](0[0-9]|1[0-2])(?::(\d{2}))?)|Z)?)?$/;
+const DATE_PATTERN2 = /^(\d{4,14})(?:\.(\d{1,3}))?$/;
 
 function coerceDateString(
   input: any,
@@ -136,10 +137,23 @@ function coerceDateString(
       dateParts.push(String(d.getMilliseconds()).padStart(3, '0'));
   } else if (typeof input === 'string') {
     const d = datefns.parseISO(input);
-    const m = DATE_PATTERN.exec(input);
+    let m = DATE_PATTERN.exec(input);
     if (m && datefns.isValid(d)) {
       m.shift();
       dateParts = m;
+    } else {
+      m = DATE_PATTERN2.exec(input);
+      if (m) {
+        dateParts = [
+          m[1].substring(0, 4),
+          m[1].substring(4, 6),
+          m[1].substring(6, 8),
+          m[1].substring(8, 10),
+          m[1].substring(10, 12),
+          m[1].substring(12, 14),
+          m[2],
+        ];
+      }
     }
   }
   if (!dateParts) return;
