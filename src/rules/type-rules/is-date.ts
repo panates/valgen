@@ -166,7 +166,7 @@ function coerceDateString(
   if (precisionIndex > 3) value += 'T' + (dateParts[3] || '00');
   if (precisionIndex > 4) value += ':' + (dateParts[4] || '00');
   if (precisionIndex > 5) value += ':' + (dateParts[5] || '00');
-  if (precisionIndex > 6) value += dateParts[6] ? '.' + dateParts[6] : '';
+  if (precisionIndex > 5) value += dateParts[6] ? '.' + dateParts[6] : '';
   if (precisionIndex > 7) value += dateParts[7] || '';
   return {
     value,
