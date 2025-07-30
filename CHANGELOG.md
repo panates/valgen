@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.17.2](https://github.com/panates/valgen/compare/v5.17.1...v5.17.2) - 
+### [v5.17.3](https://github.com/panates/valgen/compare/v5.17.2...v5.17.3) - 
+
+#### 🚀 New Features
+
+- feat: isDate can parse date string without signs @Eray Hanoğlu 
+
+### [v5.17.2](https://github.com/panates/valgen/compare/v5.17.1...v5.17.2) -  29 July 2025 
 
 #### 🛠 Refactoring and Updates
 

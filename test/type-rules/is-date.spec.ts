@@ -121,4 +121,13 @@ describe('isDateString', () => {
       vg.isDateString({ coerce: true, precisionMin: 'yr' })('2020-11-01'),
     ).toEqual('2020-11-01T00:00:00');
   });
+
+  it('should coerce non signed numbers to date string', () => {
+    expect(
+      vg.isDateString({
+        coerce: true,
+        precisionMin: 'yr',
+      })('20201101'),
+    ).toEqual('2020-11-01T00:00:00');
+  });
 });
