@@ -1,6 +1,16 @@
 ## Changelog
 
-### [v5.17.3](https://github.com/panates/valgen/compare/v5.17.2...v5.17.3) - 
+### [v5.18.0](https://github.com/panates/valgen/compare/v5.17.3...v5.18.0) - 
+
+#### 🚀 New Features
+
+- feat: isTime accept Date instance @Eray Hanoğlu 
+
+#### 🪲 Fixes
+
+- fix: Minor fix in isDate rule @Eray Hanoğlu 
+
+### [v5.17.3](https://github.com/panates/valgen/compare/v5.17.2...v5.17.3) -  30 July 2025 
 
 #### 🚀 New Features
 

@@ -129,5 +129,23 @@ describe('isDateString', () => {
         precisionMin: 'yr',
       })('20201101'),
     ).toEqual('2020-11-01T00:00:00');
+    expect(
+      vg.isDateString({
+        coerce: true,
+        precisionMin: 'yr',
+      })('20201101153223.123'),
+    ).toEqual('2020-11-01T15:32:23.123');
+    expect(
+      vg.isDateString({
+        coerce: true,
+        precisionMin: 'yr',
+      })('20201101153223.123+03'),
+    ).toEqual('2020-11-01T15:32:23.123+03');
+    expect(
+      vg.isDateString({
+        coerce: true,
+        precisionMin: 'yr',
+      })('20201101153223.123+0330'),
+    ).toEqual('2020-11-01T15:32:23.123+03:30');
   });
 });
