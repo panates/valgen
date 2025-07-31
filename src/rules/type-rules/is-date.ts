@@ -112,7 +112,8 @@ export function isDateString(options?: IsDateStringOptions) {
 // noinspection RegExpUnnecessaryNonCapturingGroup
 const DATE_PATTERN =
   /^(\d{4})(?:-(0[0-9]|1[0-2]))?(?:-([0-2][0-9]|3[0-1]))?(?:[T ](?:([0-1][0-9]|2[0-4]):([0-5][0-9])(?::([0-5][0-9]))?(?:\.(\d{0,3}))?)?((?:[+-](0[0-9]|1[0-2])(?::(\d{2}))?)|Z)?)?$/;
-const DATE_PATTERN2 = /^(\d{4,14})(?:\.(\d{1,3}))?$/;
+const DATE_PATTERN2 =
+  /^(\d{4,14})(?:\.(\d{1,3}))?(?:(?:([+-])(0[0-9]|1[0-2])(\d{2})?)|Z)?$/;
 
 function coerceDateString(
   input: any,
@@ -152,13 +153,14 @@ function coerceDateString(
           m[1].substring(10, 12),
           m[1].substring(12, 14),
           m[2],
+          m[3] ? m[3] + m[4] + (m[5] ? ':' + m[5] : '') : '',
         ];
       }
     }
   }
   if (!dateParts) return;
   outPrecision = dateParts.findIndex(v => !v);
-  if (outPrecision === -1) outPrecision = dateParts.length + 1;
+  if (outPrecision === -1) outPrecision = dateParts.length;
   const precisionIndex = (precision ? PRECISION_INDEX[precision] : 9) || 9;
   let value = dateParts[0] || '0000';
   if (precisionIndex > 1) value += '-' + (dateParts[1] || '01');
