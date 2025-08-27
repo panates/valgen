@@ -54,7 +54,7 @@ jobs:
           npm run qc
           npm run citest
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: "--max_old_space_size=4096 --no-experimental-strip-types"
 
       - name: Send coverage to Coveralls
         uses: coverallsapp/github-action@v2
