@@ -47,6 +47,7 @@ jobs:
         uses: panates/gh-setup-node@v1
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          node-version: ${{ matrix.node }}
 
       - name: Apply tests
         run: |
