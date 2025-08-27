@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.18.0](https://github.com/panates/valgen/compare/v5.17.3...v5.18.0) - 
+### [v5.18.1](https://github.com/panates/valgen/compare/v5.18.0...v5.18.1) - 
+
+#### 🪲 Fixes
+
+- fix: Increased ms precision @Eray Hanoğlu 
+
+### [v5.18.0](https://github.com/panates/valgen/compare/v5.17.3...v5.18.0) -  31 July 2025 
 
 #### 🚀 New Features
 
