@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.18.1](https://github.com/panates/valgen/compare/v5.18.0...v5.18.1) - 
+### [v5.18.2](https://github.com/panates/valgen/compare/v5.18.1...v5.18.2) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Set precision of toDateString() to "day" @Eray Hanoğlu 
+
+### [v5.18.1](https://github.com/panates/valgen/compare/v5.18.0...v5.18.1) -  27 August 2025 
 
 #### 🪲 Fixes
 
