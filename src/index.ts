@@ -4,6 +4,7 @@ import * as vg from './rules/index.js';
 
 export * from './constants.js';
 export * from './core/index.js';
+export type { DatePrecision } from './rules/type-rules/is-date.js';
 export type { IsObject } from './rules/type-rules/is-object.js';
 
 const isAlpha = vg.isAlpha();
@@ -71,7 +72,7 @@ const toDateString = (
   const trim = options?.trim ?? 'seconds';
   let validator = toDateStringValidators.get(trim);
   if (!validator) {
-    validator = vg.isDateString({ coerce: true, trim });
+    validator = vg.isDateString({ coerce: true, precisionMax: trim });
     toDateStringValidators.set(trim, validator);
   }
   return validator(input, options, ctx);
