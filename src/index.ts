@@ -69,10 +69,14 @@ const toDateString = (
   options?: ExecutionOptions & { trim?: DatePrecision },
   ctx?: Context,
 ) => {
-  const trim = options?.trim ?? 'seconds';
+  const trim = options?.trim ?? 'ms';
   let validator = toDateStringValidators.get(trim);
   if (!validator) {
-    validator = vg.isDateString({ coerce: true, precisionMax: trim });
+    validator = vg.isDateString({
+      coerce: true,
+      precisionMax: trim,
+      trim: true,
+    });
     toDateStringValidators.set(trim, validator);
   }
   return validator(input, options, ctx);
