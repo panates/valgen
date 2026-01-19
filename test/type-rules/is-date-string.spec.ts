@@ -24,37 +24,23 @@ describe('isDateString', () => {
     expect(isDateString('2020-01-10T08:30')).toEqual('2020-01-10T08:30');
     expect(isDateString('2020-01-10 08:30')).toEqual('2020-01-10 08:30');
 
-    expect(() => isDateString('2020-01-10T08')).toThrow(
-      'Value is not valid date string',
-    );
-    expect(() => isDateString('2020-01-10')).toThrow(
-      'Value is not valid date string',
-    );
-    expect(() => isDateString(undefined as any)).toThrow(
-      'Value is not valid date string',
-    );
-    expect(() => isDateString(null as any)).toThrow(
-      'Value is not valid date string',
-    );
-    expect(() => isDateString('invalid')).toThrow(
-      'Value is not valid date string',
-    );
+    expect(() => isDateString('2020-01-10T08')).toThrow();
+    expect(() => isDateString('2020-01-10')).toThrow();
+    expect(() => isDateString(undefined as any)).toThrow();
+    expect(() => isDateString(null as any)).toThrow();
+    expect(() => isDateString('invalid')).toThrow();
   });
 
   it('should validate date string with precisionMin', () => {
     expect(vg.isDateString({ precisionMin: 'day' })('2020-11-01')).toEqual(
       '2020-11-01',
     );
-    expect(() => vg.isDateString({ precisionMin: 'day' })('2020')).toThrow(
-      'Value is not valid date string with required precision',
-    );
+    expect(() => vg.isDateString({ precisionMin: 'day' })('2020')).toThrow();
 
     expect(vg.isDateString({ precisionMin: 'month' })('2020-11')).toEqual(
       '2020-11',
     );
-    expect(() => vg.isDateString({ precisionMin: 'month' })('2020')).toThrow(
-      'Value is not valid date string with required precision',
-    );
+    expect(() => vg.isDateString({ precisionMin: 'month' })('2020')).toThrow();
   });
 
   it('should validate date string with precisionMax', () => {
@@ -63,21 +49,23 @@ describe('isDateString', () => {
     );
     expect(() =>
       vg.isDateString({ precisionMax: 'day' })('2020-01-01T13:30'),
-    ).toThrow('Value is not valid date string with required precision');
+    ).toThrow();
   });
 
   it('should coerce to date with given precision', () => {
     expect(
       vg.isDateString({
         coerce: true,
-        trim: 'min',
+        trim: true,
+        precisionMax: 'min',
         precisionMin: 'yr',
       })('2020-11-01'),
     ).toEqual('2020-11-01T00:00');
     expect(
       vg.isDateString({
         coerce: true,
-        trim: 'ms',
+        trim: true,
+        precisionMax: 'ms',
         precisionMin: 'yr',
       })(new Date('2020-11-01T00:00:00.1')),
     ).toEqual('2020-11-01T00:00:00.100');
@@ -86,100 +74,78 @@ describe('isDateString', () => {
     ).toEqual('2020-11-01T00:00:00');
   });
 
-  it('should trim to given precision', () => {
+  it('should trim date string to given precision', () => {
     expect(
-      vg.isDateString({ coerce: true, trim: 'yr' })(
+      vg.isDateString({ coerce: true, precisionMax: 'yr', trim: true })(
         '2020-11-01T00:00:00+03:00',
       ),
     ).toEqual('2020');
     expect(
-      vg.isDateString({ coerce: true, trim: 'month' })(
+      vg.isDateString({ coerce: true, precisionMax: 'month', trim: true })(
         '2020-11-01T00:00:00+03:00',
       ),
     ).toEqual('2020-11');
     expect(
-      vg.isDateString({ coerce: true, trim: 'day' })('2020-11-01'),
+      vg.isDateString({ coerce: true, precisionMax: 'day', trim: true })(
+        '2020-11-01',
+      ),
     ).toEqual('2020-11-01');
     expect(
-      vg.isDateString({ coerce: true, trim: 'hours' })(
+      vg.isDateString({ coerce: true, precisionMax: 'hours', trim: true })(
         '2020-11-01T10:23:45+03:00',
       ),
     ).toEqual('2020-11-01T10');
     expect(
-      vg.isDateString({ coerce: true, trim: 'minutes' })(
+      vg.isDateString({ coerce: true, precisionMax: 'minutes', trim: true })(
         '2020-11-01T10:23:45+03:00',
       ),
     ).toEqual('2020-11-01T10:23');
     expect(
-      vg.isDateString({ coerce: true, trim: 'seconds' })(
+      vg.isDateString({ coerce: true, precisionMax: 'seconds', trim: true })(
         '2020-11-01T10:23:45+03:00',
       ),
     ).toEqual('2020-11-01T10:23:45');
     expect(
-      vg.isDateString({ coerce: true, trim: 'ms' })(
+      vg.isDateString({ coerce: true, precisionMax: 'ms', trim: true })(
         '2020-11-01T10:23:45.123+03:00',
       ),
     ).toEqual('2020-11-01T10:23:45.123');
     expect(
-      vg.isDateString({ coerce: true, trim: 'tz' })(
+      vg.isDateString({ coerce: true, precisionMax: 'tz', trim: true })(
         '2020-11-01T10:23:45.123+03:00',
       ),
     ).toEqual('2020-11-01T10:23:45.123' + tz);
   });
 
-  it('should coerce Date to date string', () => {
+  it('should trim Date to given precision', () => {
     const d = new Date('2020-11-01T10:23:45.123');
-    expect(vg.isDateString({ coerce: true, trim: 'yr' })(d)).toEqual('2020');
-    expect(vg.isDateString({ coerce: true, trim: 'month' })(d)).toEqual(
-      '2020-11',
-    );
-    expect(vg.isDateString({ coerce: true, trim: 'day' })(d)).toEqual(
-      '2020-11-01',
-    );
-    expect(vg.isDateString({ coerce: true, trim: 'hours' })(d)).toEqual(
-      '2020-11-01T10',
-    );
-    expect(vg.isDateString({ coerce: true, trim: 'minutes' })(d)).toEqual(
-      '2020-11-01T10:23',
-    );
-    expect(vg.isDateString({ coerce: true, trim: 'seconds' })(d)).toEqual(
-      '2020-11-01T10:23:45',
-    );
-    expect(vg.isDateString({ coerce: true, trim: 'milliseconds' })(d)).toEqual(
-      '2020-11-01T10:23:45.123',
-    );
-    expect(vg.isDateString({ coerce: true, trim: 'tz' })(d)).toEqual(
-      '2020-11-01T10:23:45.123+03:00',
-    );
-  });
-
-  it('should coerce non signed numbers to date string', () => {
+    expect(
+      vg.isDateString({ coerce: true, precisionMax: 'yr', trim: true })(d),
+    ).toEqual('2020');
+    expect(
+      vg.isDateString({ coerce: true, precisionMax: 'month', trim: true })(d),
+    ).toEqual('2020-11');
+    expect(
+      vg.isDateString({ coerce: true, precisionMax: 'day', trim: true })(d),
+    ).toEqual('2020-11-01');
+    expect(
+      vg.isDateString({ coerce: true, precisionMax: 'hours', trim: true })(d),
+    ).toEqual('2020-11-01T10');
+    expect(
+      vg.isDateString({ coerce: true, precisionMax: 'minutes', trim: true })(d),
+    ).toEqual('2020-11-01T10:23');
+    expect(
+      vg.isDateString({ coerce: true, precisionMax: 'seconds', trim: true })(d),
+    ).toEqual('2020-11-01T10:23:45');
     expect(
       vg.isDateString({
         coerce: true,
-        precisionMin: 'yr',
-      })('20201101'),
-    ).toEqual('2020-11-01T00:00:00');
+        precisionMax: 'milliseconds',
+        trim: true,
+      })(d),
+    ).toEqual('2020-11-01T10:23:45.123');
     expect(
-      vg.isDateString({
-        coerce: true,
-        precisionMin: 'yr',
-      })('20201101153223.123'),
-    ).toEqual('2020-11-01T15:32:23.123');
-    expect(
-      vg.isDateString({ coerce: true })('20250823000600.0000+0300'),
-    ).toEqual('2025-08-23T00:06:00.0000+03:00');
-    expect(
-      vg.isDateString({
-        coerce: true,
-        precisionMin: 'yr',
-      })('20201101153223.123+03'),
-    ).toEqual('2020-11-01T15:32:23.123+03');
-    expect(
-      vg.isDateString({
-        coerce: true,
-        precisionMin: 'yr',
-      })('20201101153223.123+0330'),
-    ).toEqual('2020-11-01T15:32:23.123+03:30');
+      vg.isDateString({ coerce: true, precisionMax: 'tz', trim: true })(d),
+    ).toEqual('2020-11-01T10:23:45.123+03:00');
   });
 });

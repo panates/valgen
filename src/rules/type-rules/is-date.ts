@@ -64,7 +64,7 @@ export function isDate(options?: IsDateOptions) {
 export interface IsDateStringOptions extends ValidationOptions {
   precisionMin?: DatePrecision;
   precisionMax?: DatePrecision;
-  trim?: DatePrecision;
+  trim?: boolean;
   timeZone?: boolean | number;
 }
 
@@ -74,38 +74,46 @@ export interface IsDateStringOptions extends ValidationOptions {
  * @validator isDateString
  */
 export function isDateString(options?: IsDateStringOptions) {
-  const trimIdx = PRECISION_INDEX[options?.trim || 'tz'] || 9;
-  const precisionMin = options?.precisionMin || options?.trim || 'minutes';
+  const trim = options?.trim;
   const precisionMax = options?.precisionMax || 'tz';
-  const precisionMaxIdx = PRECISION_INDEX[precisionMax] || 9;
+  const precisionMaxIdx = PRECISION_INDEX[precisionMax] || 8;
+  let precisionMin = options?.precisionMin || 'minutes';
   const precisionMinIdx = Math.min(
-    trimIdx,
     precisionMaxIdx,
     PRECISION_INDEX[precisionMin] || 6,
   );
+  precisionMin = (PRECISION_INDEX_KEYS[
+    PRECISION_INDEX_VALUES.indexOf(precisionMinIdx)
+  ] || precisionMin) as any;
   return validator<string, Date | number | string>(
     'isDateString',
     (input: any, context: Context, _this): Nullish<string> => {
       const coerce = options?.coerce ?? context.coerce;
-      const parsed = coerceDateString(input, options?.trim);
+      const parsed = coerceDateString(input, trim ? precisionMax : undefined);
       if (parsed) {
-        if (
-          parsed.precision >= precisionMinIdx &&
-          parsed.precision <= precisionMaxIdx
-        ) {
-          return coerce ? parsed.value : input;
+        if (parsed.precision < precisionMinIdx) {
+          context.fail(
+            _this,
+            `Minimum date precision should be ${precisionMin}`,
+            input,
+            options,
+          );
         }
+        if (parsed.precision > precisionMaxIdx) {
+          context.fail(
+            _this,
+            `Maximum date precision should be ${precisionMax}`,
+            input,
+            options,
+          );
+        }
+        return coerce ? parsed.value : input;
       }
       context.fail(
         _this,
-        `Value is not valid date string` +
-          (options?.precisionMin || options?.precisionMax
-            ? ` with required precision`
-            : ''),
+        `Value "${input}" is not a valid date string`,
         input,
-        {
-          ...options,
-        },
+        options,
       );
     },
     options,
@@ -120,12 +128,13 @@ const DATE_PATTERN2 =
 
 function coerceDateString(
   input: any,
-  precision?: DatePrecision,
+  trimPrecision?: DatePrecision,
 ): Nullish<{
   value: string;
   precision: number;
 }> {
-  const precisionIndex = (precision ? PRECISION_INDEX[precision] : 9) || 9;
+  const precisionIndex =
+    (trimPrecision ? PRECISION_INDEX[trimPrecision] : 9) || 9;
   let dateParts: (string | undefined)[] | undefined;
   let detectedPrecision = 0;
   if (input instanceof Date || typeof input === 'number') {
@@ -174,9 +183,8 @@ function coerceDateString(
     }
   }
   if (!dateParts) return;
-  detectedPrecision = dateParts.findIndex(v => !v);
-  if (detectedPrecision === -1)
-    detectedPrecision = Math.min(dateParts.length, 8);
+  detectedPrecision = dateParts[7] ? 8 : dateParts.findIndex(v => !v);
+  if (detectedPrecision < 0) detectedPrecision = Math.min(dateParts.length, 8);
   let value = dateParts[0] || '0000';
   if (precisionIndex > 1) value += '-' + (dateParts[1] || '01');
   if (precisionIndex > 2) value += '-' + (dateParts[2] || '01');
@@ -187,7 +195,7 @@ function coerceDateString(
   if (precisionIndex > 7) value += dateParts[7] || '';
   return {
     value,
-    precision: detectedPrecision || 8,
+    precision: Math.min(precisionIndex, detectedPrecision),
   };
 }
 
@@ -208,6 +216,8 @@ const PRECISION_INDEX: Record<DatePrecision, number> = {
   ms: 7,
   tz: 8,
 };
+const PRECISION_INDEX_KEYS = Object.keys(PRECISION_INDEX);
+const PRECISION_INDEX_VALUES = Object.values(PRECISION_INDEX);
 
 function setPrecision(d: Date, precision?: string) {
   switch (precision) {
