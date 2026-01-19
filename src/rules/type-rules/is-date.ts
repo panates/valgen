@@ -6,7 +6,7 @@ import {
   validator,
 } from '../../core/index.js';
 
-type Precision =
+export type DatePrecision =
   | 'year'
   | 'yr'
   | 'month'
@@ -24,7 +24,7 @@ type Precision =
   | 'tz';
 
 export interface IsDateOptions extends ValidationOptions {
-  trim?: Precision;
+  trim?: DatePrecision;
 }
 
 /**
@@ -62,9 +62,9 @@ export function isDate(options?: IsDateOptions) {
 }
 
 export interface IsDateStringOptions extends ValidationOptions {
-  precisionMin?: Precision;
-  precisionMax?: Precision;
-  trim?: Precision;
+  precisionMin?: DatePrecision;
+  precisionMax?: DatePrecision;
+  trim?: DatePrecision;
   timeZone?: boolean | number;
 }
 
@@ -120,7 +120,7 @@ const DATE_PATTERN2 =
 
 function coerceDateString(
   input: any,
-  precision?: Precision,
+  precision?: DatePrecision,
 ): Nullish<{
   value: string;
   precision: number;
@@ -191,7 +191,7 @@ function coerceDateString(
   };
 }
 
-const PRECISION_INDEX: Record<Precision, number> = {
+const PRECISION_INDEX: Record<DatePrecision, number> = {
   year: 1,
   yr: 1,
   month: 2,
