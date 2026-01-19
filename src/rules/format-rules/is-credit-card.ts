@@ -7,8 +7,7 @@ import {
 } from '../../core/index.js';
 
 export interface CreditCardValidatorOptions
-  extends ValidationOptions,
-    validatorJS.IsCreditCardOptions {}
+  extends ValidationOptions, validatorJS.IsCreditCardOptions {}
 
 /**
  * Validates if value is a credit card number

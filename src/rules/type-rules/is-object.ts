@@ -11,8 +11,10 @@ import {
 } from '../../core/index.js';
 
 export namespace IsObject {
-  export interface Validator<T extends object = object, I = object>
-    extends Validator_<T, I> {
+  export interface Validator<
+    T extends object = object,
+    I = object,
+  > extends Validator_<T, I> {
     schema: Schema;
   }
 
