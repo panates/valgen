@@ -1,6 +1,16 @@
 ## Changelog
 
-### [v5.18.2](https://github.com/panates/valgen/compare/v5.18.1...v5.18.2) - 
+### [v5.18.3](https://github.com/panates/valgen/compare/v5.18.2...v5.18.3) - 
+
+#### 🪲 Fixes
+
+- fix: Fixed precision and trim issue of isDate rule @Eray Hanoğlu 
+
+#### 💬 General Changes
+
+- dev: npm Trusted publishing update @Eray Hanoğlu 
+
+### [v5.18.2](https://github.com/panates/valgen/compare/v5.18.1...v5.18.2) -  29 August 2025 
 
 #### 🛠 Refactoring and Updates
 
