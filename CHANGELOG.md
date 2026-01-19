@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.19.1](https://github.com/panates/valgen/compare/v5.19.0...v5.19.1) - 
+### [v5.19.2](https://github.com/panates/valgen/compare/v5.19.1...v5.19.2) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Refactored isDateString options @Eray Hanoğlu 
+
+### [v5.19.1](https://github.com/panates/valgen/compare/v5.19.0...v5.19.1) -  19 January 2026 
 
 #### 🚀 New Features
 
