@@ -65,6 +65,7 @@ export interface IsDateStringOptions extends ValidationOptions {
   precisionMin?: Precision;
   precisionMax?: Precision;
   trim?: Precision;
+  timeZone?: boolean | number;
 }
 
 /**
@@ -73,10 +74,12 @@ export interface IsDateStringOptions extends ValidationOptions {
  * @validator isDateString
  */
 export function isDateString(options?: IsDateStringOptions) {
-  const precisionMin = options?.precisionMin || 'minutes';
+  const trimIdx = PRECISION_INDEX[options?.trim || 'tz'] || 9;
+  const precisionMin = options?.precisionMin || options?.trim || 'minutes';
   const precisionMax = options?.precisionMax || 'tz';
   const precisionMaxIdx = PRECISION_INDEX[precisionMax] || 9;
   const precisionMinIdx = Math.min(
+    trimIdx,
     precisionMaxIdx,
     PRECISION_INDEX[precisionMin] || 6,
   );
@@ -122,8 +125,9 @@ function coerceDateString(
   value: string;
   precision: number;
 }> {
+  const precisionIndex = (precision ? PRECISION_INDEX[precision] : 9) || 9;
   let dateParts: (string | undefined)[] | undefined;
-  let outPrecision = 0;
+  let detectedPrecision = 0;
   if (input instanceof Date || typeof input === 'number') {
     const d = typeof input === 'number' ? new Date(input) : input;
     dateParts = [
@@ -134,8 +138,19 @@ function coerceDateString(
       String(d.getMinutes()).padStart(2, '0'),
       String(d.getSeconds()).padStart(2, '0'),
     ];
-    if (d.getMilliseconds() > 0)
+    if (precisionIndex >= 7 && d.getMilliseconds() > 0)
       dateParts.push(String(d.getMilliseconds()).padStart(3, '0'));
+    if (precisionIndex >= 8) {
+      const tzOffset = d.getTimezoneOffset();
+      const tz =
+        tzOffset > 0
+          ? '-'
+          : '+' +
+            String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
+            ':' +
+            String(Math.abs(tzOffset) % 60).padStart(2, '0');
+      dateParts.push(tz);
+    }
   } else if (typeof input === 'string') {
     const d = datefns.parseISO(input);
     let m = DATE_PATTERN.exec(input);
@@ -159,20 +174,20 @@ function coerceDateString(
     }
   }
   if (!dateParts) return;
-  outPrecision = dateParts.findIndex(v => !v);
-  if (outPrecision === -1) outPrecision = dateParts.length;
-  const precisionIndex = (precision ? PRECISION_INDEX[precision] : 9) || 9;
+  detectedPrecision = dateParts.findIndex(v => !v);
+  if (detectedPrecision === -1)
+    detectedPrecision = Math.min(dateParts.length, 8);
   let value = dateParts[0] || '0000';
   if (precisionIndex > 1) value += '-' + (dateParts[1] || '01');
   if (precisionIndex > 2) value += '-' + (dateParts[2] || '01');
   if (precisionIndex > 3) value += 'T' + (dateParts[3] || '00');
   if (precisionIndex > 4) value += ':' + (dateParts[4] || '00');
   if (precisionIndex > 5) value += ':' + (dateParts[5] || '00');
-  if (precisionIndex > 5) value += dateParts[6] ? '.' + dateParts[6] : '';
+  if (precisionIndex > 6) value += dateParts[6] ? '.' + dateParts[6] : '';
   if (precisionIndex > 7) value += dateParts[7] || '';
   return {
     value,
-    precision: outPrecision || 8,
+    precision: detectedPrecision || 8,
   };
 }
 
