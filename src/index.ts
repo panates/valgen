@@ -1,3 +1,5 @@
+import { Context, ExecutionOptions } from './core/index.js';
+import { DatePrecision } from './rules/index.js';
 import * as vg from './rules/index.js';
 
 export * from './constants.js';
@@ -60,12 +62,24 @@ const toArray = vg.isArray(isAny, { coerce: true });
 const toBigint = vg.isBigint({ coerce: true });
 const toBoolean = vg.isBoolean({ coerce: true });
 const toDate = vg.isDate({ coerce: true });
-const toDateString = vg.isDateString({ coerce: true, precisionMin: 'day' });
+const toDateStringValidators = new Map();
+const toDateString = (
+  input: Date | string | number,
+  options?: ExecutionOptions & { trim?: DatePrecision },
+  ctx?: Context,
+) => {
+  const trim = options?.trim ?? 'seconds';
+  let validator = toDateStringValidators.get(trim);
+  if (!validator) {
+    validator = vg.isDateString({ coerce: true, trim });
+    toDateStringValidators.set(trim, validator);
+  }
+  return validator(input, options, ctx);
+};
 const toInteger = vg.isInteger({ coerce: true });
 const toNumber = vg.isNumber({ coerce: true });
 const toString = vg.isString({ coerce: true });
 const toTime = vg.isTime({ coerce: true });
-
 export {
   isAlpha,
   isAlphanumeric,

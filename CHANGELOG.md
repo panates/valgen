@@ -1,6 +1,17 @@
 ## Changelog
 
-### [v5.19.0](https://github.com/panates/valgen/compare/v5.18.3...v5.19.0) - 
+### [v5.19.1](https://github.com/panates/valgen/compare/v5.19.0...v5.19.1) - 
+
+#### 🚀 New Features
+
+- feat: Added "trim" option to "toDateString" @Eray Hanoğlu 
+
+#### 🧪 Changes to Test Assests
+
+- test: Set timezone for entire job in test workflow @Eray Hanoğlu 
+- test: Set timezone for entire job in test workflow @Eray Hanoğlu 
+
+### [v5.19.0](https://github.com/panates/valgen/compare/v5.18.3...v5.19.0) -  19 January 2026 
 
 #### 💬 General Changes
 
