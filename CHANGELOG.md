@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.19.2](https://github.com/panates/valgen/compare/v5.19.1...v5.19.2) - 
+### [v5.19.3](https://github.com/panates/valgen/compare/v5.19.2...v5.19.3) - 
+
+#### 🪲 Fixes
+
+- fix: toDateString do not trim @Eray Hanoğlu 
+
+### [v5.19.2](https://github.com/panates/valgen/compare/v5.19.1...v5.19.2) -  19 January 2026 
 
 #### 🛠 Refactoring and Updates
 
