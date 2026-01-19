@@ -7,8 +7,7 @@ import {
 } from '../../core/index.js';
 
 export interface Base64ValidatorOptions
-  extends ValidationOptions,
-    validatorJS.IsBase64Options {}
+  extends ValidationOptions, validatorJS.IsBase64Options {}
 
 /**
  * Validates if value is a "Base64" string.

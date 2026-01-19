@@ -7,8 +7,7 @@ import {
 } from '../../core/index.js';
 
 export interface IsURLOptions
-  extends ValidationOptions,
-    validatorJS.IsURLOptions {}
+  extends ValidationOptions, validatorJS.IsURLOptions {}
 
 /**
  * Validates if value is an URL

@@ -1,6 +1,19 @@
 import { expect } from 'expect';
 import { isDateString, vg } from 'valgen';
 
+let tz = '';
+{
+  const d = new Date();
+  const tzOffset = d.getTimezoneOffset();
+  tz =
+    tzOffset > 0
+      ? '-'
+      : '+' +
+        String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
+        ':' +
+        String(Math.abs(tzOffset) % 60).padStart(2, '0');
+}
+
 describe('isDateString', () => {
   it('should validate date string', () => {
     expect(isDateString('2020-01-10T08:30:15Z')).toEqual(
@@ -71,6 +84,73 @@ describe('isDateString', () => {
     expect(
       vg.isDateString({ coerce: true, precisionMin: 'yr' })('2020-11-01'),
     ).toEqual('2020-11-01T00:00:00');
+  });
+
+  it('should trim to given precision', () => {
+    expect(
+      vg.isDateString({ coerce: true, trim: 'yr' })(
+        '2020-11-01T00:00:00+03:00',
+      ),
+    ).toEqual('2020');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'month' })(
+        '2020-11-01T00:00:00+03:00',
+      ),
+    ).toEqual('2020-11');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'day' })('2020-11-01'),
+    ).toEqual('2020-11-01');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'hours' })(
+        '2020-11-01T10:23:45+03:00',
+      ),
+    ).toEqual('2020-11-01T10');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'minutes' })(
+        '2020-11-01T10:23:45+03:00',
+      ),
+    ).toEqual('2020-11-01T10:23');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'seconds' })(
+        '2020-11-01T10:23:45+03:00',
+      ),
+    ).toEqual('2020-11-01T10:23:45');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'ms' })(
+        '2020-11-01T10:23:45.123+03:00',
+      ),
+    ).toEqual('2020-11-01T10:23:45.123');
+    expect(
+      vg.isDateString({ coerce: true, trim: 'tz' })(
+        '2020-11-01T10:23:45.123+03:00',
+      ),
+    ).toEqual('2020-11-01T10:23:45.123' + tz);
+  });
+
+  it('should coerce Date to date string', () => {
+    const d = new Date('2020-11-01T10:23:45.123');
+    expect(vg.isDateString({ coerce: true, trim: 'yr' })(d)).toEqual('2020');
+    expect(vg.isDateString({ coerce: true, trim: 'month' })(d)).toEqual(
+      '2020-11',
+    );
+    expect(vg.isDateString({ coerce: true, trim: 'day' })(d)).toEqual(
+      '2020-11-01',
+    );
+    expect(vg.isDateString({ coerce: true, trim: 'hours' })(d)).toEqual(
+      '2020-11-01T10',
+    );
+    expect(vg.isDateString({ coerce: true, trim: 'minutes' })(d)).toEqual(
+      '2020-11-01T10:23',
+    );
+    expect(vg.isDateString({ coerce: true, trim: 'seconds' })(d)).toEqual(
+      '2020-11-01T10:23:45',
+    );
+    expect(vg.isDateString({ coerce: true, trim: 'milliseconds' })(d)).toEqual(
+      '2020-11-01T10:23:45.123',
+    );
+    expect(vg.isDateString({ coerce: true, trim: 'tz' })(d)).toEqual(
+      '2020-11-01T10:23:45.123+03:00',
+    );
   });
 
   it('should coerce non signed numbers to date string', () => {
