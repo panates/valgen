@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.18.3](https://github.com/panates/valgen/compare/v5.18.2...v5.18.3) - 
+### [v5.19.0](https://github.com/panates/valgen/compare/v5.18.3...v5.19.0) - 
+
+#### 💬 General Changes
+
+- dev: Removed cjs support @Eray Hanoğlu 
+
+### [v5.18.3](https://github.com/panates/valgen/compare/v5.18.2...v5.18.3) -  19 January 2026 
 
 #### 🪲 Fixes
 
