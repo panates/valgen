@@ -1,6 +1,19 @@
 import { expect } from 'expect';
 import { isDateString, vg } from 'valgen';
 
+let tz = '';
+{
+  const d = new Date();
+  const tzOffset = d.getTimezoneOffset();
+  tz =
+    tzOffset > 0
+      ? '-'
+      : '+' +
+        String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
+        ':' +
+        String(Math.abs(tzOffset) % 60).padStart(2, '0');
+}
+
 describe('isDateString', () => {
   it('should validate date string', () => {
     expect(isDateString('2020-01-10T08:30:15Z')).toEqual(
@@ -111,7 +124,7 @@ describe('isDateString', () => {
       vg.isDateString({ coerce: true, trim: 'tz' })(
         '2020-11-01T10:23:45.123+03:00',
       ),
-    ).toEqual('2020-11-01T10:23:45.123+03:00');
+    ).toEqual('2020-11-01T10:23:45.123' + tz);
   });
 
   it('should coerce Date to date string', () => {
