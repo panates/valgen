@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.19.3](https://github.com/panates/valgen/compare/v5.19.2...v5.19.3) - 
+### [v5.19.4](https://github.com/panates/valgen/compare/v5.19.3...v5.19.4) - 
+
+#### 🚀 New Features
+
+- feat: Handle TypeScript enums in isEnum validator @Eray Hanoğlu 
+
+### [v5.19.3](https://github.com/panates/valgen/compare/v5.19.2...v5.19.3) -  19 January 2026 
 
 #### 🪲 Fixes
 
