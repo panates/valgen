@@ -99,7 +99,7 @@ export function isDateString(options?: IsDateStringOptions) {
             options,
           );
         }
-        if (parsed.precision > precisionMaxIdx) {
+        if (parsed.precision > precisionMaxIdx && !(input instanceof Date)) {
           context.fail(
             _this,
             `Maximum date precision should be ${precisionMax}`,
@@ -147,8 +147,10 @@ function coerceDateString(
       String(d.getMinutes()).padStart(2, '0'),
       String(d.getSeconds()).padStart(2, '0'),
     ];
-    if (precisionIndex >= 7 && d.getMilliseconds() > 0)
-      dateParts.push(String(d.getMilliseconds()).padStart(3, '0'));
+    if (precisionIndex >= 7)
+      if (d.getMilliseconds() > 0)
+        dateParts.push(String(d.getMilliseconds()).padStart(3, '0'));
+      else dateParts.push('');
     if (precisionIndex >= 8) {
       const tzOffset = d.getTimezoneOffset();
       const tz =

@@ -24,7 +24,6 @@ export function isEnum<T1>(
     values = keys.reduce((a, k) => {
       if (values[k] != null) a.push(values[k]);
       return a;
-      // v => !(typeof v === 'number' && !keys.includes(String(v))),
     }, [] as any[]);
   }
   const valObj = (Array.isArray(values) ? values : [values]).reduce<any>(

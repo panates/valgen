@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.19.4](https://github.com/panates/valgen/compare/v5.19.3...v5.19.4) - 
+### [v5.19.5](https://github.com/panates/valgen/compare/v5.19.4...v5.19.5) - 
+
+#### 🪲 Fixes
+
+- fix: Fixed "ms" serialization issue @Eray Hanoğlu 
+
+### [v5.19.4](https://github.com/panates/valgen/compare/v5.19.3...v5.19.4) -  20 January 2026 
 
 #### 🚀 New Features
 
