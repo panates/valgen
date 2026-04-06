@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v5.19.5](https://github.com/panates/valgen/compare/v5.19.4...v5.19.5) - 
+### [v5.20.0](https://github.com/panates/valgen/compare/v5.19.5...v5.20.0) - 
+
+#### 🚀 New Features
+
+- feat: Added UID version 6,7 and 8 validation support @Eray Hanoğlu 
+
+### [v5.19.5](https://github.com/panates/valgen/compare/v5.19.4...v5.19.5) -  23 February 2026 
 
 #### 🪲 Fixes
 
