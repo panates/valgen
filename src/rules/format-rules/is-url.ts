@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsURLOptions as _IsURLOptions,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -6,8 +8,7 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface IsURLOptions
-  extends ValidationOptions, validatorJS.IsURLOptions {}
+export interface IsURLOptions extends ValidationOptions, _IsURLOptions {}
 
 /**
  * Validates if value is an URL

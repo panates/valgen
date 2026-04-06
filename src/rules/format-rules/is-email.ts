@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsEmailOptions as _IsEmailOptions,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -76,7 +78,7 @@ export interface IsEmailOptions extends ValidationOptions {
  * @validator isEmail
  */
 export function isEmail(options?: IsEmailOptions) {
-  const emailOptions: validatorJS.IsEmailOptions = {
+  const emailOptions: _IsEmailOptions = {
     allow_display_name: true,
     allow_utf8_local_part: options?.utf8LocalPart,
     ignore_max_length: true,

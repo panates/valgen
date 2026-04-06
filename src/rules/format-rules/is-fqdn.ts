@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsFQDNOptions as _IsFQDNOptions,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -19,7 +21,7 @@ export interface IsFQDNOptions extends ValidationOptions {
  * @validator isFQDN
  */
 export function isFQDN(options?: IsFQDNOptions) {
-  const opts: validatorJS.IsFQDNOptions = {
+  const opts: _IsFQDNOptions = {
     allow_wildcard: options?.allowWildcard,
   };
   return validator<string, string>(

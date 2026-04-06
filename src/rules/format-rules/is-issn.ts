@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsISSNOptions as _IsISSNOptions,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -20,7 +22,7 @@ export interface IsISSNOptions extends ValidationOptions {
  * @validator isISSN
  */
 export function isISSN(options?: IsISSNOptions) {
-  const opts: validatorJS.IsISSNOptions = {
+  const opts: _IsISSNOptions = {
     case_sensitive: options?.caseSensitive,
   };
   return validator<string, string>(

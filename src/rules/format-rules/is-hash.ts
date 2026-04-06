@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type HashAlgorithm as _HashAlgorithm,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -6,7 +8,7 @@ import {
   validator,
 } from '../../core/index.js';
 
-export type HashAlgorithm = validatorJS.HashAlgorithm;
+export type HashAlgorithm = _HashAlgorithm;
 
 /**
  * Validates if value a hash of type algorithm

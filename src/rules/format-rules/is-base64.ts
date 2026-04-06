@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsBase64Options as _IsBase64Options,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -7,7 +9,7 @@ import {
 } from '../../core/index.js';
 
 export interface Base64ValidatorOptions
-  extends ValidationOptions, validatorJS.IsBase64Options {}
+  extends ValidationOptions, _IsBase64Options {}
 
 /**
  * Validates if value is a "Base64" string.

@@ -1,10 +1,14 @@
-import validatorJS, { UUIDVersion } from '@browsery/validator';
+import validatorJS, {
+  type UUIDVersion as _UUIDVersion,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
   type ValidationOptions,
   validator,
 } from '../../core/index.js';
+
+export type UUIDVersion = _UUIDVersion;
 
 /**
  * Validates if value is a "UUID".

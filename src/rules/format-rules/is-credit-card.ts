@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsCreditCardOptions as _IsCreditCardOptions,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -7,7 +9,7 @@ import {
 } from '../../core/index.js';
 
 export interface CreditCardValidatorOptions
-  extends ValidationOptions, validatorJS.IsCreditCardOptions {}
+  extends ValidationOptions, _IsCreditCardOptions {}
 
 /**
  * Validates if value is a credit card number
