@@ -1,6 +1,17 @@
 ## Changelog
 
-### [v5.20.0](https://github.com/panates/valgen/compare/v5.19.5...v5.20.0) - 
+### [v6.0.0](https://github.com/panates/valgen/compare/v5.20.0...v6.0.0) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Improved typing exports using namespaces @Eray Hanoğlu 
+- refactor: Minor typing update @Eray Hanoğlu 
+
+#### 💬 General Changes
+
+- dev: Fixed issues for new lint rules @Eray Hanoğlu 
+
+### [v5.20.0](https://github.com/panates/valgen/compare/v5.19.5...v5.20.0) -  6 April 2026 
 
 #### 🚀 New Features
 
