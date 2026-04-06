@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsMACAddressOptions as _IsMACAddressOptions,
+} from '@browsery/validator';
 import { type Nullish } from 'ts-gems';
 import {
   type Context,
@@ -28,7 +30,7 @@ export interface IsMACAddressOptions extends ValidationOptions {
  * @validator isMACAddress
  */
 export function isMACAddress(options?: IsMACAddressOptions) {
-  const opts: validatorJS.IsMACAddressOptions = {
+  const opts: _IsMACAddressOptions = {
     no_separators: options?.noSeparators,
     eui: options?.eui,
   };

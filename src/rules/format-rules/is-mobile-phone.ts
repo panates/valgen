@@ -1,4 +1,7 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsMobilePhoneOptions as _IsMobilePhoneOptions,
+  type MobilePhoneLocale as _MobilePhoneLocale,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -18,10 +21,7 @@ export interface IsMobilePhoneOptions extends ValidationOptions {
    * Locale or locales of the mobile phone
    * @default 'any'
    */
-  locale?:
-    | 'any'
-    | validatorJS.MobilePhoneLocale
-    | validatorJS.MobilePhoneLocale[];
+  locale?: 'any' | _MobilePhoneLocale | _MobilePhoneLocale[];
 }
 
 /**
@@ -29,7 +29,7 @@ export interface IsMobilePhoneOptions extends ValidationOptions {
  * @validator isMobilePhone
  */
 export function isMobilePhone(options?: IsMobilePhoneOptions) {
-  const opts: validatorJS.IsMobilePhoneOptions = {
+  const opts: _IsMobilePhoneOptions = {
     strictMode: options?.strictMode,
   };
   return validator<string, string>(

@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type VATCountryCode as _VATCountryCode,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -6,11 +8,16 @@ import {
   validator,
 } from '../../core/index.js';
 
+export type VATCountryCode = _VATCountryCode;
+
 /**
- * Validates if value is an VAT number
+ * Validates if value is a VAT number
  * @validator isVAT
  */
-export function isVATNumber(countryCode: string, options?: ValidationOptions) {
+export function isVATNumber(
+  countryCode: VATCountryCode,
+  options?: ValidationOptions,
+) {
   return validator<string, string>(
     'isVATNumber',
     (input: unknown, context: Context, _this): Nullish<string> => {
