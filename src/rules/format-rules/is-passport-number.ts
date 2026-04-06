@@ -11,7 +11,7 @@ import {
  * @validator isPassportNumber
  */
 export function isPassportNumber(
-  countryCode: isPassportNumber.Locale,
+  countryCode: isPassportNumber.CountryCode,
   options?: isPassportNumber.Options,
 ) {
   return validator<string, string>(
@@ -35,5 +35,5 @@ export function isPassportNumber(
 
 export namespace isPassportNumber {
   export interface Options extends ValidationOptions {}
-  export type Locale = PostalCodeLocale;
+  export type CountryCode = PostalCodeLocale;
 }
