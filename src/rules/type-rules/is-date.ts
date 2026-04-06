@@ -136,7 +136,7 @@ function coerceDateString(
   const precisionIndex =
     (trimPrecision ? PRECISION_INDEX[trimPrecision] : 9) || 9;
   let dateParts: (string | undefined)[] | undefined;
-  let detectedPrecision = 0;
+  let detectedPrecision: number;
   if (input instanceof Date || typeof input === 'number') {
     const d = typeof input === 'number' ? new Date(input) : input;
     dateParts = [

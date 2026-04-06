@@ -1,4 +1,4 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, { UUIDVersion } from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -7,13 +7,10 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is an "UUID".
+ * Validates if value is a "UUID".
  * @validator isUUID
  */
-export function isUUID(
-  version?: 1 | 2 | 3 | 4 | 5,
-  options?: ValidationOptions,
-) {
+export function isUUID(version?: UUIDVersion, options?: ValidationOptions) {
   return validator<string, string>(
     'isUUID',
     (input: unknown, context: Context, _this): Nullish<string> => {
