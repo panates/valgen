@@ -45,6 +45,8 @@ export namespace isMobilePhone {
      * Locale or locales of the mobile phone
      * @default 'any'
      */
-    locale?: 'any' | _MobilePhoneLocale | _MobilePhoneLocale[];
+    locale?: 'any' | MobilePhoneLocale | MobilePhoneLocale[];
   }
+
+  export type MobilePhoneLocale = _MobilePhoneLocale;
 }

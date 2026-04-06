@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v6.0.0](https://github.com/panates/valgen/compare/v5.20.0...v6.0.0) - 
+### [v6.0.1](https://github.com/panates/valgen/compare/v6.0.0...v6.0.1) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Exposed "MobilePhoneLocale" @Eray Hanoğlu 
+
+## [v6.0.0](https://github.com/panates/valgen/compare/v5.20.0...v6.0.0) -  6 April 2026 
 
 #### 🛠 Refactoring and Updates
 
