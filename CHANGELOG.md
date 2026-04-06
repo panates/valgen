@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v6.0.2](https://github.com/panates/valgen/compare/v6.0.1...v6.0.2) - 
+### [v6.0.3](https://github.com/panates/valgen/compare/v6.0.2...v6.0.3) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Removed isPassportNumber.CountryCode type @Eray Hanoğlu 
+
+### [v6.0.2](https://github.com/panates/valgen/compare/v6.0.1...v6.0.2) -  6 April 2026 
 
 #### 🛠 Refactoring and Updates
 

@@ -1,4 +1,4 @@
-import validatorJS, { PostalCodeLocale } from '@browsery/validator';
+import validatorJS from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -11,7 +11,7 @@ import {
  * @validator isPassportNumber
  */
 export function isPassportNumber(
-  countryCode: isPassportNumber.CountryCode,
+  countryCode: string,
   options?: isPassportNumber.Options,
 ) {
   return validator<string, string>(
@@ -35,5 +35,4 @@ export function isPassportNumber(
 
 export namespace isPassportNumber {
   export interface Options extends ValidationOptions {}
-  export type CountryCode = PostalCodeLocale;
 }
