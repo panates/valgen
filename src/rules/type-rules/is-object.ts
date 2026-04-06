@@ -95,7 +95,7 @@ export function isObject<T extends object = object, I = object | string>(
 
       const keys = Array.from(new Set([...Object.keys(output), ...schemaKeys]));
       const l = keys.length;
-      let i = 0;
+      let i: number;
       let inputKey: string;
       let schemaKey: string;
       let v: any;
