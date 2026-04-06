@@ -58,6 +58,9 @@ const isUUID2 = vg.isUUID(2);
 const isUUID3 = vg.isUUID(3);
 const isUUID4 = vg.isUUID(4);
 const isUUID5 = vg.isUUID(5);
+const isUUID6 = vg.isUUID(6);
+const isUUID7 = vg.isUUID(7);
+const isUUID8 = vg.isUUID(8);
 
 const toArray = vg.isArray(isAny, { coerce: true });
 const toBigint = vg.isBigint({ coerce: true });
@@ -137,6 +140,9 @@ export {
   isUUID3,
   isUUID4,
   isUUID5,
+  isUUID6,
+  isUUID7,
+  isUUID8,
   toArray,
   toBigint,
   toBoolean,

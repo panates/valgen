@@ -1,5 +1,15 @@
 import { expect } from 'expect';
-import { isUUID, isUUID1, isUUID2, isUUID3, isUUID4, isUUID5 } from 'valgen';
+import {
+  isUUID,
+  isUUID1,
+  isUUID2,
+  isUUID3,
+  isUUID4,
+  isUUID5,
+  isUUID6,
+  isUUID7,
+  isUUID8,
+} from 'valgen';
 
 describe('isUUID', () => {
   const uuidV1: string = '3c6aed92-0a89-11ee-be56-0242ac120002';
@@ -7,6 +17,9 @@ describe('isUUID', () => {
   const uuidV3: string = 'b2c449de-aa9b-36d4-b548-2642ba1e161a';
   const uuidV4: string = '01e0fee8-60d5-42a5-997c-b55a4f3e973f';
   const uuidV5: string = 'a0657685-23c5-5cbc-81a4-dd72b3743c21';
+  const uuidV6: string = 'a0657685-23c5-6cbc-81a4-dd72b3743c21';
+  const uuidV7: string = 'a0657685-23c5-7cbc-81a4-dd72b3743c21';
+  const uuidV8: string = 'a0657685-23c5-8cbc-81a4-dd72b3743c21';
 
   it('should validate value is a uuid', () => {
     expect(isUUID(uuidV1)).toStrictEqual(uuidV1);
@@ -14,6 +27,9 @@ describe('isUUID', () => {
     expect(isUUID(uuidV3)).toStrictEqual(uuidV3);
     expect(isUUID(uuidV4)).toStrictEqual(uuidV4);
     expect(isUUID(uuidV5)).toStrictEqual(uuidV5);
+    expect(isUUID(uuidV6)).toStrictEqual(uuidV6);
+    expect(isUUID(uuidV7)).toStrictEqual(uuidV7);
+    expect(isUUID(uuidV8)).toStrictEqual(uuidV8);
     expect(() => isUUID(undefined as any)).toThrow(
       'Value must be a valid UUID',
     );
@@ -27,6 +43,9 @@ describe('isUUID', () => {
     expect(() => isUUID1(uuidV3)).toThrow('Value must be a valid UUID v1');
     expect(() => isUUID1(uuidV4)).toThrow('Value must be a valid UUID v1');
     expect(() => isUUID1(uuidV5)).toThrow('Value must be a valid UUID v1');
+    expect(() => isUUID1(uuidV6)).toThrow('Value must be a valid UUID v1');
+    expect(() => isUUID1(uuidV7)).toThrow('Value must be a valid UUID v1');
+    expect(() => isUUID1(uuidV8)).toThrow('Value must be a valid UUID v1');
   });
 
   it('should validate value is a uuid v2', () => {
@@ -35,6 +54,9 @@ describe('isUUID', () => {
     expect(() => isUUID2(uuidV3)).toThrow('Value must be a valid UUID v2');
     expect(() => isUUID2(uuidV4)).toThrow('Value must be a valid UUID v2');
     expect(() => isUUID2(uuidV5)).toThrow('Value must be a valid UUID v2');
+    expect(() => isUUID2(uuidV6)).toThrow('Value must be a valid UUID v2');
+    expect(() => isUUID2(uuidV7)).toThrow('Value must be a valid UUID v2');
+    expect(() => isUUID2(uuidV8)).toThrow('Value must be a valid UUID v2');
   });
 
   it('should validate value is a uuid v3', () => {
@@ -59,5 +81,29 @@ describe('isUUID', () => {
     expect(() => isUUID5(uuidV3)).toThrow('Value must be a valid UUID v5');
     expect(() => isUUID5(uuidV4)).toThrow('Value must be a valid UUID v5');
     expect(isUUID5(uuidV5)).toStrictEqual(uuidV5);
+  });
+
+  it('should validate value is a uuid v6', () => {
+    expect(() => isUUID6(uuidV1)).toThrow('Value must be a valid UUID v6');
+    expect(() => isUUID6(uuidV2)).toThrow('Value must be a valid UUID v6');
+    expect(() => isUUID6(uuidV3)).toThrow('Value must be a valid UUID v6');
+    expect(() => isUUID6(uuidV4)).toThrow('Value must be a valid UUID v6');
+    expect(isUUID6(uuidV6)).toStrictEqual(uuidV6);
+  });
+
+  it('should validate value is a uuid v7', () => {
+    expect(() => isUUID7(uuidV1)).toThrow('Value must be a valid UUID v7');
+    expect(() => isUUID7(uuidV2)).toThrow('Value must be a valid UUID v7');
+    expect(() => isUUID7(uuidV3)).toThrow('Value must be a valid UUID v7');
+    expect(() => isUUID7(uuidV4)).toThrow('Value must be a valid UUID v7');
+    expect(isUUID7(uuidV7)).toStrictEqual(uuidV7);
+  });
+
+  it('should validate value is a uuid v8', () => {
+    expect(() => isUUID8(uuidV1)).toThrow('Value must be a valid UUID v8');
+    expect(() => isUUID8(uuidV2)).toThrow('Value must be a valid UUID v8');
+    expect(() => isUUID8(uuidV3)).toThrow('Value must be a valid UUID v8');
+    expect(() => isUUID8(uuidV4)).toThrow('Value must be a valid UUID v8');
+    expect(isUUID8(uuidV8)).toStrictEqual(uuidV8);
   });
 });
