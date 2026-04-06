@@ -30,4 +30,6 @@ export function isCreditCard(options?: isCreditCard.Options) {
 
 export namespace isCreditCard {
   export interface Options extends ValidationOptions, _IsCreditCardOptions {}
+
+  export type Provider = _IsCreditCardOptions['provider'];
 }

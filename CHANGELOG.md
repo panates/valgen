@@ -1,6 +1,14 @@
 ## Changelog
 
-### [v6.0.1](https://github.com/panates/valgen/compare/v6.0.0...v6.0.1) - 
+### [v6.0.2](https://github.com/panates/valgen/compare/v6.0.1...v6.0.2) - 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Exposed "isPassportNumber.Locale" type @Eray Hanoğlu 
+- refactor: Exposed "isPassportNumber.CountryCode" type @Eray Hanoğlu 
+- refactor: Exposed "isCreditCard.Provider" type @Eray Hanoğlu 
+
+### [v6.0.1](https://github.com/panates/valgen/compare/v6.0.0...v6.0.1) -  6 April 2026 
 
 #### 🛠 Refactoring and Updates
 
