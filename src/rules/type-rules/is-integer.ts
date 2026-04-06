@@ -6,11 +6,11 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is "integer".
- * Converts input value to integer number if coerce option is set to 'true'.
+ * Validates if the value is "integer".
+ * Converts the input value to an integer number if the coerce option is set to 'true'.
  * @validator isInteger
  */
-export function isInteger(options?: ValidationOptions) {
+export function isInteger(options?: isInteger.Options) {
   return validator<number, unknown>(
     'isInteger',
     (input: unknown, context: Context, _this): Nullish<number> => {
@@ -34,4 +34,8 @@ export function isInteger(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isInteger {
+  export interface Options extends ValidationOptions {}
 }

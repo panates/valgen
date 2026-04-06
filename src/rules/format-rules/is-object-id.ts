@@ -6,24 +6,18 @@ import {
   validator,
 } from '../../core/index.js';
 
-export declare interface ObjectIdLike {
-  id: string | Uint8Array;
-
-  toHexString(): string;
-}
-
 /**
  * Validates if value is an "ObjectId".
  * @validator isObjectId
  */
 export function isObjectId(options?: ValidationOptions) {
-  return validator<string | Uint8Array | ObjectIdLike, unknown>(
+  return validator<string | Uint8Array | isObjectId.ObjectIdLike, unknown>(
     'isObjectId',
     (
       input: any,
       context: Context,
       _this,
-    ): Nullish<string | Uint8Array | ObjectIdLike> => {
+    ): Nullish<string | Uint8Array | isObjectId.ObjectIdLike> => {
       if (
         input != null &&
         (_isObjectIdValue(input) ||
@@ -46,4 +40,12 @@ function _isObjectIdValue(input: string | Uint8Array): boolean {
       input.length === 24 &&
       validatorJS.isHexadecimal(input))
   );
+}
+
+export namespace isObjectId {
+  export declare interface ObjectIdLike {
+    id: string | Uint8Array;
+
+    toHexString(): string;
+  }
 }

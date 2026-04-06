@@ -8,13 +8,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface IsURLOptions extends ValidationOptions, _IsURLOptions {}
-
 /**
  * Validates if value is an URL
  * @validator isURL
  */
-export function isURL(options?: IsURLOptions) {
+export function isURL(options?: isURL.Options) {
   return validator<string, string>(
     'isURL',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -29,4 +27,8 @@ export function isURL(options?: IsURLOptions) {
     },
     options,
   );
+}
+
+export namespace isURL {
+  export interface Options extends ValidationOptions, _IsURLOptions {}
 }

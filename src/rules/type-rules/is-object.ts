@@ -10,38 +10,15 @@ import {
   validator,
 } from '../../core/index.js';
 
-export namespace IsObject {
-  export interface Validator<
-    T extends object = object,
-    I = object,
-  > extends Validator_<T, I> {
-    schema: Schema;
-  }
-
-  export type PropertyOptions = { label?: string; as?: string };
-  export type Schema = Record<
-    string | number,
-    Validator_ | [Validator_, PropertyOptions]
-  >;
-
-  export interface Options<T> extends ValidationOptions {
-    name?: string;
-    ctor?: Type<T>;
-    additionalFields?: boolean | Validator_ | 'error';
-    caseInSensitive?: boolean;
-    detectCircular?: boolean;
-  }
-}
-
 /**
- * Validates object according to schema
- * Converts properties according to schema rules if coerce option is set to 'true'.
+ * Validates the object according to schema
+ * Converts properties according to schema rules if the coerce option is set to 'true'.
  * @validator isObject
  */
 export function isObject<T extends object = object, I = object | string>(
-  schema?: IsObject.Schema,
-  options?: IsObject.Options<T>,
-): IsObject.Validator<T, I> {
+  schema?: isObject.Schema,
+  options?: isObject.Options<T>,
+): isObject.Validator<T, I> {
   const ctor = options?.ctor;
   const ctorName = options?.name || ctor?.name;
   const additionalFields = options?.additionalFields ?? !schema;
@@ -50,7 +27,7 @@ export function isObject<T extends object = object, I = object | string>(
   const propertyRules: Record<any, Validator_> = {};
   const propertyOptions: Record<
     any,
-    RequiredSome<IsObject.PropertyOptions, 'as'>
+    RequiredSome<isObject.PropertyOptions, 'as'>
   > = {};
   schema = schema || {};
   const schemaKeys = Object.keys(schema);
@@ -158,8 +135,31 @@ export function isObject<T extends object = object, I = object | string>(
       return out;
     },
     options,
-  ) as unknown as IsObject.Validator<T, I>;
+  ) as unknown as isObject.Validator<T, I>;
 
   _rule.schema = schema;
   return _rule;
+}
+
+export namespace isObject {
+  export interface Validator<
+    T extends object = object,
+    I = object,
+  > extends Validator_<T, I> {
+    schema: Schema;
+  }
+
+  export type PropertyOptions = { label?: string; as?: string };
+  export type Schema = Record<
+    string | number,
+    Validator_ | [Validator_, PropertyOptions]
+  >;
+
+  export interface Options<T> extends ValidationOptions {
+    name?: string;
+    ctor?: Type<T>;
+    additionalFields?: boolean | Validator_ | 'error';
+    caseInSensitive?: boolean;
+    detectCircular?: boolean;
+  }
 }

@@ -5,10 +5,10 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is "null".
+ * Validates if the value is "null".
  * @validator isNull
  */
-export function isNull(options?: ValidationOptions) {
+export function isNull(options?: isNull.Options) {
   return validator<null, unknown>(
     'isNull',
     (input: unknown, context: Context, _this) => {
@@ -19,11 +19,15 @@ export function isNull(options?: ValidationOptions) {
   );
 }
 
+export namespace isNull {
+  export interface Options extends ValidationOptions {}
+}
+
 /**
- * Validates if value is not "null".
+ * Validates if the value is not "null".
  * @validator isNotNull
  */
-export function isNotNull(options?: ValidationOptions) {
+export function isNotNull(options?: isNotNull.Options) {
   return validator(
     'isNotNull',
     (input: unknown, context: Context, _this) => {
@@ -34,11 +38,15 @@ export function isNotNull(options?: ValidationOptions) {
   );
 }
 
+export namespace isNotNull {
+  export interface Options extends ValidationOptions {}
+}
+
 /**
- * Validates if value is "null" or "undefined".
+ * Validates if the value is "null" or "undefined".
  * @validator isNullish
  */
-export function isNullish(options?: ValidationOptions) {
+export function isNullish(options?: isNullish.Options) {
   return validator<null, unknown>(
     'isNullish',
     (input: unknown, context: Context, _this) => {
@@ -49,11 +57,15 @@ export function isNullish(options?: ValidationOptions) {
   );
 }
 
+export namespace isNullish {
+  export interface Options extends ValidationOptions {}
+}
+
 /**
- * Validates if value is not "null" nor "undefined".
+ * Validates if the value is not "null" nor "undefined".
  * @validator isNotNullish
  */
-export function isNotNullish(options?: ValidationOptions) {
+export function isNotNullish(options?: isNotNullish.Options) {
   return validator(
     'isNotNullish',
     (input: unknown, context: Context, _this) => {
@@ -63,4 +75,8 @@ export function isNotNullish(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isNotNullish {
+  export interface Options extends ValidationOptions {}
 }

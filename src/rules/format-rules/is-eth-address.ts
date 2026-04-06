@@ -7,10 +7,10 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a ETH (Ethereum) address.
+ * Validates if value is an ETH (Ethereum) address.
  * @validator isETHAddress
  */
-export function isETHAddress(options?: ValidationOptions) {
+export function isETHAddress(options?: isETHAddress.Options) {
   return validator<string, string>(
     'isETHAddress',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -21,4 +21,8 @@ export function isETHAddress(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isETHAddress {
+  export interface Options extends ValidationOptions {}
 }

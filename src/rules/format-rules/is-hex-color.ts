@@ -10,7 +10,7 @@ import {
  * Validates if value is a Hex Color
  * @validator isHexColor
  */
-export function isHexColor(options?: ValidationOptions) {
+export function isHexColor(options?: isHexColor.Options) {
   return validator<string, string>(
     'isHexColor',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -21,4 +21,8 @@ export function isHexColor(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isHexColor {
+  export interface Options extends ValidationOptions {}
 }

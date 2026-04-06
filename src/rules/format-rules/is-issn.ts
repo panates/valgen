@@ -8,20 +8,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface IsISSNOptions extends ValidationOptions {
-  /**
-   * If set to `true`, ISSNs with a lowercase `x` as the check digit are rejected.
-   *
-   * @default false
-   */
-  caseSensitive?: boolean;
-}
-
 /**
  * Validates if value is an ISSN
  * @validator isISSN
  */
-export function isISSN(options?: IsISSNOptions) {
+export function isISSN(options?: isISSN.Options) {
   const opts: _IsISSNOptions = {
     case_sensitive: options?.caseSensitive,
   };
@@ -35,4 +26,15 @@ export function isISSN(options?: IsISSNOptions) {
     },
     options,
   );
+}
+
+export namespace isISSN {
+  export interface Options extends ValidationOptions {
+    /**
+     * If set to `true`, ISSNs with a lowercase `x` as the check digit are rejected.
+     *
+     * @default false
+     */
+    caseSensitive?: boolean;
+  }
 }

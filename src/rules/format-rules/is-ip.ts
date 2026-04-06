@@ -1,4 +1,4 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, { type IPVersion as _IPVersion } from '@browsery/validator';
 import { type Nullish } from 'ts-gems';
 import {
   type Context,
@@ -10,7 +10,7 @@ import {
  * Validates if value is an IP
  * @validator isIP
  */
-export function isIP(version?: 4 | 6, options?: ValidationOptions) {
+export function isIP(version?: isIP.IPVersion, options?: ValidationOptions) {
   return validator<string, string>(
     'isIP',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -35,7 +35,10 @@ export function isIP(version?: 4 | 6, options?: ValidationOptions) {
  * Validates if value is an IP
  * @validator isIPRange
  */
-export function isIPRange(version?: 4 | 6, options?: ValidationOptions) {
+export function isIPRange(
+  version?: isIPRange.IPVersion,
+  options?: ValidationOptions,
+) {
   return validator<string, string>(
     'isIPRange',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -54,4 +57,12 @@ export function isIPRange(version?: 4 | 6, options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isIP {
+  export type IPVersion = _IPVersion;
+}
+
+export namespace isIPRange {
+  export type IPVersion = _IPVersion;
 }

@@ -10,7 +10,7 @@ import {
  * Validates if value a Lowercase string
  * @validator isLowercase
  */
-export function isLowercase(options?: ValidationOptions) {
+export function isLowercase(options?: isLowercase.Options) {
   return validator<string, string>(
     'isLowercase',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -23,19 +23,6 @@ export function isLowercase(options?: ValidationOptions) {
   );
 }
 
-/**
- * Validates if value a Uppercase string
- * @validator isUppercase
- */
-export function isUppercase(options?: ValidationOptions) {
-  return validator<string, string>(
-    'isUppercase',
-    (input: unknown, context: Context, _this): Nullish<string> => {
-      if (typeof input === 'string' && validatorJS.isUppercase(input)) {
-        return input;
-      }
-      context.fail(_this, `Value must be an uppercase string`, input);
-    },
-    options,
-  );
+export namespace isLowercase {
+  export interface Options extends ValidationOptions {}
 }

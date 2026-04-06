@@ -8,13 +8,13 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is "array" and applies validation for each item.
- * Converts input value to array if coerce option is set to 'true'.
+ * Validates if the value is "array" and applies validation for each item.
+ * Converts input value to array if the coerce option is set to 'true'.
  * @validator isArray
  */
 export function isArray<T, I>(
   itemValidator?: Validator<T, I>,
-  options?: ValidationOptions,
+  options?: isArray.Options,
 ) {
   return validator<T[], I[] | I>(
     'isArray',
@@ -56,4 +56,8 @@ export function isArray<T, I>(
     },
     options,
   );
+}
+
+export namespace isArray {
+  export interface Options extends ValidationOptions {}
 }

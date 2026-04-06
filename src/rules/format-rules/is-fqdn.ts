@@ -8,19 +8,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface IsFQDNOptions extends ValidationOptions {
-  /**
-   * If set to true, the validator will allow domain starting with `*.` (e.g. `*.example.com` or `*.shop.example.com`).
-   * @default false
-   */
-  allowWildcard?: boolean;
-}
-
 /**
  * Validates if value is an FQDN
  * @validator isFQDN
  */
-export function isFQDN(options?: IsFQDNOptions) {
+export function isFQDN(options?: isFQDN.Options) {
   const opts: _IsFQDNOptions = {
     allow_wildcard: options?.allowWildcard,
   };
@@ -34,4 +26,14 @@ export function isFQDN(options?: IsFQDNOptions) {
     },
     options,
   );
+}
+
+export namespace isFQDN {
+  export interface Options extends ValidationOptions {
+    /**
+     * If set to true, the validator will allow domain starting with `*.` (e.g. `*.example.com` or `*.shop.example.com`).
+     * @default false
+     */
+    allowWildcard?: boolean;
+  }
 }

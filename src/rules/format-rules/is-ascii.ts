@@ -10,7 +10,7 @@ import {
  * Check if the string contains ASCII chars only.
  * @validator isAscii
  */
-export function isAscii(options?: ValidationOptions) {
+export function isAscii(options?: isAscii.Options) {
   return validator<string, string>(
     'isAscii',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -19,4 +19,8 @@ export function isAscii(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isAscii {
+  export interface Options extends ValidationOptions {}
 }

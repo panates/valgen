@@ -7,22 +7,22 @@ import {
 } from '../../core/index.js';
 
 /**
- * Check if the string is a hexadecimal number.
- * @validator isHex
+ * Validates if value a Uppercase string
+ * @validator isUppercase
  */
-export function isHex(options?: isHex.Options) {
+export function isUppercase(options?: isUppercase.Options) {
   return validator<string, string>(
-    'isHex',
+    'isUppercase',
     (input: unknown, context: Context, _this): Nullish<string> => {
-      if (typeof input === 'string' && validatorJS.isHexadecimal(input)) {
+      if (typeof input === 'string' && validatorJS.isUppercase(input)) {
         return input;
       }
-      context.fail(_this, `Value must be an hexadecimal string`, input);
+      context.fail(_this, `Value must be an uppercase string`, input);
     },
     options,
   );
 }
 
-export namespace isHex {
+export namespace isUppercase {
   export interface Options extends ValidationOptions {}
 }

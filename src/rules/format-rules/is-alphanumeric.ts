@@ -7,22 +7,22 @@ import {
 } from '../../core/index.js';
 
 /**
- * Check if the string is a hexadecimal number.
- * @validator isHex
+ * Check if the string contains only letters and numbers.
+ * @validator isAlphanumeric
  */
-export function isHex(options?: isHex.Options) {
+export function isAlphanumeric(options?: isAlphanumeric.Options) {
   return validator<string, string>(
-    'isHex',
+    'isAlphanumeric',
     (input: unknown, context: Context, _this): Nullish<string> => {
-      if (typeof input === 'string' && validatorJS.isHexadecimal(input)) {
+      if (typeof input === 'string' && validatorJS.isAlphanumeric(input)) {
         return input;
       }
-      context.fail(_this, `Value must be an hexadecimal string`, input);
+      context.fail(_this, `"Value must be an alphanumeric string`, input);
     },
     options,
   );
 }
 
-export namespace isHex {
+export namespace isAlphanumeric {
   export interface Options extends ValidationOptions {}
 }

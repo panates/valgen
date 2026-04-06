@@ -8,13 +8,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export type UUIDVersion = _UUIDVersion;
-
 /**
  * Validates if value is a "UUID".
  * @validator isUUID
  */
-export function isUUID(version?: UUIDVersion, options?: ValidationOptions) {
+export function isUUID(version?: isUUID.UUIDVersion, options?: isUUID.Options) {
   return validator<string, string>(
     'isUUID',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -33,4 +31,9 @@ export function isUUID(version?: UUIDVersion, options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isUUID {
+  export type UUIDVersion = _UUIDVersion;
+  export interface Options extends ValidationOptions {}
 }

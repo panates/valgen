@@ -10,7 +10,7 @@ import {
  * Validates if value is a port number
  * @validator isPort
  */
-export function isPort(options?: ValidationOptions) {
+export function isPort(options?: isPort.Options) {
   return validator<number, string | number>(
     'isPort',
     (input: unknown, context: Context, _this): Nullish<number> => {
@@ -26,4 +26,8 @@ export function isPort(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isPort {
+  export interface Options extends ValidationOptions {}
 }

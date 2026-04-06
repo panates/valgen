@@ -8,7 +8,7 @@ import {
  * Validates if value is not "undefined" nor "null"
  * @validator isDefined
  */
-export function isDefined(options?: ValidationOptions) {
+export function isDefined(options?: isDefined.Options) {
   return validator<any, unknown>(
     'is-defined',
     (input: unknown, context: Context, _this) => {
@@ -17,4 +17,8 @@ export function isDefined(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isDefined {
+  export interface Options extends ValidationOptions {}
 }

@@ -6,10 +6,10 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is "undefined"
+ * Validates if the value is undefined
  * @validator isUndefined
  */
-export function isUndefined(options?: ValidationOptions) {
+export function isUndefined(options?: isUndefined.Options) {
   return validator<any, unknown>(
     'isUndefined',
     (input: unknown, context: Context, _this): Nullish<any> => {
@@ -19,4 +19,8 @@ export function isUndefined(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isUndefined {
+  export interface Options extends ValidationOptions {}
 }

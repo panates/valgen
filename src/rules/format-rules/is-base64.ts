@@ -8,14 +8,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface Base64ValidatorOptions
-  extends ValidationOptions, _IsBase64Options {}
-
 /**
  * Validates if value is a "Base64" string.
  * @validator isBase64
  */
-export function isBase64(options?: Base64ValidatorOptions) {
+export function isBase64(options?: isBase64.Options) {
   return validator<string, string>(
     'isBase64',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -26,4 +23,8 @@ export function isBase64(options?: Base64ValidatorOptions) {
     },
     options,
   );
+}
+
+export namespace isBase64 {
+  export interface Options extends ValidationOptions, _IsBase64Options {}
 }

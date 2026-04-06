@@ -11,7 +11,7 @@ import {
  * such as `0.1`, `.3`, `1.1`, `1.00003`, `4.0` etc.
  * @validator isDecimal
  */
-export function isDecimal(options?: ValidationOptions) {
+export function isDecimal(options?: isDecimal.Options) {
   return validator<string, string>(
     'isDecimal',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -22,4 +22,8 @@ export function isDecimal(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isDecimal {
+  export interface Options extends ValidationOptions {}
 }

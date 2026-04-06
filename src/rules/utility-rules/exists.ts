@@ -8,7 +8,7 @@ import {
  * Validates if property exists
  * @validator exists
  */
-export function exists(options?: ValidationOptions) {
+export function exists(options?: exists.Options) {
   return validator<any, unknown>(
     'exists',
     (input: unknown, context: Context, _this) => {
@@ -23,4 +23,8 @@ export function exists(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace exists {
+  export interface Options extends ValidationOptions {}
 }

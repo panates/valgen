@@ -4,14 +4,12 @@ import {
   validator,
 } from '../../core/index.js';
 
-type IsEmptyInput = any;
-
 /**
- * Checks if value is an empty. Value should be string, array, set, map or object
+ * Checks if the value is empty. Value should be string, array, set, map or object
  * @validator isEmpty
  */
-export function isEmpty(options?: ValidationOptions) {
-  return validator<IsEmptyInput, IsEmptyInput>(
+export function isEmpty(options?: isEmpty.Options) {
+  return validator<any, any>(
     'isEmpty',
     (input: unknown, context: Context, _this) => {
       if (input == null) return input;
@@ -50,12 +48,16 @@ export function isEmpty(options?: ValidationOptions) {
   );
 }
 
+export namespace isEmpty {
+  export interface Options extends ValidationOptions {}
+}
+
 /**
- * Checks if value is a not empty. Value should be string, array, set, map or object
+ * Checks if the value is not empty. Value should be string, array, set, map or object
  * @validator isNotEmpty
  */
-export function isNotEmpty(options?: ValidationOptions) {
-  return validator<IsEmptyInput, IsEmptyInput>(
+export function isNotEmpty(options?: isNotEmpty.Options) {
+  return validator<any, any>(
     'isNotEmpty',
     (input: unknown, context: Context, _this) => {
       if (input != null) {
@@ -101,4 +103,8 @@ export function isNotEmpty(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isNotEmpty {
+  export interface Options extends ValidationOptions {}
 }
