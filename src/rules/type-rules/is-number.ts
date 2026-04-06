@@ -6,11 +6,11 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is "number".
- * Converts input value to number if coerce option is set to 'true'.
+ * Validates if the value is a number.
+ * Converts input value to number if the coerce option is set to 'true'.
  * @validator isNumber
  */
-export function isNumber(options?: ValidationOptions) {
+export function isNumber(options?: isNumber.Options) {
   return validator<number, unknown>(
     'isNumber',
     (input: unknown, context: Context, _this): Nullish<number> => {
@@ -29,4 +29,8 @@ export function isNumber(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isNumber {
+  export interface Options extends ValidationOptions {}
 }

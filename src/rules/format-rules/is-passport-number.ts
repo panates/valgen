@@ -12,7 +12,7 @@ import {
  */
 export function isPassportNumber(
   countryCode: string,
-  options?: ValidationOptions,
+  options?: isPassportNumber.Options,
 ) {
   return validator<string, string>(
     'isPassportNumber',
@@ -31,4 +31,8 @@ export function isPassportNumber(
     },
     options,
   );
+}
+
+export namespace isPassportNumber {
+  export interface Options extends ValidationOptions {}
 }

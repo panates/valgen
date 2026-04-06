@@ -10,7 +10,7 @@ import {
  * Validates if value a valid JWT token
  * @validator isJWT
  */
-export function isJWT(options?: ValidationOptions) {
+export function isJWT(options?: isJWT.Options) {
   return validator<string, string>(
     'isJWT',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -19,4 +19,8 @@ export function isJWT(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isJWT {
+  export interface Options extends ValidationOptions {}
 }

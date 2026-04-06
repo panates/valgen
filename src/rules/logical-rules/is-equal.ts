@@ -8,7 +8,7 @@ import {
  *
  * @validator isEqual
  */
-export function isEqual<T>(compare: T, options?: ValidationOptions) {
+export function isEqual<T>(compare: T, options?: isEqual.Options) {
   return validator<any, any>(
     'isEqual',
     (input: unknown, context: Context, _this) => {
@@ -21,11 +21,15 @@ export function isEqual<T>(compare: T, options?: ValidationOptions) {
   );
 }
 
+export namespace isEqual {
+  export interface Options extends ValidationOptions {}
+}
+
 /**
  *
  * @validator isNotEqual
  */
-export function isNotEqual(compare: any, options?: ValidationOptions) {
+export function isNotEqual(compare: any, options?: isNotEqual.Options) {
   return validator<any, any>(
     'isNotEqual',
     (input: unknown, context: Context, _this) => {
@@ -37,4 +41,8 @@ export function isNotEqual(compare: any, options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isNotEqual {
+  export interface Options extends ValidationOptions {}
 }

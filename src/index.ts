@@ -1,11 +1,8 @@
 import { Context, ExecutionOptions } from './core/index.js';
-import { DatePrecision } from './rules/index.js';
 import * as vg from './rules/index.js';
 
 export * from './constants.js';
 export * from './core/index.js';
-export type { DatePrecision } from './rules/type-rules/is-date.js';
-export type { IsObject } from './rules/type-rules/is-object.js';
 
 const isAlpha = vg.isAlpha();
 const isAlphanumeric = vg.isAlphanumeric();
@@ -69,18 +66,18 @@ const toDate = vg.isDate({ coerce: true });
 const toDateStringValidators = new Map();
 const toDateString = (
   input: Date | string | number,
-  options?: ExecutionOptions & { trim?: DatePrecision },
+  options?: ExecutionOptions & { trim?: vg.isDateString.Precision },
   ctx?: Context,
 ) => {
-  const trim = options?.trim ?? 'ms';
-  let validator = toDateStringValidators.get(trim);
+  const precisionMax = options?.trim ?? 'ms';
+  let validator = toDateStringValidators.get(precisionMax);
   if (!validator) {
     validator = vg.isDateString({
       coerce: true,
-      precisionMax: trim,
+      precisionMax,
       trim: true,
     });
-    toDateStringValidators.set(trim, validator);
+    toDateStringValidators.set(precisionMax, validator);
   }
   return validator(input, options, ctx);
 };

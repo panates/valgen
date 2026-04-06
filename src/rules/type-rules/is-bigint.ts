@@ -7,10 +7,10 @@ import {
 
 /**
  * Validates if value is "BigInt".
- * Converts input value to number if coerce option is set to 'true'.
+ * Converts input value to number if the coerce option is set to 'true'.
  * @validator isNumber
  */
-export function isBigint(options?: ValidationOptions) {
+export function isBigint(options?: isBigint.Options) {
   return validator<bigint, unknown>(
     'isBigint',
     (input: unknown, context: Context, _this): Nullish<bigint> => {
@@ -26,4 +26,8 @@ export function isBigint(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isBigint {
+  export interface Options extends ValidationOptions {}
 }

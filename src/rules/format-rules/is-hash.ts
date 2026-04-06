@@ -8,13 +8,14 @@ import {
   validator,
 } from '../../core/index.js';
 
-export type HashAlgorithm = _HashAlgorithm;
-
 /**
  * Validates if value a hash of type algorithm
  * @validator isHash
  */
-export function isHash(algorithm: HashAlgorithm, options?: ValidationOptions) {
+export function isHash(
+  algorithm: isHash.HashAlgorithm,
+  options?: ValidationOptions,
+) {
   return validator<string, string>(
     'isHash',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -25,4 +26,8 @@ export function isHash(algorithm: HashAlgorithm, options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isHash {
+  export type HashAlgorithm = _HashAlgorithm;
 }

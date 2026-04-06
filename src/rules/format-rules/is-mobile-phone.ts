@@ -9,26 +9,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface IsMobilePhoneOptions extends ValidationOptions {
-  /**
-   * If this is set to `true`, the mobile phone number must be supplied with the country code and therefore must start with `+`.
-   *
-   * @default false
-   */
-  strictMode?: boolean;
-
-  /**
-   * Locale or locales of the mobile phone
-   * @default 'any'
-   */
-  locale?: 'any' | _MobilePhoneLocale | _MobilePhoneLocale[];
-}
-
 /**
  * Validates if value is a valid Email
  * @validator isMobilePhone
  */
-export function isMobilePhone(options?: IsMobilePhoneOptions) {
+export function isMobilePhone(options?: isMobilePhone.Options) {
   const opts: _IsMobilePhoneOptions = {
     strictMode: options?.strictMode,
   };
@@ -45,4 +30,21 @@ export function isMobilePhone(options?: IsMobilePhoneOptions) {
     },
     options,
   );
+}
+
+export namespace isMobilePhone {
+  export interface Options extends ValidationOptions {
+    /**
+     * If this is set to `true`, the mobile phone number must be supplied with the country code and therefore must start with `+`.
+     *
+     * @default false
+     */
+    strictMode?: boolean;
+
+    /**
+     * Locale or locales of the mobile phone
+     * @default 'any'
+     */
+    locale?: 'any' | _MobilePhoneLocale | _MobilePhoneLocale[];
+  }
 }

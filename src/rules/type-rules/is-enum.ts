@@ -6,15 +6,12 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if given value is one of enum values.
+ * Validates if the given value is one of enum values.
  * @validator isEnum
  */
 export function isEnum<T1>(
   values: any,
-  options?: ValidationOptions & {
-    caseInSensitive?: boolean;
-    enumName?: string;
-  },
+  options?: isEnum.Options,
 ): Validator<T1, any> {
   const caseInSensitive = !!options?.caseInSensitive;
   const enumName = options?.enumName;
@@ -59,4 +56,11 @@ export function isEnum<T1>(
     },
     options,
   );
+}
+
+export namespace isEnum {
+  export interface Options extends ValidationOptions {
+    caseInSensitive?: boolean;
+    enumName?: string;
+  }
 }

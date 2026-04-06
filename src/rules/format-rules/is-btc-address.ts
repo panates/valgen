@@ -10,7 +10,7 @@ import {
  * Validates if value is a BTC address.
  * @validator isBtcAddress
  */
-export function isBtcAddress(options?: ValidationOptions) {
+export function isBtcAddress(options?: isBtcAddress.Options) {
   return validator<string, string>(
     'isBtcAddress',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -21,4 +21,8 @@ export function isBtcAddress(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isBtcAddress {
+  export interface Options extends ValidationOptions {}
 }

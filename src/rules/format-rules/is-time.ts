@@ -5,15 +5,13 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface IsTimeOptions extends ValidationOptions {}
-
 const TIME_PATTERN = /^(\d{2}):?(\d{2})(?::?(\d{2})?(?:\.(\d{1,3}))?)?$/;
 
 /**
  * Validates if value is a time formatted string
  * @validator isTime
  */
-export function isTime(options?: IsTimeOptions) {
+export function isTime(options?: isTime.Options) {
   return validator<string, string | Date>(
     'isTime',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -54,4 +52,8 @@ export function isTime(options?: IsTimeOptions) {
     },
     options,
   );
+}
+
+export namespace isTime {
+  export interface Options extends ValidationOptions {}
 }

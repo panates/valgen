@@ -10,10 +10,10 @@ const FALSE_PATTERN = /^false|f|0|no|n$/i;
 
 /**
  * Validates if value is "boolean".
- * Converts input value to boolean if coerce option is set to 'true'.
+ * Converts input value to boolean if the coerce option is set to 'true'.
  * @validator isBoolean
  */
-export function isBoolean(options?: ValidationOptions) {
+export function isBoolean(options?: isBoolean.Options) {
   return validator<boolean | undefined, unknown>(
     'isBoolean',
     (input: unknown, context: Context, _this): Nullish<boolean> => {
@@ -32,4 +32,8 @@ export function isBoolean(options?: ValidationOptions) {
     },
     options,
   );
+}
+
+export namespace isBoolean {
+  export interface Options extends ValidationOptions {}
 }

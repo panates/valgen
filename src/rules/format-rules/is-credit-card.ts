@@ -8,14 +8,11 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface CreditCardValidatorOptions
-  extends ValidationOptions, _IsCreditCardOptions {}
-
 /**
  * Validates if value is a credit card number
  * @validator isCreditCard
  */
-export function isCreditCard(options?: CreditCardValidatorOptions) {
+export function isCreditCard(options?: isCreditCard.Options) {
   return validator<string, string>(
     'isCreditCard',
     (input: unknown, context: Context, _this): Nullish<string> => {
@@ -29,4 +26,8 @@ export function isCreditCard(options?: CreditCardValidatorOptions) {
     },
     options,
   );
+}
+
+export namespace isCreditCard {
+  export interface Options extends ValidationOptions, _IsCreditCardOptions {}
 }

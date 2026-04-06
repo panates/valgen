@@ -7,17 +7,17 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is an EAN (European Article Number)
- * @validator isEAN
+ * Validates if value is a BIC (Bank Identification Code) or SWIFT code
+ * @validator isSWIFT
  */
-export function isEAN(options?: isEAN.Options) {
+export function isSWIFT(options?: isSWIFT.Options) {
   return validator<string, string>(
-    'isEAN',
+    'isSWIFT',
     (input: unknown, context: Context, _this): Nullish<string> => {
-      if (typeof input === 'string' && validatorJS.isEAN(input)) return input;
+      if (typeof input === 'string' && validatorJS.isBIC(input)) return input;
       context.fail(
         _this,
-        `Value must be a valid EAN (European Article Number)`,
+        `Value must be a valid a BIC (Bank Identification Code) or SWIFT code`,
         input,
       );
     },
@@ -25,6 +25,6 @@ export function isEAN(options?: isEAN.Options) {
   );
 }
 
-export namespace isEAN {
+export namespace isSWIFT {
   export interface Options extends ValidationOptions {}
 }

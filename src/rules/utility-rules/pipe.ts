@@ -6,17 +6,13 @@ import {
   validator,
 } from '../../core/index.js';
 
-export interface PipeOptions extends ValidationOptions {
-  returnIndex?: number;
-}
-
 /**
  *
  * @validator pipe
  */
 export function pipe<T>(
   rules: Validator[],
-  options?: PipeOptions,
+  options?: pipe.Options,
 ): Validator<T> {
   const l = rules.length;
   const returnIndex = options?.returnIndex;
@@ -38,4 +34,10 @@ export function pipe<T>(
     },
     options,
   );
+}
+
+export namespace pipe {
+  export interface Options extends ValidationOptions {
+    returnIndex?: number;
+  }
 }

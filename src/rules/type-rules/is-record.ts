@@ -8,14 +8,14 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates record object according to given "key" and "value" rules
- * Converts properties according to rules if coerce option is set to 'true'.
+ * Validates the record object according to given "key" and "value" rules
+ * Converts properties according to rules if the coerce option is set to 'true'.
  * @validator isRecord
  */
 export function isRecord<TKeys extends string | number | symbol, TValues>(
   keyRule: Validator<TKeys>,
   valueRule: Validator<TValues>,
-  options?: ValidationOptions,
+  options?: isRecord.Options,
 ) {
   return validator<Record<TKeys, TValues>>(
     'isRecord',
@@ -60,4 +60,8 @@ export function isRecord<TKeys extends string | number | symbol, TValues>(
     },
     options,
   );
+}
+
+export namespace isRecord {
+  export interface Options extends ValidationOptions {}
 }

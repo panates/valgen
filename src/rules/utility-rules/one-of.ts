@@ -1,11 +1,19 @@
-import { type Context, type Validator, validator } from '../../core/index.js';
+import {
+  type Context,
+  ValidationOptions,
+  type Validator,
+  validator,
+} from '../../core/index.js';
 
 type DiscriminatorRecord = Record<string, Validator>;
 
 /**
  *
  */
-export function oneOf(rules: (Validator | [Validator, DiscriminatorRecord])[]) {
+export function oneOf(
+  rules: (Validator | [Validator, DiscriminatorRecord])[],
+  options?: oneOf.Options,
+) {
   const l = rules.length;
   return validator('union', (input: any, context: Context, _this): any => {
     let i: number;
@@ -31,7 +39,7 @@ export function oneOf(rules: (Validator | [Validator, DiscriminatorRecord])[]) {
         }
         try {
           for (const k of Object.keys(discriminator)) {
-            discriminator[k](input[k], context);
+            discriminator[k](input[k], context || options);
             if (!passed) break;
           }
           if (!passed) continue;
@@ -41,7 +49,7 @@ export function oneOf(rules: (Validator | [Validator, DiscriminatorRecord])[]) {
       } else c = rules[i] as Validator;
       if (passed)
         try {
-          v = c(input, context);
+          v = c(input, context || options);
           if (passed) break;
         } catch {
           //
@@ -52,4 +60,8 @@ export function oneOf(rules: (Validator | [Validator, DiscriminatorRecord])[]) {
     if (passed) return v;
     context.fail(_this, `Value didn't match one of required rules`, input);
   });
+}
+
+export namespace oneOf {
+  export interface Options extends ValidationOptions {}
 }

@@ -6,33 +6,12 @@ import {
   validator,
 } from '../../core/index.js';
 
-export type DatePrecision =
-  | 'year'
-  | 'yr'
-  | 'month'
-  | 'mo'
-  | 'day'
-  | 'd'
-  | 'hours'
-  | 'hr'
-  | 'minutes'
-  | 'min'
-  | 'seconds'
-  | 'sec'
-  | 'milliseconds'
-  | 'ms'
-  | 'tz';
-
-export interface IsDateOptions extends ValidationOptions {
-  trim?: DatePrecision;
-}
-
 /**
  * Validates if value is a "Date" instance or ISO 8601 formatted date string.
  *  if a `coerce` option is `true`, converts input value to Date instance
  * @validator isDate
  */
-export function isDate(options?: IsDateOptions) {
+export function isDate(options?: isDate.Options) {
   const trim = options?.trim;
   return validator<Date, Date | number | string>(
     'isDate',
@@ -61,19 +40,35 @@ export function isDate(options?: IsDateOptions) {
   );
 }
 
-export interface IsDateStringOptions extends ValidationOptions {
-  precisionMin?: DatePrecision;
-  precisionMax?: DatePrecision;
-  trim?: boolean;
-  timeZone?: boolean | number;
+export namespace isDate {
+  export type Precision =
+    | 'year'
+    | 'yr'
+    | 'month'
+    | 'mo'
+    | 'day'
+    | 'd'
+    | 'hours'
+    | 'hr'
+    | 'minutes'
+    | 'min'
+    | 'seconds'
+    | 'sec'
+    | 'milliseconds'
+    | 'ms'
+    | 'tz';
+
+  export interface Options extends ValidationOptions {
+    trim?: Precision;
+  }
 }
 
 /**
- * Validates if value is DFS (date formatted string).
+ * Validates if value is DFS (date-formatted string).
  * Converts input value to DFS if the "coerce" option is set to 'true'.
  * @validator isDateString
  */
-export function isDateString(options?: IsDateStringOptions) {
+export function isDateString(options?: isDateString.Options) {
   const trim = options?.trim;
   const precisionMax = options?.precisionMax || 'tz';
   const precisionMaxIdx = PRECISION_INDEX[precisionMax] || 8;
@@ -120,6 +115,16 @@ export function isDateString(options?: IsDateStringOptions) {
   );
 }
 
+export namespace isDateString {
+  export type Precision = isDate.Precision;
+  export interface Options extends ValidationOptions {
+    precisionMin?: Precision;
+    precisionMax?: Precision;
+    trim?: boolean;
+    timeZone?: boolean | number;
+  }
+}
+
 // noinspection RegExpUnnecessaryNonCapturingGroup
 const DATE_PATTERN =
   /^(\d{4})(?:-(0[0-9]|1[0-2]))?(?:-([0-2][0-9]|3[0-1]))?(?:[T ](?:([0-1][0-9]|2[0-4]):([0-5][0-9])(?::([0-5][0-9]))?(?:\.(\d{0,6}))?)?((?:[+-](0[0-9]|1[0-2])(?::(\d{2}))?)|Z)?)?$/;
@@ -128,7 +133,7 @@ const DATE_PATTERN2 =
 
 function coerceDateString(
   input: any,
-  trimPrecision?: DatePrecision,
+  trimPrecision?: isDate.Precision,
 ): Nullish<{
   value: string;
   precision: number;
@@ -201,7 +206,7 @@ function coerceDateString(
   };
 }
 
-const PRECISION_INDEX: Record<DatePrecision, number> = {
+const PRECISION_INDEX: Record<isDate.Precision, number> = {
   year: 1,
   yr: 1,
   month: 2,

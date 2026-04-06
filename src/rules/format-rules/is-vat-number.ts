@@ -8,15 +8,13 @@ import {
   validator,
 } from '../../core/index.js';
 
-export type VATCountryCode = _VATCountryCode;
-
 /**
  * Validates if value is a VAT number
  * @validator isVAT
  */
 export function isVATNumber(
-  countryCode: VATCountryCode,
-  options?: ValidationOptions,
+  countryCode: isVATNumber.CountryCode,
+  options?: isVATNumber.Options,
 ) {
   return validator<string, string>(
     'isVATNumber',
@@ -28,4 +26,9 @@ export function isVATNumber(
     },
     options,
   );
+}
+
+export namespace isVATNumber {
+  export type CountryCode = _VATCountryCode;
+  export interface Options extends ValidationOptions {}
 }

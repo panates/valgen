@@ -7,12 +7,12 @@ import {
 } from '../../core/index.js';
 
 /**
- * Makes sub-rule optional
+ * Makes the sub-rule optional
  * @validator optional
  */
 export function optional<T, I>(
   nested: Validator<T, I>,
-  options?: ValidationOptions,
+  options?: optional.Options,
 ) {
   return validator<Nullish<T>, Nullish<I>>(
     'optional',
@@ -22,4 +22,8 @@ export function optional<T, I>(
     },
     options,
   );
+}
+
+export namespace optional {
+  export interface Options extends ValidationOptions {}
 }
