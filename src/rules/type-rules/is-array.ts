@@ -1,11 +1,11 @@
-import {
-  type Context,
+import type {
+  Context,
   ErrorIssue,
-  type Nullish,
-  type ValidationOptions,
-  type Validator,
-  validator,
+  Nullish,
+  ValidationOptions,
+  Validator,
 } from '../../core/index.js';
+import { validator } from '../../core/index.js';
 
 /**
  * Validates if the value is "array" and applies validation for each item.

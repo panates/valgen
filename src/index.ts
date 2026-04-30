@@ -1,8 +1,14 @@
-import { Context, ExecutionOptions } from './core/index.js';
+import type { Type } from 'ts-gems';
+import {
+  Context,
+  type ExecutionOptions,
+  type Validator,
+} from './core/index.js';
 import * as vg from './rules/index.js';
 
 export * from './constants.js';
 export * from './core/index.js';
+const isInstanceOfCache = new WeakMap<Type, Validator>();
 
 const isAlpha = vg.isAlpha();
 const isAlphanumeric = vg.isAlphanumeric();
@@ -27,6 +33,18 @@ const isHex = vg.isHex();
 const isHexColor = vg.isHexColor();
 const isIBAN = vg.isIBAN();
 const isInteger = vg.isInteger();
+const isInstanceOf = <T extends object>(
+  clazz: Type<T>,
+  input: any,
+  options?: vg.isInstanceOf.Options,
+) => {
+  let fn = isInstanceOfCache.get(clazz);
+  if (!fn) {
+    fn = vg.isInstanceOf(clazz);
+    isInstanceOfCache.set(clazz, fn);
+  }
+  return fn(input, options);
+};
 const isIP = vg.isIP();
 const isIPRange = vg.isIPRange();
 const isISSN = vg.isISSN();
@@ -108,6 +126,7 @@ export {
   isHex,
   isHexColor,
   isIBAN,
+  isInstanceOf,
   isInteger,
   isIP,
   isIPRange,

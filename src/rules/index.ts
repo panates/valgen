@@ -44,6 +44,7 @@ export * from './type-rules/is-bigint.js';
 export * from './type-rules/is-boolean.js';
 export * from './type-rules/is-date.js';
 export * from './type-rules/is-enum.js';
+export * from './type-rules/is-instanceof.js';
 export * from './type-rules/is-integer.js';
 export * from './type-rules/is-null.js';
 export * from './type-rules/is-number.js';
