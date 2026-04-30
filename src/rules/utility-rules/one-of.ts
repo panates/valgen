@@ -1,9 +1,9 @@
-import {
-  type Context,
+import type {
+  Context,
   ValidationOptions,
-  type Validator,
-  validator,
+  Validator,
 } from '../../core/index.js';
+import { validator } from '../../core/index.js';
 
 type DiscriminatorRecord = Record<string, Validator>;
 
