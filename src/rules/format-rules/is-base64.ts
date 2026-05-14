@@ -14,7 +14,7 @@ import {
  */
 export function isBase64(options?: isBase64.Options) {
   return validator<string, string>(
-    'isBase64',
+    isBase64.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isBase64(input, options)) {
         return input;

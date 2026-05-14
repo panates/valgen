@@ -10,7 +10,7 @@ import {
  */
 export function exists(options?: exists.Options) {
   return validator<any, unknown>(
-    'exists',
+    exists.name,
     (input: unknown, context: Context, _this) => {
       if (
         input !== undefined ||

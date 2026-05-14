@@ -20,7 +20,7 @@ export function isEmail(options?: isEmail.Options) {
     allow_ip_domain: options?.allowIpDomain,
   };
   return validator<string, string>(
-    'isEmail',
+    isEmail.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         typeof input === 'string' &&

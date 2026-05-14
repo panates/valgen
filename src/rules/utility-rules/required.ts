@@ -15,7 +15,7 @@ export function required<T, I>(
   options?: RequiredValidatorOptions,
 ) {
   return validator<Nullish<T>, I>(
-    'required',
+    required.name,
     (input: I, context: Context, _this): Nullish<T> => {
       if (input == null) input = options?.default;
       if (input == null) {

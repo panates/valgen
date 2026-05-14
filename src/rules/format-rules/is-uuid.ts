@@ -14,7 +14,7 @@ import {
  */
 export function isUUID(version?: isUUID.UUIDVersion, options?: isUUID.Options) {
   return validator<string, string>(
-    'isUUID',
+    isUUID.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         input != null &&

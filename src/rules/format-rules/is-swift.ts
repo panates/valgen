@@ -12,7 +12,7 @@ import {
  */
 export function isSWIFT(options?: isSWIFT.Options) {
   return validator<string, string>(
-    'isSWIFT',
+    isSWIFT.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isBIC(input)) return input;
       context.fail(

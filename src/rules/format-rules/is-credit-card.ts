@@ -14,7 +14,7 @@ import {
  */
 export function isCreditCard(options?: isCreditCard.Options) {
   return validator<string, string>(
-    'isCreditCard',
+    isCreditCard.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         typeof input === 'string' &&

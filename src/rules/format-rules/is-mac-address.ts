@@ -18,7 +18,7 @@ export function isMACAddress(options?: isMACAddress.Options) {
     eui: options?.eui,
   };
   return validator<string, string>(
-    'isMACAddress',
+    isMACAddress.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         input != null &&

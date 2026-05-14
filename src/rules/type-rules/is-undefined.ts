@@ -11,7 +11,7 @@ import {
  */
 export function isUndefined(options?: isUndefined.Options) {
   return validator<any, unknown>(
-    'isUndefined',
+    isUndefined.name,
     (input: unknown, context: Context, _this): Nullish<any> => {
       if (options?.coerce ?? context.coerce) return undefined;
       if (input === undefined) return;

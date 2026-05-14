@@ -12,7 +12,7 @@ import {
  */
 export function isEAN(options?: isEAN.Options) {
   return validator<string, string>(
-    'isEAN',
+    isEAN.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isEAN(input)) return input;
       context.fail(

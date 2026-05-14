@@ -10,7 +10,7 @@ import {
  */
 export function isDefined(options?: isDefined.Options) {
   return validator<any, unknown>(
-    'is-defined',
+    isDefined.name,
     (input: unknown, context: Context, _this) => {
       if (input !== undefined) return input;
       context.fail(_this, `Value must be defined`, input);

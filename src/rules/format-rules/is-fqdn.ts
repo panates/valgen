@@ -17,7 +17,7 @@ export function isFQDN(options?: isFQDN.Options) {
     allow_wildcard: options?.allowWildcard,
   };
   return validator<string, string>(
-    'isFQDN',
+    isFQDN.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isFQDN(input, opts)) {
         return input;

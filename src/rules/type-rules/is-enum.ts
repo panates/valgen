@@ -33,7 +33,7 @@ export function isEnum<T1>(
   );
 
   return validator<any>(
-    'isEnum',
+    isEnum.name,
     (input: any, context: Context, _this) => {
       if (
         input != null &&

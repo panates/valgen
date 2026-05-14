@@ -51,7 +51,7 @@ export function isObject<T extends object = object, I = object | string>(
   }
 
   const _rule = validator<T, object>(
-    'isObject',
+    isObject.name,
     (
       input: any,
       context: Context & { circMap?: Map<object, object> },

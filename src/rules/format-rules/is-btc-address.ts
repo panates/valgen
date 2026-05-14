@@ -12,7 +12,7 @@ import {
  */
 export function isBtcAddress(options?: isBtcAddress.Options) {
   return validator<string, string>(
-    'isBtcAddress',
+    isBtcAddress.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isBtcAddress(input)) {
         return input;

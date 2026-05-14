@@ -16,7 +16,7 @@ export function isGte<T extends range.Input>(
   options?: isGte.Options,
 ): Validator<T> {
   return validator<T>(
-    'isGte',
+    isGte.name,
     (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof minValue === 'number' || typeof minValue === 'bigint') &&

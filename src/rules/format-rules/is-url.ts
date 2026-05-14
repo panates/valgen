@@ -14,7 +14,7 @@ import {
  */
 export function isURL(options?: isURL.Options) {
   return validator<string, string>(
-    'isURL',
+    isURL.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         input != null &&

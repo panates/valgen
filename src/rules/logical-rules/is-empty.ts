@@ -10,7 +10,7 @@ import {
  */
 export function isEmpty(options?: isEmpty.Options) {
   return validator<any, any>(
-    'isEmpty',
+    isEmpty.name,
     (input: unknown, context: Context, _this) => {
       if (input == null) return input;
       if (typeof input === 'string') {

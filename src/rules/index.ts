@@ -57,6 +57,7 @@ export * from './utility-rules/all-of.js';
 export * from './utility-rules/exists.js';
 export * from './utility-rules/fixed.js';
 export * from './utility-rules/get-length.js';
+export * from './utility-rules/nullable.js';
 export * from './utility-rules/one-of.js';
 export * from './utility-rules/optional.js';
 export * from './utility-rules/pipe.js';

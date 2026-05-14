@@ -16,7 +16,7 @@ export function isInstanceOf<T extends object>(
   options?: isInstanceOf.Options,
 ) {
   return validator<T, unknown>(
-    'isInstanceOf',
+    isInstanceOf.name,
     (input: unknown, context: Context, _this): Nullish<any> => {
       if ((options?.coerce ?? context.coerce) && isPlainObject(input)) {
         Object.setPrototypeOf(input, clazz.prototype);

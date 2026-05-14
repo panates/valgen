@@ -17,7 +17,7 @@ export function isHash(
   options?: ValidationOptions,
 ) {
   return validator<string, string>(
-    'isHash',
+    isHash.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isHash(input, algorithm)) {
         return input;

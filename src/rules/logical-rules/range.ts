@@ -15,7 +15,7 @@ export function range<T extends range.Input>(
   options?: range.Options,
 ) {
   return validator<T>(
-    'range',
+    range.name,
     (input: range.Input, context: Context, _this): Nullish<T> => {
       if (
         (typeof minValue === 'number' || typeof minValue === 'bigint') &&

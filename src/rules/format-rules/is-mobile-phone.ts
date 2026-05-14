@@ -18,7 +18,7 @@ export function isMobilePhone(options?: isMobilePhone.Options) {
     strictMode: options?.strictMode,
   };
   return validator<string, string>(
-    'isMobilePhone',
+    isMobilePhone.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         typeof input === 'string' &&

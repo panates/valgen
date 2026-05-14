@@ -1,4 +1,4 @@
-import type { Nullish } from 'ts-gems';
+import type { Maybe } from 'ts-gems';
 import {
   type Context,
   type ValidationOptions,
@@ -14,10 +14,10 @@ export function optional<T, I>(
   nested: Validator<T, I>,
   options?: optional.Options,
 ) {
-  return validator<Nullish<T>, Nullish<I>>(
-    'optional',
-    (input: Nullish<I>, context: Context): Nullish<T> => {
-      if (input == null) return input as any;
+  return validator<Maybe<T>, Maybe<I>>(
+    optional.name,
+    (input: Maybe<I>, context: Context): Maybe<T> => {
+      if (input === undefined) return input as any;
       return nested(input as I, context) as T;
     },
     options,

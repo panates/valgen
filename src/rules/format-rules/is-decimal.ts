@@ -13,7 +13,7 @@ import {
  */
 export function isDecimal(options?: isDecimal.Options) {
   return validator<string, string>(
-    'isDecimal',
+    isDecimal.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isDecimal(input)) {
         return input;

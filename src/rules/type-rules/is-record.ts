@@ -18,7 +18,7 @@ export function isRecord<TKeys extends string | number | symbol, TValues>(
   options?: isRecord.Options,
 ) {
   return validator<Record<TKeys, TValues>>(
-    'isRecord',
+    isRecord.name,
     (
       input: object | undefined,
       context: Context,

@@ -13,7 +13,7 @@ export function matches(format: string | RegExp, options?: matches.Options) {
   const regExp = format instanceof RegExp ? format : new RegExp(format);
   const formatName = options?.formatName;
   return validator<string, string>(
-    'matches',
+    matches.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (input == null) return;
       if (typeof input === 'string' && regExp.test(input)) return input;

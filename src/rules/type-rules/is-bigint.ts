@@ -12,7 +12,7 @@ import {
  */
 export function isBigint(options?: isBigint.Options) {
   return validator<bigint, unknown>(
-    'isBigint',
+    isBigint.name,
     (input: unknown, context: Context, _this): Nullish<bigint> => {
       const coerce = options?.coerce ?? context.coerce;
       if (typeof input === 'bigint') return input;

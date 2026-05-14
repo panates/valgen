@@ -12,7 +12,7 @@ import {
  */
 export function isAscii(options?: isAscii.Options) {
   return validator<string, string>(
-    'isAscii',
+    isAscii.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isAscii(input)) return input;
       context.fail(_this, `Value must be an ascii string`, input);

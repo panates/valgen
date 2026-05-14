@@ -16,7 +16,7 @@ export function isLte<T extends range.Input>(
   options?: isLte.Options,
 ): Validator {
   return validator<T>(
-    'isLte',
+    isLte.name,
     (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof maxValue === 'number' || typeof maxValue === 'bigint') &&

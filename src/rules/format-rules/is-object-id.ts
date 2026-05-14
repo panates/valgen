@@ -12,7 +12,7 @@ import {
  */
 export function isObjectId(options?: ValidationOptions) {
   return validator<string | Uint8Array | isObjectId.ObjectIdLike, unknown>(
-    'isObjectId',
+    isObjectId.name,
     (
       input: any,
       context: Context,

@@ -12,7 +12,7 @@ import {
  */
 export function isLowercase(options?: isLowercase.Options) {
   return validator<string, string>(
-    'isLowercase',
+    isLowercase.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isLowercase(input)) {
         return input;

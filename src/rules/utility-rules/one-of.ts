@@ -15,7 +15,7 @@ export function oneOf(
   options?: oneOf.Options,
 ) {
   const l = rules.length;
-  return validator('union', (input: any, context: Context, _this): any => {
+  return validator(oneOf.name, (input: any, context: Context, _this): any => {
     let i: number;
     let c: Validator;
     let discriminator: DiscriminatorRecord | undefined;

@@ -12,7 +12,7 @@ import {
  */
 export function isPort(options?: isPort.Options) {
   return validator<number, string | number>(
-    'isPort',
+    isPort.name,
     (input: unknown, context: Context, _this): Nullish<number> => {
       if (typeof input === 'number') input = String(input);
       if (

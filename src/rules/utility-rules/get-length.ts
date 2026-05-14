@@ -13,7 +13,7 @@ type ExtractLengthInput =
  */
 export function getLength() {
   return validator<number, ExtractLengthInput>(
-    'getLength',
+    getLength.name,
     (input: any, context: Context, _this): Nullish<number> => {
       if (typeof input === 'string') return input.length;
       if (Array.isArray(input)) return input.length;

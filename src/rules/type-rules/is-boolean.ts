@@ -15,7 +15,7 @@ const FALSE_PATTERN = /^false|f|0|no|n$/i;
  */
 export function isBoolean(options?: isBoolean.Options) {
   return validator<boolean | undefined, unknown>(
-    'isBoolean',
+    isBoolean.name,
     (input: unknown, context: Context, _this): Nullish<boolean> => {
       const coerce = options?.coerce ?? context.coerce;
       let output: any = input;

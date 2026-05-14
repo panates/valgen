@@ -10,7 +10,7 @@ import {
  */
 export function isNull(options?: isNull.Options) {
   return validator<null, unknown>(
-    'isNull',
+    isNull.name,
     (input: unknown, context: Context, _this) => {
       if (input === null) return input;
       context.fail(_this, `Value must be null`, input);
@@ -29,7 +29,7 @@ export namespace isNull {
  */
 export function isNotNull(options?: isNotNull.Options) {
   return validator(
-    'isNotNull',
+    isNotNull.name,
     (input: unknown, context: Context, _this) => {
       if (input !== null) return input;
       context.fail(_this, `{{label}} is null`, input);
@@ -48,7 +48,7 @@ export namespace isNotNull {
  */
 export function isNullish(options?: isNullish.Options) {
   return validator<null, unknown>(
-    'isNullish',
+    isNullish.name,
     (input: unknown, context: Context, _this) => {
       if (input == null) return input;
       context.fail(_this, `{{label}} is not nullish`, input);
@@ -67,7 +67,7 @@ export namespace isNullish {
  */
 export function isNotNullish(options?: isNotNullish.Options) {
   return validator(
-    'isNotNullish',
+    isNotNullish.name,
     (input: unknown, context: Context, _this) => {
       if (input != null) return input;
       if (input === null) context.fail(_this, `{{label}} is null`, input);

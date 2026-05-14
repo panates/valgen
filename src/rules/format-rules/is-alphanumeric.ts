@@ -12,7 +12,7 @@ import {
  */
 export function isAlphanumeric(options?: isAlphanumeric.Options) {
   return validator<string, string>(
-    'isAlphanumeric',
+    isAlphanumeric.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isAlphanumeric(input)) {
         return input;
