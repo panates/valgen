@@ -15,7 +15,7 @@ export function isGt<T extends range.Input>(
   minValue: T,
   options?: isGt.Options,
 ): Validator {
-  return validator<T, T>(
+  return validator<T>(
     'isGt',
     (input: T, context: Context, _this): Nullish<T> => {
       if (

@@ -2,7 +2,6 @@ import { expect } from 'expect';
 import {
   forwardRef,
   isNumber,
-  IsObject,
   isString,
   postValidation,
   preValidation,
@@ -20,11 +19,11 @@ class Person {
   declare address?: Address;
 }
 
-const addressDef: IsObject.Schema = {
+const addressDef: vg.isObject.Schema = {
   city: [vg.optional(isString), { label: 'City' }],
   country: [vg.required(isString), { label: 'Country' }],
 };
-const personDef: IsObject.Schema = {
+const personDef: vg.isObject.Schema = {
   name: [vg.required(isString), { label: 'Full Name', as: 'fullName' }],
   age: [vg.required(isNumber), { label: 'Age' }],
   address: vg.optional(vg.isObject(addressDef, { ctor: Address })),

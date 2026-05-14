@@ -15,7 +15,7 @@ export function isLte<T extends range.Input>(
   maxValue: T,
   options?: isLte.Options,
 ): Validator {
-  return validator<T, T>(
+  return validator<T>(
     'isLte',
     (input: T, context: Context, _this): Nullish<T> => {
       if (

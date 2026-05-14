@@ -55,6 +55,7 @@ export * from './type-rules/is-tuple.js';
 export * from './type-rules/is-undefined.js';
 export * from './utility-rules/all-of.js';
 export * from './utility-rules/exists.js';
+export * from './utility-rules/fixed.js';
 export * from './utility-rules/get-length.js';
 export * from './utility-rules/one-of.js';
 export * from './utility-rules/optional.js';
