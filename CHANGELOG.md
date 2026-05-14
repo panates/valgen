@@ -1,6 +1,16 @@
 ## Changelog
 
-### [v6.1.0](https://github.com/panates/valgen/compare/v6.0.3...v6.1.0) - 
+### [v6.2.0](https://github.com/panates/valgen/compare/v6.1.0...v6.2.0) - 
+
+#### 🚀 New Features
+
+- feat: Added `fixed` validator @Eray Hanoğlu 
+
+#### 🛠 Refactoring and Updates
+
+- refactor: Replaced hardcoded validator names with function names, added nullable validator and tests @Eray Hanoğlu 
+
+### [v6.1.0](https://github.com/panates/valgen/compare/v6.0.3...v6.1.0) -  30 April 2026 
 
 #### 🚀 New Features
 
