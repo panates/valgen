@@ -12,7 +12,7 @@ import {
  */
 export function isUppercase(options?: isUppercase.Options) {
   return validator<string, string>(
-    'isUppercase',
+    isUppercase.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isUppercase(input)) {
         return input;

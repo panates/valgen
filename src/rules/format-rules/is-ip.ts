@@ -12,7 +12,7 @@ import {
  */
 export function isIP(version?: isIP.IPVersion, options?: ValidationOptions) {
   return validator<string, string>(
-    'isIP',
+    isIP.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         input != null &&
@@ -40,7 +40,7 @@ export function isIPRange(
   options?: ValidationOptions,
 ) {
   return validator<string, string>(
-    'isIPRange',
+    isIPRange.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         input != null &&

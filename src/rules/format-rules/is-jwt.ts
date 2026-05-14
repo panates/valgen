@@ -12,7 +12,7 @@ import {
  */
 export function isJWT(options?: isJWT.Options) {
   return validator<string, string>(
-    'isJWT',
+    isJWT.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isJWT(input)) return input;
       context.fail(_this, `Value must be valid JWT token`, input);

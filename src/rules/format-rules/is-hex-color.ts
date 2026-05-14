@@ -12,7 +12,7 @@ import {
  */
 export function isHexColor(options?: isHexColor.Options) {
   return validator<string, string>(
-    'isHexColor',
+    isHexColor.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isHexColor(input)) {
         return input;

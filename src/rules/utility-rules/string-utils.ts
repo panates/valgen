@@ -29,7 +29,7 @@ export function stringReplace(
 );
 export function stringReplace(searchValue: any, replacer: any) {
   return validator<string>(
-    'stringReplace',
+    stringReplace.name,
     (input: unknown): Nullish<string> => {
       if (input == null) return input;
       return String(input).replace(searchValue, replacer);
@@ -47,7 +47,7 @@ export function stringSplit(
   limit?: number,
 );
 export function stringSplit(splitter: any, limit: any) {
-  return validator<string[], string>('stringSplit', (input: unknown) => {
+  return validator<string[], string>(stringSplit.name, (input: unknown) => {
     if (input == null) return input;
     return String(input).split(splitter, limit);
   });
@@ -58,7 +58,7 @@ export function stringSplit(splitter: any, limit: any) {
  * @validator trim
  */
 export function trim() {
-  return validator<string, string>('trim', (input: unknown) => {
+  return validator<string, string>(trim.name, (input: unknown) => {
     if (input == null) return input;
     return String(input).trim();
   });
@@ -70,15 +70,15 @@ export function trim() {
  * Removes whitespace from the end of a string
  * @validator trimEnd
  */
-export const trimEnd = () => trimEndRule;
-
-const trimEndRule = validator<string, string>(
-  'trimEnd',
-  (input: unknown): Nullish<string> => {
-    if (input == null) return input;
-    return String(input).trimEnd();
-  },
-);
+export function trimEnd() {
+  return validator<string, string>(
+    trimEnd.name,
+    (input: unknown): Nullish<string> => {
+      if (input == null) return input;
+      return String(input).trimEnd();
+    },
+  );
+}
 
 // *************************************************************
 
@@ -86,12 +86,12 @@ const trimEndRule = validator<string, string>(
  * Removes whitespace from the beginning of a string
  * @validator trimStart
  */
-export const trimStart = () => trimStartRule;
-
-const trimStartRule = validator<string, string>(
-  'trimStart',
-  (input: unknown): Nullish<string> => {
-    if (input == null) return input;
-    return String(input).trimStart();
-  },
-);
+export function trimStart() {
+  return validator<string, string>(
+    trimStart.name,
+    (input: unknown): Nullish<string> => {
+      if (input == null) return input;
+      return String(input).trimStart();
+    },
+  );
+}

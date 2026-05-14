@@ -17,7 +17,7 @@ export function isVATNumber(
   options?: isVATNumber.Options,
 ) {
   return validator<string, string>(
-    'isVATNumber',
+    isVATNumber.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isVAT(input, countryCode)) {
         return input;

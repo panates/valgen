@@ -12,7 +12,7 @@ import {
  */
 export function isETHAddress(options?: isETHAddress.Options) {
   return validator<string, string>(
-    'isETHAddress',
+    isETHAddress.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isEthereumAddress(input)) {
         return input;

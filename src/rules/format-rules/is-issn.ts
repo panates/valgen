@@ -17,7 +17,7 @@ export function isISSN(options?: isISSN.Options) {
     case_sensitive: options?.caseSensitive,
   };
   return validator<string, string>(
-    'isISSN',
+    isISSN.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isISSN(input, opts)) {
         return input;

@@ -15,7 +15,7 @@ export function isPassportNumber(
   options?: isPassportNumber.Options,
 ) {
   return validator<string, string>(
-    'isPassportNumber',
+    isPassportNumber.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (
         typeof input === 'string' &&

@@ -12,7 +12,7 @@ import {
  */
 export function isIBAN(options?: isIBAN.Options) {
   return validator<string, string>(
-    'isIBAN',
+    isIBAN.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isIBAN(input)) return input;
       context.fail(

@@ -17,7 +17,7 @@ export function pipe<T>(
   const l = rules.length;
   const returnIndex = options?.returnIndex;
   return validator<T, any>(
-    'pipe',
+    pipe.name,
     (input: unknown, context: Context): Nullish<T> => {
       let i: number;
       let c: Validator;

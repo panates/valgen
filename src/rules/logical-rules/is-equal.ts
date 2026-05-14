@@ -10,7 +10,7 @@ import {
  */
 export function isEqual<T>(compare: T, options?: isEqual.Options) {
   return validator<any, any>(
-    'isEqual',
+    isEqual.name,
     (input: unknown, context: Context, _this) => {
       if (input == null) return input;
       if (input !== compare)
@@ -31,7 +31,7 @@ export namespace isEqual {
  */
 export function isNotEqual(compare: any, options?: isNotEqual.Options) {
   return validator<any, any>(
-    'isNotEqual',
+    isNotEqual.name,
     (input: unknown, context: Context, _this) => {
       if (input == null) return input;
       if (input === compare) {

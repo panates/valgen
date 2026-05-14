@@ -67,7 +67,7 @@ export function isTuple<T1, I1, T2, I2, T3, I3, T4, I4, T5, I5, T6, I6>(
 >;
 export function isTuple(items: Validator[], options?: ValidationOptions) {
   return validator<any>(
-    'isTuple',
+    isTuple.name,
     (input: unknown, context: Context, _this) => {
       const coerce = options?.coerce ?? context.coerce;
       let output: any = input;

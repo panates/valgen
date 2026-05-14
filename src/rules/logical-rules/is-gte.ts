@@ -14,9 +14,9 @@ import type { range } from './range.js';
 export function isGte<T extends range.Input>(
   minValue: T,
   options?: isGte.Options,
-): Validator<T, T> {
-  return validator<T, T>(
-    'isGte',
+): Validator<T> {
+  return validator<T>(
+    isGte.name,
     (input: T, context: Context, _this): Nullish<T> => {
       if (
         (typeof minValue === 'number' || typeof minValue === 'bigint') &&

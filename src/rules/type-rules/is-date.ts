@@ -14,7 +14,7 @@ import {
 export function isDate(options?: isDate.Options) {
   const trim = options?.trim;
   return validator<Date, Date | number | string>(
-    'isDate',
+    isDate.name,
     (input: any, context: Context, _this) => {
       const coerce = options?.coerce ?? context.coerce;
       let d: Date | undefined;
@@ -81,7 +81,7 @@ export function isDateString(options?: isDateString.Options) {
     PRECISION_INDEX_VALUES.indexOf(precisionMinIdx)
   ] || precisionMin) as any;
   return validator<string, Date | number | string>(
-    'isDateString',
+    isDateString.name,
     (input: any, context: Context, _this): Nullish<string> => {
       const coerce = options?.coerce ?? context.coerce;
       const parsed = coerceDateString(input, trim ? precisionMax : undefined);

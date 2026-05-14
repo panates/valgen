@@ -12,7 +12,7 @@ import {
  */
 export function isHex(options?: isHex.Options) {
   return validator<string, string>(
-    'isHex',
+    isHex.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isHexadecimal(input)) {
         return input;

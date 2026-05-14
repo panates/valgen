@@ -12,7 +12,7 @@ import {
  */
 export function isAlpha(options?: isAlpha.Options) {
   return validator<string, string>(
-    'isAlpha',
+    isAlpha.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (typeof input === 'string' && validatorJS.isAlpha(input)) return input;
       context.fail(_this, `"Value must be an alpha string`, input);

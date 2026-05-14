@@ -17,7 +17,7 @@ export function isArray<T, I>(
   options?: isArray.Options,
 ) {
   return validator<T[], I[] | I>(
-    'isArray',
+    isArray.name,
     (input: unknown, context: Context, _this): Nullish<T[]> => {
       const coerce = options?.coerce ?? context.coerce;
       let output: any = input;

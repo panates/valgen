@@ -12,7 +12,7 @@ import {
  */
 export function isNumber(options?: isNumber.Options) {
   return validator<number, unknown>(
-    'isNumber',
+    isNumber.name,
     (input: unknown, context: Context, _this): Nullish<number> => {
       const coerce = options?.coerce ?? context.coerce;
       let output: any = input;

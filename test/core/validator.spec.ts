@@ -3,7 +3,7 @@ import {
   isNumber,
   kOptions,
   kValidatorFn,
-  ValidationOptions,
+  type ValidationOptions,
   validator,
 } from 'valgen';
 

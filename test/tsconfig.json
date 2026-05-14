@@ -4,7 +4,6 @@
   "compilerOptions": {
     "types": ["node", "mocha"],
     "sourceMap": true,
-    "baseUrl": "./",
     "paths": {
       "valgen": ["../src/index.js"]
     }

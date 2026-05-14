@@ -12,7 +12,7 @@ import {
  */
 export function isString(options?: isString.Options) {
   return validator<string, unknown>(
-    'isString',
+    isString.name,
     (input: any, context: Context, _this): Nullish<string> => {
       const coerce = options?.coerce ?? context.coerce;
       let output: any = input;

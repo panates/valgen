@@ -13,7 +13,7 @@ export function allOf<T = any>(
   rules: Validator[],
   options?: allOf.Options,
 ): Validator<T> {
-  return validator('allOf', (input: any, context: Context): any => {
+  return validator(allOf.name, (input: any, context: Context): any => {
     let i: number;
     let c: Validator;
     const l = rules.length;

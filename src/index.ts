@@ -8,6 +8,7 @@ import * as vg from './rules/index.js';
 
 export * from './constants.js';
 export * from './core/index.js';
+export * from './core/types.js';
 const isInstanceOfCache = new WeakMap<Type, Validator>();
 
 const isAlpha = vg.isAlpha();

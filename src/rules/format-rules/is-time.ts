@@ -13,7 +13,7 @@ const TIME_PATTERN = /^(\d{2}):?(\d{2})(?::?(\d{2})?(?:\.(\d{1,3}))?)?$/;
  */
 export function isTime(options?: isTime.Options) {
   return validator<string, string | Date>(
-    'isTime',
+    isTime.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (input != null) {
         const coerce = options?.coerce ?? context.coerce;
