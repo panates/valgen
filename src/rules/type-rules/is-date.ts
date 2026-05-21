@@ -84,7 +84,10 @@ export function isDateString(options?: isDateString.Options) {
     isDateString.name,
     (input: any, context: Context, _this): Nullish<string> => {
       const coerce = options?.coerce ?? context.coerce;
-      const parsed = coerceDateString(input, trim ? precisionMax : undefined);
+      const parsed = coerceDateString(input, {
+        trimPrecision: trim ? precisionMax : undefined,
+        separators: options?.separators,
+      });
       if (parsed) {
         if (parsed.precision < precisionMinIdx) {
           context.fail(
@@ -121,7 +124,7 @@ export namespace isDateString {
     precisionMin?: Precision;
     precisionMax?: Precision;
     trim?: boolean;
-    timeZone?: boolean | number;
+    separators?: boolean;
   }
 }
 
@@ -133,11 +136,16 @@ const DATE_PATTERN2 =
 
 function coerceDateString(
   input: any,
-  trimPrecision?: isDate.Precision,
+  options: {
+    trimPrecision?: isDate.Precision;
+    separators?: boolean;
+  } = {},
 ): Nullish<{
   value: string;
   precision: number;
 }> {
+  const { trimPrecision } = options;
+  const separators = options.separators ?? true;
   const precisionIndex =
     (trimPrecision ? PRECISION_INDEX[trimPrecision] : 9) || 9;
   let dateParts: (string | undefined)[] | undefined;
@@ -193,11 +201,16 @@ function coerceDateString(
   detectedPrecision = dateParts[7] ? 8 : dateParts.findIndex(v => !v);
   if (detectedPrecision < 0) detectedPrecision = Math.min(dateParts.length, 8);
   let value = dateParts[0] || '0000';
-  if (precisionIndex > 1) value += '-' + (dateParts[1] || '01');
-  if (precisionIndex > 2) value += '-' + (dateParts[2] || '01');
-  if (precisionIndex > 3) value += 'T' + (dateParts[3] || '00');
-  if (precisionIndex > 4) value += ':' + (dateParts[4] || '00');
-  if (precisionIndex > 5) value += ':' + (dateParts[5] || '00');
+  if (precisionIndex > 1)
+    value += (separators ? '-' : '') + (dateParts[1] || '01');
+  if (precisionIndex > 2)
+    value += (separators ? '-' : '') + (dateParts[2] || '01');
+  if (precisionIndex > 3)
+    value += (separators ? 'T' : '') + (dateParts[3] || '00');
+  if (precisionIndex > 4)
+    value += (separators ? ':' : '') + (dateParts[4] || '00');
+  if (precisionIndex > 5)
+    value += (separators ? ':' : '') + (dateParts[5] || '00');
   if (precisionIndex > 6) value += dateParts[6] ? '.' + dateParts[6] : '';
   if (precisionIndex > 7) value += dateParts[7] || '';
   return {

@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v6.2.0](https://github.com/panates/valgen/compare/v6.1.0...v6.2.0) - 
+### [v6.2.1](https://github.com/panates/valgen/compare/v6.2.0...v6.2.1) - 
+
+#### 🚀 New Features
+
+- feat: Added `separators` option to `isDateString`, updated logic and tests for custom separator handling @Eray Hanoğlu 
+
+### [v6.2.0](https://github.com/panates/valgen/compare/v6.1.0...v6.2.0) -  14 May 2026 
 
 #### 🚀 New Features
 
