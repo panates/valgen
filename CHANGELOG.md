@@ -1,6 +1,12 @@
 ## Changelog
 
-### [v6.2.1](https://github.com/panates/valgen/compare/v6.2.0...v6.2.1) - 
+### [v6.2.2](https://github.com/panates/valgen/compare/v6.2.1...v6.2.2) - 
+
+#### 🚀 New Features
+
+- feat: Add `separators` option to `toDateString` for enhanced formatting customization @Eray Hanoğlu 
+
+### [v6.2.1](https://github.com/panates/valgen/compare/v6.2.0...v6.2.1) -  21 May 2026 
 
 #### 🚀 New Features
 
