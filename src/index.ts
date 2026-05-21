@@ -85,7 +85,10 @@ const toDate = vg.isDate({ coerce: true });
 const toDateStringValidators = new Map();
 const toDateString = (
   input: Date | string | number,
-  options?: ExecutionOptions & { trim?: vg.isDateString.Precision },
+  options?: ExecutionOptions & {
+    trim?: vg.isDateString.Precision;
+    separators?: boolean;
+  },
   ctx?: Context,
 ) => {
   const precisionMax = options?.trim ?? 'ms';
@@ -95,6 +98,7 @@ const toDateString = (
       coerce: true,
       precisionMax,
       trim: true,
+      separators: options?.separators,
     });
     toDateStringValidators.set(precisionMax, validator);
   }
