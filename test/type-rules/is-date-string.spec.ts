@@ -148,4 +148,16 @@ describe('isDateString', () => {
       vg.isDateString({ coerce: true, precisionMax: 'tz', trim: true })(d),
     ).toEqual('2020-11-01T10:23:45.123+03:00');
   });
+
+  it('should hide seperators', () => {
+    const d = new Date('2020-11-01T10:23:45.123');
+    expect(
+      vg.isDateString({
+        coerce: true,
+        separators: false,
+        trim: true,
+        precisionMax: 'ms',
+      })(d),
+    ).toEqual('20201101102345.123');
+  });
 });
