@@ -152,6 +152,7 @@ function coerceDateString(
   let detectedPrecision: number;
   if (input instanceof Date || typeof input === 'number') {
     const d = typeof input === 'number' ? new Date(input) : input;
+    if (!datefns.isValid(d)) return;
     dateParts = [
       String(d.getFullYear()).padStart(4, '0'),
       String(d.getMonth() + 1).padStart(2, '0'),
@@ -241,29 +242,35 @@ const PRECISION_INDEX_VALUES = Object.values(PRECISION_INDEX);
 
 function setPrecision(d: Date, precision?: string) {
   switch (precision) {
-    case 'year': {
+    case 'year':
+    case 'yr': {
       d.setMonth(0, 1);
       d.setHours(0, 0, 0, 0);
       break;
     }
-    case 'month': {
+    case 'month':
+    case 'mo': {
       d.setDate(1);
       d.setHours(0, 0, 0, 0);
       break;
     }
-    case 'day': {
+    case 'day':
+    case 'd': {
       d.setHours(0, 0, 0, 0);
       break;
     }
-    case 'hours': {
+    case 'hours':
+    case 'hr': {
       d.setMinutes(0, 0, 0);
       break;
     }
-    case 'minutes': {
+    case 'minutes':
+    case 'min': {
       d.setSeconds(0, 0);
       break;
     }
-    case 'seconds': {
+    case 'seconds':
+    case 'sec': {
       d.setMilliseconds(0);
       break;
     }

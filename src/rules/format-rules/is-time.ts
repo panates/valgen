@@ -5,7 +5,7 @@ import {
   validator,
 } from '../../core/index.js';
 
-const TIME_PATTERN = /^(\d{2}):?(\d{2})(?::?(\d{2})?(?:\.(\d{1,3}))?)?$/;
+const TIME_PATTERN = /^(\d{2}):?(\d{2})(?::?(\d{2}))?(?:\.(\d{1,3}))?$/;
 
 /**
  * Validates if value is a time formatted string

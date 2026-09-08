@@ -19,8 +19,12 @@ export function isInteger(options?: isInteger.Options) {
       if (output != null && typeof output !== 'number' && coerce) {
         if (typeof input === 'string') output = parseFloat(input);
         else if (typeof input === 'bigint') {
-          output = Number(input);
-          if (input === BigInt(output)) input = output;
+          const n = Number(input);
+          if (input !== BigInt(n)) {
+            context.fail(_this, `Value must be a valid integer value`, input);
+            return;
+          }
+          output = n;
         }
       }
       if (
