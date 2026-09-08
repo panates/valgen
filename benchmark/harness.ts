@@ -222,8 +222,9 @@ function formatTime(n: number, unit: TimeUnit): string {
 }
 
 /** Colors the "±X.XX%" margin-of-error suffix by how noisy it is. */
-function formatMarginOfError(pct: number): string {
+function formatMarginOfError(pct: number, colorize = true): string {
   const text = `±${pct.toFixed(2)}%`;
+  if (!colorize) return text;
   if (pct < 2) return c.green(text);
   if (pct < 10) return c.yellow(text);
   return c.red(text);
@@ -241,13 +242,14 @@ function pickByteUnit(maxAbsBytes: number): ByteUnit {
 }
 
 /** Colors a byte figure: near-zero (likely GC noise) is dim, real growth stands out. */
-function formatBytes(n: number, unit: ByteUnit): string {
+function formatBytes(n: number, unit: ByteUnit, colorize = true): string {
   const abs = Math.abs(n);
   const magnitude = unit === 'B' ? abs.toFixed(0) : (abs / 1024).toFixed(2);
   // Rounds-to-zero deltas are just GC noise, not a real shrink - a "-0"
   // would wrongly suggest a meaningful direction, so drop the sign.
   const isZero = Number(magnitude) === 0;
   const text = `${n < 0 && !isZero ? '-' : ''}${magnitude}`;
+  if (!colorize) return text;
   if (abs < 64) return c.dim(text);
   if (abs >= 1024) return c.yellow(text);
   return text;
@@ -327,4 +329,44 @@ export function printResults(results: BenchResult[]): void {
   console.log(renderRow(headers.map(h => c.bold(h))));
   console.log('  ' + widths.map(w => c.dim('─'.repeat(w))).join('   '));
   for (const row of rows) console.log(renderRow(row));
+}
+
+/**
+ * Renders results as a plain-text (no ANSI) GitHub-flavored Markdown table,
+ * one row per case, in the same column layout as `printResults`.
+ */
+export function resultsToMarkdown(results: BenchResult[]): string {
+  if (results.length === 0) return '_No benchmark results._\n';
+
+  const timeUnit = pickTimeUnit(Math.max(...results.map(r => r.meanTimeNs)));
+  const byteUnit = pickByteUnit(
+    Math.max(
+      ...results.map(r => Math.abs(r.heapUsedPerOpBytes)),
+      ...results.map(r => Math.abs(r.rssPerOpBytes)),
+    ),
+  );
+
+  const headers = [
+    'Name',
+    'Ops/sec',
+    `Mean time (${timeUnit})`,
+    `Heap/op (${byteUnit})`,
+    `RSS/op (${byteUnit})`,
+    'Samples',
+  ];
+  const rows = results.map(r => [
+    r.name,
+    `${formatOps(r.opsPerSecondMean)} (${formatMarginOfError(r.relativeMarginOfError, false)})`,
+    formatTime(r.meanTimeNs, timeUnit),
+    formatBytes(r.heapUsedPerOpBytes, byteUnit, false),
+    formatBytes(r.rssPerOpBytes, byteUnit, false),
+    r.iterations.toLocaleString('en-US'),
+  ]);
+
+  const lines = [
+    `| ${headers.join(' | ')} |`,
+    `| ${headers.map((_, i) => (i === 0 ? ':---' : '---:')).join(' | ')} |`,
+    ...rows.map(row => `| ${row.join(' | ')} |`),
+  ];
+  return lines.join('\n') + '\n';
 }

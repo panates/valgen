@@ -1,4 +1,4 @@
-import { readdirSync } from 'node:fs';
+import { readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -9,12 +9,14 @@ import {
   type BenchCase,
   type BenchResult,
   printResults,
+  resultsToMarkdown,
   runBench,
 } from './harness.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rulesDir = path.join(__dirname, 'rules');
 const BENCH_EXT = '.bench.ts';
+const OUTPUT_MD_PATH = path.join(__dirname, '..', 'BENCHMARKS.md');
 
 /** Every rule name that has a bench/rules/<name>.bench.ts file. */
 function discoverRuleNames(): string[] {
@@ -99,9 +101,28 @@ async function main(): Promise<void> {
     };
     for (const benchCase of mod.cases) {
       results.push(runBench(benchCase));
+      // Each round/warmup/memory pass runs synchronously and can take a
+      // while (esp. across "all" rules), so print progress as each case
+      // finishes instead of leaving the console silent until the end.
+      console.log(c.dim(`  ✓ ${benchCase.name}`));
     }
   }
+  console.log();
   printResults(results);
+
+  const markdown = [
+    '# Benchmarks',
+    '',
+    `Generated ${new Date().toISOString()} - Node ${process.version}.`,
+    '',
+    resultsToMarkdown(results),
+  ].join('\n');
+  writeFileSync(OUTPUT_MD_PATH, markdown);
+  console.log(
+    c.dim(
+      `\nResults written to ${path.relative(process.cwd(), OUTPUT_MD_PATH)}`,
+    ),
+  );
 }
 
 main().catch(err => {
