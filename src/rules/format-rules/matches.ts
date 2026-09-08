@@ -6,8 +6,8 @@ import {
 } from '../../core/index.js';
 
 /**
- * Coerces given value to "UUID" format or returns undefined if nullish
- * @validator uuid
+ * Validates if value matches the given regular expression, or returns undefined if nullish
+ * @validator matches
  */
 export function matches(format: string | RegExp, options?: matches.Options) {
   const regExp = format instanceof RegExp ? format : new RegExp(format);
