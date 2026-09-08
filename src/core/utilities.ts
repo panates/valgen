@@ -29,7 +29,8 @@ export function iif(check: Validator<any>, _then: any, _else?: any) {
   return validator<any, any>('iif', (input: unknown, context: Context): any => {
     let c = _else;
     try {
-      if (check(input) !== undefined) c = _then;
+      check(input);
+      c = _then;
     } catch {
       // ignored
     }
