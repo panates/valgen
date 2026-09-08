@@ -8,7 +8,7 @@ import {
 
 /**
  * Makes the sub-rule nullable (undefined of null)
- * @validator optional
+ * @validator nullable
  */
 export function nullable<T, I>(
   nested: Validator<T, I>,
@@ -18,7 +18,7 @@ export function nullable<T, I>(
     nullable.name,
     (input: Nullish<I>, context: Context): Maybe<T> => {
       if (input == null) return input as any;
-      return nested(input as I, context) as T;
+      return nested(input as I, undefined, context) as T;
     },
     options,
   );

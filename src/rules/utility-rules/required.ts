@@ -22,7 +22,7 @@ export function required<T, I>(
         context.fail(_this, `Value required`, input);
         return;
       }
-      return nested(input, context) as T;
+      return nested(input, undefined, context) as T;
     },
     options,
   );
