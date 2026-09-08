@@ -8,7 +8,7 @@ import {
 import type { range } from './range.js';
 
 /**
- * Checks if the value is lover than or equal to maxValue
+ * Checks if the value is lower than or equal to maxValue
  * @validator isLte
  */
 export function isLte<T extends range.Input>(
@@ -43,7 +43,7 @@ export function isLte<T extends range.Input>(
       }
       context.fail(
         _this,
-        `Value must be lover than or equal to ${typeof maxValue === 'string' ? `"${maxValue}"` : maxValue}`,
+        `Value must be lower than or equal to ${typeof maxValue === 'string' ? `"${maxValue}"` : maxValue}`,
         input,
       );
     },

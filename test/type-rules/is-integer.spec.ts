@@ -26,8 +26,8 @@ describe('isInteger', () => {
   });
 
   it('should reject a bigint that loses precision when coerced to number', () => {
-    expect(() =>
-      isInteger(10000000000000000001n, { coerce: true }),
-    ).toThrow('Value must be a valid integer value');
+    expect(() => isInteger(10000000000000000001n, { coerce: true })).toThrow(
+      'Value must be a valid integer value',
+    );
   });
 });

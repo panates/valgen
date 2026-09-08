@@ -1,12 +1,5 @@
 import { expect } from 'expect';
-import {
-  isBigint,
-  isBoolean,
-  isNumber,
-  isString,
-  validator,
-  vg,
-} from 'valgen';
+import { isBigint, isBoolean, isNumber, isString, validator, vg } from 'valgen';
 
 describe('Context message templates', () => {
   it('should suppress the error when onFail returns a falsy value', () => {
@@ -130,8 +123,11 @@ describe('Context coerce inheritance', () => {
       },
       { coerce: true },
     );
-    expect(
-      codec({ n: '5', s: 1, b: 1, big: 5 } as any),
-    ).toStrictEqual({ n: 5, s: '1', b: true, big: BigInt(5) });
+    expect(codec({ n: '5', s: 1, b: 1, big: 5 } as any)).toStrictEqual({
+      n: 5,
+      s: '1',
+      b: true,
+      big: BigInt(5),
+    });
   });
 });

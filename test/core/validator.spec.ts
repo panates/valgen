@@ -3,8 +3,8 @@ import {
   isNumber,
   kOptions,
   kValidatorFn,
-  type ValidationOptions,
   ValidationError,
+  type ValidationOptions,
   validator,
 } from 'valgen';
 

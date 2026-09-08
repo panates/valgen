@@ -91,6 +91,14 @@ export function isObject<T extends object = object, I = object | string>(
       if (context.root == null) context.root = context.root || ctorName || '';
       const location = context.location || '';
       const processedSchemaKeys: Record<string, boolean> = {};
+      // Reused across every property instead of allocated per-property.
+      // `scope`/`context` never change between properties, so they're set
+      // once; `location`/`property` are reassigned every iteration, and
+      // `label` is reassigned-or-deleted every iteration (see below) so no
+      // field can leak from a previous property into the next one.
+      const subCtx = context.extend();
+      subCtx.scope = output;
+      subCtx.context = ctorName;
       // Iterate object keys and perform rules
       for (i = 0; i < l; i++) {
         inputKey = keys[i];
@@ -103,15 +111,17 @@ export function isObject<T extends object = object, I = object | string>(
         if (_propRule) {
           if (processedSchemaKeys[schemaKey]) continue;
           processedSchemaKeys[schemaKey] = true;
-          const subCtx = context.extend();
-          subCtx.scope = output;
-          subCtx.context = ctorName;
           subCtx.location = location + (location ? '.' : '') + schemaKey;
           subCtx.property = schemaKey;
-          if (propertyOptions[schemaKey]?.label) {
-            subCtx.label = propertyOptions[schemaKey]?.label;
-          }
-          v = _propRule(v, subCtx);
+          const propLabel = propertyOptions[schemaKey]?.label;
+          // Assign (not just skip) when there's no per-property label, so a
+          // label left over from a previous property can't leak in - but
+          // `delete` rather than `= undefined`, so the lookup still falls
+          // through to an inherited label from the parent context, exactly
+          // like the original per-iteration `context.extend()` did.
+          if (propLabel) subCtx.label = propLabel;
+          else delete subCtx.label;
+          v = _propRule(v, undefined, subCtx);
         } else if (v !== undefined) {
           if (!additionalFields) continue;
           if (additionalFields === 'error') {

@@ -7,8 +7,8 @@ import {
 
 /**
  * Validates if value is "BigInt".
- * Converts input value to number if the coerce option is set to 'true'.
- * @validator isNumber
+ * Converts input value to BigInt if the coerce option is set to 'true'.
+ * @validator isBigint
  */
 export function isBigint(options?: isBigint.Options) {
   return validator<bigint, unknown>(

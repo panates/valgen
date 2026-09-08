@@ -8,9 +8,7 @@ describe('isFQDN', () => {
 
   it('should throw for invalid FQDN', () => {
     expect(() => isFQDN('not a domain')).toThrow('Value must be valid FQDN');
-    expect(() => isFQDN(undefined as any)).toThrow(
-      'Value must be valid FQDN',
-    );
+    expect(() => isFQDN(undefined as any)).toThrow('Value must be valid FQDN');
   });
 
   it('should reject wildcard domains by default', () => {

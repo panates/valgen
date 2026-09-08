@@ -9,7 +9,7 @@ import {
 
 /**
  * Validates if the value instance of given class or classes
- * @validator isUndefined
+ * @validator isInstanceOf
  */
 export function isInstanceOf<T extends object>(
   clazz: Type<T>,

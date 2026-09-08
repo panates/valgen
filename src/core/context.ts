@@ -79,14 +79,25 @@ export class Context implements ExecutionOptions {
   }
 
   extend(options?: ExecutionOptions): Context {
-    const extended = {} as Context;
+    // Object.create(this) sets the prototype at creation time. Setting it
+    // afterward via Object.setPrototypeOf() (the previous approach) is one
+    // of the slowest object operations in V8 - it invalidates hidden-class
+    // based optimizations for the object - and this runs on every nested
+    // validator call, so it showed up heavily in profiling.
+    const extended: Context = Object.create(this);
     if (options) {
-      for (const [k, v] of Object.entries(options)) {
+      // Same filtering as the old Object.entries()+destructure (skip
+      // undefined values, so an unset option falls through to the
+      // prototype chain instead of shadowing it) but without allocating an
+      // array of [key, value] pairs just to throw it away.
+      const keys = Object.keys(options);
+      for (let i = 0; i < keys.length; i++) {
+        const k = keys[i];
+        const v = (options as Record<string, unknown>)[k];
         if (v !== undefined) extended[k] = v;
       }
     }
     extended.isRoot = false;
-    Object.setPrototypeOf(extended, this);
     return extended;
   }
 }

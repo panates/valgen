@@ -94,7 +94,7 @@ export function isTuple(items: Validator[], options?: ValidationOptions) {
         itemContext.location = location + '[' + i + ']';
         itemContext.label =
           (context.label || context.property || 'Value at ') + `[${i}]`;
-        v = itemRule(output[i], itemContext);
+        v = itemRule(output[i], undefined, itemContext);
         out.push(v);
       }
       return context.errors.length ? undefined : out;

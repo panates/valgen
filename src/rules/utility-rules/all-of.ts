@@ -21,7 +21,8 @@ export function allOf<T = any>(
       const l = rules.length;
       for (i = 0; i < l; i++) {
         c = rules[i];
-        c(input, context);
+        // See pipe.ts for why context goes in the 3rd slot, not the 2nd.
+        c(input, undefined, context);
       }
       return input;
     },

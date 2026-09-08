@@ -35,9 +35,9 @@ describe('isTuple', () => {
   });
 
   it('should coerce a non-array value into a single-item tuple', () => {
-    expect(vg.isTuple([isString])('a' as any, { coerce: true })).toStrictEqual(
-      ['a'],
-    );
+    expect(vg.isTuple([isString])('a' as any, { coerce: true })).toStrictEqual([
+      'a',
+    ]);
   });
 
   it('should reject arrays with the wrong number of elements', () => {

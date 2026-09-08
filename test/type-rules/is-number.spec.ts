@@ -20,8 +20,8 @@ describe('isNumber', () => {
   });
 
   it('should reject a bigint that loses precision when coerced to number', () => {
-    expect(() =>
-      isNumber(10000000000000000001n, { coerce: true }),
-    ).toThrow('Value must be a number');
+    expect(() => isNumber(10000000000000000001n, { coerce: true })).toThrow(
+      'Value must be a number',
+    );
   });
 });

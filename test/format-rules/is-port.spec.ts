@@ -8,9 +8,7 @@ describe('isPort', () => {
   });
 
   it('should throw for invalid port numbers', () => {
-    expect(() => isPort('70000')).toThrow(
-      'Value must be a valid port number',
-    );
+    expect(() => isPort('70000')).toThrow('Value must be a valid port number');
     expect(() => isPort('-1')).toThrow('Value must be a valid port number');
     expect(() => isPort('abc')).toThrow('Value must be a valid port number');
   });

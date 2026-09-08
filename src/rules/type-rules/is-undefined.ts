@@ -6,7 +6,10 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if the value is undefined
+ * Validates if the value is undefined.
+ * If `coerce` is `true`, always succeeds and returns `undefined` regardless
+ * of the input value - "coerce" here means "force to undefined", not
+ * "convert values that merely look like undefined".
  * @validator isUndefined
  */
 export function isUndefined(options?: isUndefined.Options) {

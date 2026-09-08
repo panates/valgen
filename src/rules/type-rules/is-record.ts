@@ -37,23 +37,24 @@ export function isRecord<TKeys extends string | number | symbol, TValues>(
       let k: any;
       let v: any;
       const out: any = {};
+      // Set directly on the (already reused) context instead of passed as
+      // a fresh {onFail} options object on every call - `k` is read at call
+      // time (synchronously, before it's reassigned below), so a single
+      // closure works for the whole loop. This also lets both calls below
+      // pass `undefined` for options, which the validator wrapper needs in
+      // order to skip a needless context.extend() when the key/value rule
+      // has no options of its own.
+      keyContext.onFail = (issue: ErrorIssue) =>
+        `${k} is not a valid key. ` + issue.message;
       for (i = 0; i < l; i++) {
         k = keys[i];
         v = input[k];
         // Validate key
-        k = keyRule(
-          k,
-          {
-            onFail(issue: ErrorIssue) {
-              return `${k} is not a valid key. ` + issue.message;
-            },
-          },
-          keyContext,
-        );
+        k = keyRule(k, undefined, keyContext);
         // Validate value
         valueContext.property = k;
         valueContext.location = location + (location ? '.' : '') + k;
-        v = valueRule(v, valueContext);
+        v = valueRule(v, undefined, valueContext);
         out[k] = v;
       }
       return context.errors.length ? undefined : out;

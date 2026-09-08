@@ -30,18 +30,21 @@ export function oneOf(
         if (Array.isArray(rules[i])) {
           c = rules[i][0];
           discriminator = rules[i][1];
-          if (
-            !(
-              input &&
-              typeof input === 'object' &&
-              typeof discriminator === 'object'
-            )
-          ) {
+          if (!(
+            input &&
+            typeof input === 'object' &&
+            typeof discriminator === 'object'
+          )) {
             continue;
           }
           try {
-            for (const k of Object.keys(discriminator)) {
-              discriminator[k](input[k], context);
+            const keys = Object.keys(discriminator);
+            const len = keys.length;
+            let j: number;
+            let k: string;
+            for (j = 0; j < len; j++) {
+              k = keys[j];
+              discriminator[k](input[k], undefined, context);
               if (!passed) break;
             }
             if (!passed) continue;
@@ -51,7 +54,7 @@ export function oneOf(
         } else c = rules[i] as Validator;
         if (passed)
           try {
-            v = c(input, context);
+            v = c(input, undefined, context);
             if (passed) break;
           } catch {
             //

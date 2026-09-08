@@ -238,9 +238,7 @@ describe('toDateString', () => {
   it('should apply the requested trim precision', () => {
     const d = new Date('2020-11-01T10:23:45.123');
     expect(toDateString(d, { trim: 'day' })).toStrictEqual('2020-11-01');
-    expect(toDateString(d, { trim: 'hours' })).toStrictEqual(
-      '2020-11-01T10',
-    );
+    expect(toDateString(d, { trim: 'hours' })).toStrictEqual('2020-11-01T10');
   });
 
   it('should not mix up cached validators across different precisions', () => {
@@ -255,8 +253,8 @@ describe('toDateString', () => {
 
   it('should hide separators when requested', () => {
     const d = new Date('2020-11-01T10:23:45.123');
-    expect(
-      toDateString(d, { trim: 'ms', separators: false }),
-    ).toStrictEqual('20201101102345.123');
+    expect(toDateString(d, { trim: 'ms', separators: false })).toStrictEqual(
+      '20201101102345.123',
+    );
   });
 });
