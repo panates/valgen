@@ -16,6 +16,7 @@ export function matches(format: string | RegExp, options?: matches.Options) {
     matches.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
       if (input == null) return;
+      regExp.lastIndex = 0;
       if (typeof input === 'string' && regExp.test(input)) return input;
       context.fail(
         _this,
