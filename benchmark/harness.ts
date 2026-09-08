@@ -169,6 +169,12 @@ export function runBench(
   const meanTimeNs = (totalElapsedMs * 1_000_000) / totalIterations;
 
   // --- Memory: a separate, GC-bounded, duration-targeted pass ---
+  // Force a GC only *before* the pass, to start from a clean baseline. We
+  // deliberately do NOT force one again after the loop: since `fn`'s return
+  // value is discarded every call, everything it allocates is garbage, and
+  // a trailing forceGc() would collect it all right before we read
+  // heapAfter/rssAfter - making every case look like it allocates ~0 bytes,
+  // regardless of how much it actually churned through.
   const gcForced = forceGc();
   const heapBefore = process.memoryUsage().heapUsed;
   const rssBefore = process.memoryUsage().rss;
@@ -177,7 +183,6 @@ export function runBench(
     opts.memoryDurationMs,
     checkInterval,
   );
-  forceGc();
   const heapAfter = process.memoryUsage().heapUsed;
   const rssAfter = process.memoryUsage().rss;
 
