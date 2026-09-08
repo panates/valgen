@@ -11,7 +11,7 @@ export function forwardRef<T, I>(fn: (context: Context) => Validator<T, I>) {
     'forwardRef',
     (input: I, context: Context): Nullish<T> => {
       const nested = fn(context);
-      return nested(input, context);
+      return nested(input, undefined, context);
     },
   );
 }
@@ -34,7 +34,7 @@ export function iif(check: Validator<any>, _then: any, _else?: any) {
     } catch {
       // ignored
     }
-    if (isValidator(c)) return c(input, context);
+    if (isValidator(c)) return c(input, undefined, context);
     return c;
   });
 }

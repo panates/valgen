@@ -26,7 +26,7 @@ export function isMobilePhone(options?: isMobilePhone.Options) {
       ) {
         return input;
       }
-      context.fail(_this, `Value must be a valid a Mobile Phone Number`, input);
+      context.fail(_this, `Value must be a valid Mobile Phone Number`, input);
     },
     options,
   );

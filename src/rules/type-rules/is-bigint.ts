@@ -16,11 +16,12 @@ export function isBigint(options?: isBigint.Options) {
     (input: unknown, context: Context, _this): Nullish<bigint> => {
       const coerce = options?.coerce ?? context.coerce;
       if (typeof input === 'bigint') return input;
-      if (
-        (typeof input === 'number' && !isNaN(input)) ||
-        (typeof input === 'string' && coerce)
-      ) {
-        return BigInt(input);
+      if (coerce && (typeof input === 'number' || typeof input === 'string')) {
+        try {
+          return BigInt(input);
+        } catch {
+          // falls through to context.fail below
+        }
       }
       context.fail(_this, `Value must be a BigInt`, input);
     },

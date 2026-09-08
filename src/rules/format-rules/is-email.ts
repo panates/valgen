@@ -87,7 +87,7 @@ export function isEmail(options?: isEmail.Options) {
         }
         return input;
       }
-      context.fail(_this, `Value must much required e-mail format`, input);
+      context.fail(_this, `Value must match required e-mail format`, input);
     },
     options,
   );

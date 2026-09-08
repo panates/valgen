@@ -7,8 +7,9 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a "Date" instance or ISO 8601 formatted date string.
- *  if a `coerce` option is `true`, converts input value to Date instance
+ * Validates if value is a "Date" instance. If the `coerce` option is `true`,
+ * also accepts an ISO 8601 formatted date string or a numeric timestamp and
+ * converts it to a Date instance.
  * @validator isDate
  */
 export function isDate(options?: isDate.Options) {

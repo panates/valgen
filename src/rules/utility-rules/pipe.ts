@@ -7,7 +7,7 @@ import {
 } from '../../core/index.js';
 
 /**
- *
+ * Chains rules so each one's output becomes the next one's input.
  * @validator pipe
  */
 export function pipe<T>(

@@ -11,8 +11,13 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates the object according to schema
- * Converts properties according to schema rules if the coerce option is set to 'true'.
+ * Validates the object according to schema. Converts properties according to
+ * schema rules if the coerce option is set to 'true'. Supports
+ * `additionalFields` (allow/strip/reject/validate unknown properties -
+ * defaults to allowing them when no schema is given, and rejecting them
+ * otherwise), `caseInSensitive` (match property names ignoring case), and
+ * `detectCircular` (guard against circular references when the schema
+ * validates itself, e.g. via `forwardRef`).
  * @validator isObject
  */
 export function isObject<T extends object = object, I = object | string>(

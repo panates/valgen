@@ -7,7 +7,7 @@ import {
 } from '../../core/index.js';
 
 /**
- * Makes the sub-rule nullable (undefined of null)
+ * Makes the sub-rule nullable (accepts undefined or null)
  * @validator nullable
  */
 export function nullable<T, I>(

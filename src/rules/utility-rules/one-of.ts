@@ -8,7 +8,10 @@ import { validator } from '../../core/index.js';
 type DiscriminatorRecord = Record<string, Validator>;
 
 /**
- *
+ * Tries each rule against the input in order and returns the first one that
+ * passes. An optional discriminator record narrows which rule to try based
+ * on a distinguishing field of the input.
+ * @validator oneOf
  */
 export function oneOf(
   rules: (Validator | [Validator, DiscriminatorRecord])[],
