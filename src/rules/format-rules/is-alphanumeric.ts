@@ -17,7 +17,7 @@ export function isAlphanumeric(options?: isAlphanumeric.Options) {
       if (typeof input === 'string' && validatorJS.isAlphanumeric(input)) {
         return input;
       }
-      context.fail(_this, `"Value must be an alphanumeric string`, input);
+      context.fail(_this, `Value must be an alphanumeric string`, input);
     },
     options,
   );

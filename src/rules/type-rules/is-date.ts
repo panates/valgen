@@ -168,12 +168,10 @@ function coerceDateString(
     if (precisionIndex >= 8) {
       const tzOffset = d.getTimezoneOffset();
       const tz =
-        tzOffset > 0
-          ? '-'
-          : '+' +
-            String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
-            ':' +
-            String(Math.abs(tzOffset) % 60).padStart(2, '0');
+        (tzOffset > 0 ? '-' : '+') +
+        String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
+        ':' +
+        String(Math.abs(tzOffset) % 60).padStart(2, '0');
       dateParts.push(tz);
     }
   } else if (typeof input === 'string') {

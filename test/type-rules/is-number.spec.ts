@@ -18,4 +18,10 @@ describe('isNumber', () => {
     expect(isNumber('-3.2', { coerce: true })).toStrictEqual(-3.2);
     expect(isNumber(BigInt(5), { coerce: true })).toStrictEqual(5);
   });
+
+  it('should reject a bigint that loses precision when coerced to number', () => {
+    expect(() =>
+      isNumber(10000000000000000001n, { coerce: true }),
+    ).toThrow('Value must be a number');
+  });
 });

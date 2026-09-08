@@ -23,4 +23,9 @@ describe('isNotEqual', () => {
       'Value must not be equal to',
     );
   });
+
+  it('should pass null and undefined through unchanged', () => {
+    expect(vg.isNotEqual('a')(null as any)).toStrictEqual(null);
+    expect(vg.isNotEqual('a')(undefined as any)).toStrictEqual(undefined);
+  });
 });

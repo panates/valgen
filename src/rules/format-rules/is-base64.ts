@@ -19,7 +19,7 @@ export function isBase64(options?: isBase64.Options) {
       if (typeof input === 'string' && validatorJS.isBase64(input, options)) {
         return input;
       }
-      context.fail(_this, `"Value must be a Base64 string`, input);
+      context.fail(_this, `Value must be a Base64 string`, input);
     },
     options,
   );

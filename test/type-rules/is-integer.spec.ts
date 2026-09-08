@@ -24,4 +24,10 @@ describe('isInteger', () => {
     expect(isInteger('-3', { coerce: true })).toStrictEqual(-3);
     expect(isInteger(BigInt(5), { coerce: true })).toStrictEqual(5);
   });
+
+  it('should reject a bigint that loses precision when coerced to number', () => {
+    expect(() =>
+      isInteger(10000000000000000001n, { coerce: true }),
+    ).toThrow('Value must be a valid integer value');
+  });
 });

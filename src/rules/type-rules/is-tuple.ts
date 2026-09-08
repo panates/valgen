@@ -90,13 +90,10 @@ export function isTuple(items: Validator[], options?: ValidationOptions) {
       for (i = 0; i < nl; i++) {
         itemRule = items[i];
         itemContext.scope = output;
-        itemContext.label = context.label
-          ? context.label + `[${i}]`
-          : undefined;
         itemContext.index = i;
         itemContext.location = location + '[' + i + ']';
         itemContext.label =
-          (itemContext.label || itemContext.property || 'Value at ') + `[${i}]`;
+          (context.label || context.property || 'Value at ') + `[${i}]`;
         v = itemRule(output[i], itemContext);
         out.push(v);
       }

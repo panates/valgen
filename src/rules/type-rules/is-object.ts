@@ -116,7 +116,7 @@ export function isObject<T extends object = object, I = object | string>(
           if (!additionalFields) continue;
           if (additionalFields === 'error') {
             context.fail(
-              _propRule,
+              _this,
               `${ctorName || 'Object'} has no field '${inputKey}' and does not accept additional fields`,
               v,
             );

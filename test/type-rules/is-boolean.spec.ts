@@ -29,4 +29,10 @@ describe('isBoolean', () => {
     expect(isBoolean('true', { coerce: true })).toStrictEqual(true);
     expect(isBoolean('false', { coerce: true })).toStrictEqual(false);
   });
+
+  it('should throw for an unrecognized boolean string when coercing', () => {
+    expect(() => isBoolean('maybe', { coerce: true })).toThrow(
+      'Invalid boolean string',
+    );
+  });
 });

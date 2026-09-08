@@ -47,5 +47,30 @@ describe('isDate', () => {
     expect(vg.isDate({ trim: 'minutes', coerce: true })(d)).toEqual(
       new Date('2020-05-10T08:30:00'),
     );
+    expect(vg.isDate({ trim: 'seconds', coerce: true })(d)).toEqual(
+      new Date('2020-05-10T08:30:15'),
+    );
+  });
+
+  it('should apply precision using abbreviated precision keys', () => {
+    const d = '2020-05-10T08:30:15.123';
+    expect(vg.isDate({ trim: 'yr', coerce: true })(d)).toEqual(
+      new Date('2020-01-01T00:00:00'),
+    );
+    expect(vg.isDate({ trim: 'mo', coerce: true })(d)).toEqual(
+      new Date('2020-05-01T00:00:00'),
+    );
+    expect(vg.isDate({ trim: 'd', coerce: true })(d)).toEqual(
+      new Date('2020-05-10T00:00:00'),
+    );
+    expect(vg.isDate({ trim: 'hr', coerce: true })(d)).toEqual(
+      new Date('2020-05-10T08:00:00'),
+    );
+    expect(vg.isDate({ trim: 'min', coerce: true })(d)).toEqual(
+      new Date('2020-05-10T08:30:00'),
+    );
+    expect(vg.isDate({ trim: 'sec', coerce: true })(d)).toEqual(
+      new Date('2020-05-10T08:30:15'),
+    );
   });
 });

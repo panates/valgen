@@ -1,4 +1,6 @@
-import validatorJS from '@browsery/validator';
+import validatorJS, {
+  type IsIBANOptions as _IsIBANOptions,
+} from '@browsery/validator';
 import type { Nullish } from 'ts-gems';
 import {
   type Context,
@@ -14,7 +16,8 @@ export function isIBAN(options?: isIBAN.Options) {
   return validator<string, string>(
     isIBAN.name,
     (input: unknown, context: Context, _this): Nullish<string> => {
-      if (typeof input === 'string' && validatorJS.isIBAN(input)) return input;
+      if (typeof input === 'string' && validatorJS.isIBAN(input, options))
+        return input;
       context.fail(
         _this,
         `Value must be a valid IBAN (International Bank Account Number)`,
@@ -26,5 +29,5 @@ export function isIBAN(options?: isIBAN.Options) {
 }
 
 export namespace isIBAN {
-  export interface Options extends ValidationOptions {}
+  export interface Options extends ValidationOptions, _IsIBANOptions {}
 }
