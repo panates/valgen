@@ -18,7 +18,7 @@ export function optional<T, I>(
     optional.name,
     (input: Maybe<I>, context: Context): Maybe<T> => {
       if (input === undefined) return input as any;
-      return nested(input as I, context) as T;
+      return nested(input as I, undefined, context) as T;
     },
     options,
   );

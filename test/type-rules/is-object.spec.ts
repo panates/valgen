@@ -145,4 +145,53 @@ describe('isObject', () => {
     });
     Person[postValidation] = undefined;
   });
+
+  it('should throw for an invalid schema entry in tuple form', () => {
+    expect(() => vg.isObject({ a: [123, {}] as any })).toThrow(
+      'Invalid tuple definition in validation schema (a)',
+    );
+  });
+
+  it('should throw for an invalid schema entry in plain form', () => {
+    expect(() => vg.isObject({ a: 123 as any })).toThrow(
+      'Invalid definition in validation schema (a)',
+    );
+  });
+
+  it('should match property names case-insensitively when caseInSensitive is true', () => {
+    const codec = vg.isObject({ Name: isString }, { caseInSensitive: true });
+    expect(codec({ name: 'John' } as any)).toStrictEqual({ Name: 'John' });
+    expect(codec({ NAME: 'John' } as any)).toStrictEqual({ Name: 'John' });
+  });
+
+  it('should only process the first match for a case-insensitive duplicate key', () => {
+    const codec = vg.isObject({ name: isString }, { caseInSensitive: true });
+    expect(codec({ name: 'a', Name: 'b' } as any)).toStrictEqual({
+      name: 'a',
+    });
+  });
+
+  it('should silently drop additional fields by default', () => {
+    const codec = vg.isObject({ a: isString });
+    expect(codec({ a: '1', b: 5 } as any)).toStrictEqual({ a: '1' });
+  });
+
+  it('should apply a validator to additional fields when additionalFields is a validator', () => {
+    const codec = vg.isObject({ a: isString }, { additionalFields: isNumber });
+    expect(codec({ a: '1', b: 5 } as any)).toStrictEqual({ a: '1', b: 5 });
+    expect(() => codec({ a: '1', b: 'x' } as any)).toThrow(
+      'Value must be a number',
+    );
+  });
+
+  it('should reject additional fields when additionalFields is "error"', () => {
+    const objValidate = vg.isObject(
+      { a: isString },
+      { additionalFields: 'error' },
+    );
+    expect(objValidate({ a: '1' })).toStrictEqual({ a: '1' });
+    expect(() => objValidate({ a: '1', b: 2 } as any)).toThrow(
+      "has no field 'b' and does not accept additional fields",
+    );
+  });
 });

@@ -47,4 +47,26 @@ describe('oneOf', () => {
       }),
     ).toThrow("Value didn't match one of required rules");
   });
+
+  it('should move on to the next rule if a discriminator throws unexpectedly', () => {
+    const throwing = (() => {
+      throw new Error('boom');
+    }) as any;
+    const c = vg.oneOf([[isObject, { kind: throwing }], isNumber]);
+    expect(c(5)).toStrictEqual(5);
+    expect(() => c({ kind: 'x' } as any)).toThrow(
+      "Value didn't match one of required rules",
+    );
+  });
+
+  it('should move on to the next rule if a rule throws unexpectedly', () => {
+    const throwing = (() => {
+      throw new Error('boom');
+    }) as any;
+    const c = vg.oneOf([throwing, isNumber]);
+    expect(c(5)).toStrictEqual(5);
+    expect(() => c('x' as any)).toThrow(
+      "Value didn't match one of required rules",
+    );
+  });
 });

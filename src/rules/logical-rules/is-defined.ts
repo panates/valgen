@@ -5,7 +5,8 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is not "undefined" nor "null"
+ * Validates if value is not "undefined". Note that "null" is considered
+ * defined; use `isNotNullish` to reject both "undefined" and "null".
  * @validator isDefined
  */
 export function isDefined(options?: isDefined.Options) {

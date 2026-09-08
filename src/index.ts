@@ -92,15 +92,17 @@ const toDateString = (
   ctx?: Context,
 ) => {
   const precisionMax = options?.trim ?? 'ms';
-  let validator = toDateStringValidators.get(precisionMax);
+  const separators = options?.separators ?? true;
+  const cacheKey = precisionMax + '|' + separators;
+  let validator = toDateStringValidators.get(cacheKey);
   if (!validator) {
     validator = vg.isDateString({
       coerce: true,
       precisionMax,
       trim: true,
-      separators: options?.separators,
+      separators,
     });
-    toDateStringValidators.set(precisionMax, validator);
+    toDateStringValidators.set(cacheKey, validator);
   }
   return validator(input, options, ctx);
 };

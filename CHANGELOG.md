@@ -1,6 +1,36 @@
 ## Changelog
 
-### [v6.2.2](https://github.com/panates/valgen/compare/v6.2.1...v6.2.2) - 
+### [v7.0.0](https://github.com/panates/valgen/compare/v6.2.2...v7.0.0) - 
+
+#### 🚀 New Features
+
+- feat: add a benchmark tool and fix real perf/correctness issues it found @Eray Hanoğlu 
+- feat: write benchmark results to BENCHMARKS.md and show live progress @Eray Hanoğlu 
+- feat: Integrate `graphify` for knowledge graph generation and add related documentation and scripts @Eray Hanoğlu 
+
+#### 🪲 Fixes
+
+- fix: bugs found while writing the API reference docs @Eray Hanoğlu 
+- fix: stop the memory pass's own forceGc() from erasing what it measures @Eray Hanoğlu 
+- fix: forward options in allOf/oneOf and fix iif's success check @Eray Hanoğlu 
+- fix: more validator correctness fixes and a doc correction @Eray Hanoğlu 
+- fix: correct several validator edge-case bugs @Eray Hanoğlu 
+- fix: stateful regex and wrong property lookup in two rules @Eray Hanoğlu 
+
+#### 📖 Documentation Changes
+
+- docs: add a detailed API reference and rewrite the README @Eray Hanoğlu 
+
+#### 🧪 Changes to Test Assests
+
+- test: raise coverage to ~99% and fix bugs found along the way @Eray Hanoğlu 
+- test: add benchmarks for all format-rules and fix two stale JSDoc comments @Eray Hanoğlu 
+
+#### ⚡️ Performance Improvments
+
+- perf: fix remaining wrong-slot nested calls, benchmark rest of utility-rules @Eray Hanoğlu 
+
+### [v6.2.2](https://github.com/panates/valgen/compare/v6.2.1...v6.2.2) -  21 May 2026 
 
 #### 🚀 New Features
 

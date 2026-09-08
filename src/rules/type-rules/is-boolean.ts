@@ -5,8 +5,8 @@ import {
   validator,
 } from '../../core/index.js';
 
-const TRUE_PATTERN = /^true|t|1|yes|y$/i;
-const FALSE_PATTERN = /^false|f|0|no|n$/i;
+const TRUE_PATTERN = /^(?:true|t|1|yes|y)$/i;
+const FALSE_PATTERN = /^(?:false|f|0|no|n)$/i;
 
 /**
  * Validates if value is "boolean".

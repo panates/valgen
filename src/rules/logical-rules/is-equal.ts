@@ -5,7 +5,8 @@ import {
 } from '../../core/index.js';
 
 /**
- *
+ * Validates if the value is strictly equal ("===") to "compare".
+ * `null`/`undefined` input is passed through unchanged.
  * @validator isEqual
  */
 export function isEqual<T>(compare: T, options?: isEqual.Options) {
@@ -26,7 +27,8 @@ export namespace isEqual {
 }
 
 /**
- *
+ * Validates if the value is not strictly equal ("===") to "compare".
+ * `null`/`undefined` input is passed through unchanged.
  * @validator isNotEqual
  */
 export function isNotEqual(compare: any, options?: isNotEqual.Options) {

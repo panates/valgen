@@ -20,6 +20,18 @@ describe('isRecord', () => {
     ).toThrow('Value must match requested format');
   });
 
+  it('should append the key to an already-set parent location', () => {
+    const codec = vg.isObject({
+      meta: vg.isRecord(isString, vg.matches(/^[a-z]+$/)),
+    });
+    try {
+      codec({ meta: { id: 'UpperValue' } } as any);
+      throw new Error('should have thrown');
+    } catch (e: any) {
+      expect(e.issues[0].location).toStrictEqual('meta.id');
+    }
+  });
+
   it('should coerce values according to given codec', () => {
     expect(
       vg.isRecord(isString, isString)(

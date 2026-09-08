@@ -33,4 +33,37 @@ describe('isTuple', () => {
       }),
     ).toStrictEqual(['1', 2, false]);
   });
+
+  it('should coerce a non-array value into a single-item tuple', () => {
+    expect(vg.isTuple([isString])('a' as any, { coerce: true })).toStrictEqual([
+      'a',
+    ]);
+  });
+
+  it('should reject arrays with the wrong number of elements', () => {
+    expect(() => vg.isTuple([isString, isNumber])(['a'] as any)).toThrow(
+      'Value must be a tuple of length 2',
+    );
+    expect(() =>
+      vg.isTuple([isString, isNumber])(['a', 1, 'extra'] as any),
+    ).toThrow('Value must be a tuple of length 2');
+  });
+
+  it('should prefix each item label with the tuple label and index', () => {
+    try {
+      vg.isTuple([isInteger], { label: 'Point' })(['x'] as any);
+      throw new Error('should have thrown');
+    } catch (e: any) {
+      expect(e.issues[0].label).toStrictEqual('Point[0]');
+    }
+  });
+
+  it('should fall back to a generic label when none is given', () => {
+    try {
+      vg.isTuple([isInteger])(['x'] as any);
+      throw new Error('should have thrown');
+    } catch (e: any) {
+      expect(e.issues[0].label).toStrictEqual('Value at [0]');
+    }
+  });
 });

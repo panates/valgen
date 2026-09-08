@@ -17,7 +17,7 @@ export function isSWIFT(options?: isSWIFT.Options) {
       if (typeof input === 'string' && validatorJS.isBIC(input)) return input;
       context.fail(
         _this,
-        `Value must be a valid a BIC (Bank Identification Code) or SWIFT code`,
+        `Value must be a valid BIC (Bank Identification Code) or SWIFT code`,
         input,
       );
     },

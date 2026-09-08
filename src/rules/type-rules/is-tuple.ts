@@ -72,29 +72,29 @@ export function isTuple(items: Validator[], options?: ValidationOptions) {
       const coerce = options?.coerce ?? context.coerce;
       let output: any = input;
       if (output != null && coerce && !Array.isArray(output)) output = [output];
-      if (!Array.isArray(input)) {
+      if (!Array.isArray(output)) {
         context.fail(_this, `Value must be a tuple`, input);
+        return;
+      }
+      const nl = items.length;
+      if (output.length !== nl) {
+        context.fail(_this, `Value must be a tuple of length ${nl}`, input);
         return;
       }
       const location = context.location || '';
       let itemRule: Validator<any>;
       let i: number;
       let v: any;
-      const l = output.length;
       const out: any[] = [];
-      const nl = items.length;
       const itemContext = context.extend();
-      for (i = 0; i < l && i < nl; i++) {
+      for (i = 0; i < nl; i++) {
         itemRule = items[i];
         itemContext.scope = output;
-        itemContext.label = context.label
-          ? context.label + `[${i}]`
-          : undefined;
         itemContext.index = i;
         itemContext.location = location + '[' + i + ']';
         itemContext.label =
-          (itemContext.label || itemContext.property || 'Value at ') + `[${i}]`;
-        v = itemRule(output[i], itemContext);
+          (context.label || context.property || 'Value at ') + `[${i}]`;
+        v = itemRule(output[i], undefined, itemContext);
         out.push(v);
       }
       return context.errors.length ? undefined : out;

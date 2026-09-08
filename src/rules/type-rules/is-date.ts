@@ -7,8 +7,9 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a "Date" instance or ISO 8601 formatted date string.
- *  if a `coerce` option is `true`, converts input value to Date instance
+ * Validates if value is a "Date" instance. If the `coerce` option is `true`,
+ * also accepts an ISO 8601 formatted date string or a numeric timestamp and
+ * converts it to a Date instance.
  * @validator isDate
  */
 export function isDate(options?: isDate.Options) {
@@ -152,6 +153,7 @@ function coerceDateString(
   let detectedPrecision: number;
   if (input instanceof Date || typeof input === 'number') {
     const d = typeof input === 'number' ? new Date(input) : input;
+    if (!datefns.isValid(d)) return;
     dateParts = [
       String(d.getFullYear()).padStart(4, '0'),
       String(d.getMonth() + 1).padStart(2, '0'),
@@ -167,12 +169,10 @@ function coerceDateString(
     if (precisionIndex >= 8) {
       const tzOffset = d.getTimezoneOffset();
       const tz =
-        tzOffset > 0
-          ? '-'
-          : '+' +
-            String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
-            ':' +
-            String(Math.abs(tzOffset) % 60).padStart(2, '0');
+        (tzOffset > 0 ? '-' : '+') +
+        String(Math.floor(Math.abs(tzOffset) / 60)).padStart(2, '0') +
+        ':' +
+        String(Math.abs(tzOffset) % 60).padStart(2, '0');
       dateParts.push(tz);
     }
   } else if (typeof input === 'string') {
@@ -225,7 +225,7 @@ const PRECISION_INDEX: Record<isDate.Precision, number> = {
   month: 2,
   mo: 2,
   day: 3,
-  d: 4,
+  d: 3,
   hours: 4,
   hr: 4,
   minutes: 5,
@@ -241,29 +241,35 @@ const PRECISION_INDEX_VALUES = Object.values(PRECISION_INDEX);
 
 function setPrecision(d: Date, precision?: string) {
   switch (precision) {
-    case 'year': {
+    case 'year':
+    case 'yr': {
       d.setMonth(0, 1);
       d.setHours(0, 0, 0, 0);
       break;
     }
-    case 'month': {
+    case 'month':
+    case 'mo': {
       d.setDate(1);
       d.setHours(0, 0, 0, 0);
       break;
     }
-    case 'day': {
+    case 'day':
+    case 'd': {
       d.setHours(0, 0, 0, 0);
       break;
     }
-    case 'hours': {
+    case 'hours':
+    case 'hr': {
       d.setMinutes(0, 0, 0);
       break;
     }
-    case 'minutes': {
+    case 'minutes':
+    case 'min': {
       d.setSeconds(0, 0);
       break;
     }
-    case 'seconds': {
+    case 'seconds':
+    case 'sec': {
       d.setMilliseconds(0);
       break;
     }

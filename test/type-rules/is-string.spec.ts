@@ -35,36 +35,58 @@ describe('stringReplace', () => {
     expect(vg.stringReplace(/-/g, '_')('a-b')).toStrictEqual('a_b');
     expect(vg.stringReplace('-', '_')('a-b')).toStrictEqual('a_b');
   });
+
+  it('should pass through null/undefined unchanged', () => {
+    expect(vg.stringReplace('-', '_')(null as any)).toStrictEqual(null);
+    expect(vg.stringReplace('-', '_')(undefined as any)).toStrictEqual(
+      undefined,
+    );
+  });
 });
 
 /*
  *
  */
-describe('stringTrim', () => {
+describe('trim', () => {
   it('should trim string value', () => {
     expect(vg.trim()(' a ')).toStrictEqual('a');
     expect(vg.trim()(' a')).toStrictEqual('a');
     expect(vg.trim()('a ')).toStrictEqual('a');
   });
-});
 
-/*
- *
- */
-describe('stringTrim', () => {
-  it('should trim string value', () => {
-    expect(vg.trimStart()(' a ')).toStrictEqual('a ');
-    expect(vg.trimStart()(' a')).toStrictEqual('a');
+  it('should pass through null/undefined unchanged', () => {
+    expect(vg.trim()(null as any)).toStrictEqual(null);
+    expect(vg.trim()(undefined as any)).toStrictEqual(undefined);
   });
 });
 
 /*
  *
  */
-describe('stringTrim', () => {
+describe('trimStart', () => {
+  it('should trim string value', () => {
+    expect(vg.trimStart()(' a ')).toStrictEqual('a ');
+    expect(vg.trimStart()(' a')).toStrictEqual('a');
+  });
+
+  it('should pass through null/undefined unchanged', () => {
+    expect(vg.trimStart()(null as any)).toStrictEqual(null);
+    expect(vg.trimStart()(undefined as any)).toStrictEqual(undefined);
+  });
+});
+
+/*
+ *
+ */
+describe('trimEnd', () => {
   it('should trim string value', () => {
     expect(vg.trimEnd()(' a ')).toStrictEqual(' a');
     expect(vg.trimEnd()('a ')).toStrictEqual('a');
+  });
+
+  it('should pass through null/undefined unchanged', () => {
+    expect(vg.trimEnd()(null as any)).toStrictEqual(null);
+    expect(vg.trimEnd()(undefined as any)).toStrictEqual(undefined);
   });
 });
 
@@ -72,7 +94,12 @@ describe('stringTrim', () => {
  *
  */
 describe('stringSplit', () => {
-  it('should process String.replace', () => {
+  it('should process String.split', () => {
     expect(vg.stringSplit(',')('a,b')).toStrictEqual(['a', 'b']);
+  });
+
+  it('should pass through null/undefined unchanged', () => {
+    expect(vg.stringSplit(',')(null as any)).toStrictEqual(null);
+    expect(vg.stringSplit(',')(undefined as any)).toStrictEqual(undefined);
   });
 });

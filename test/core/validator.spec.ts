@@ -3,6 +3,7 @@ import {
   isNumber,
   kOptions,
   kValidatorFn,
+  ValidationError,
   type ValidationOptions,
   validator,
 } from 'valgen';
@@ -28,6 +29,41 @@ describe('validator', () => {
     expect(() => validator(0 as any)).toThrow(
       'You must provide a rule function argument',
     );
+  });
+
+  it('should convert an unexpected exception thrown by the rule into a validation failure', () => {
+    const val = validator('boom', () => {
+      throw new Error('kaboom');
+    });
+    expect(() => val(1)).toThrow('kaboom');
+    const r = val.silent(1);
+    expect(r.errors?.[0].message).toStrictEqual('kaboom');
+  });
+
+  it('should let a ValidationError thrown by the rule propagate as-is', () => {
+    const originalIssues = [{ rule: 'inner', message: 'inner failure' }];
+    const val = validator('rethrow', () => {
+      throw new ValidationError(originalIssues as any);
+    });
+    let caught: any;
+    try {
+      val(1);
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(ValidationError);
+    expect(caught.issues).toStrictEqual(originalIssues);
+  });
+
+  it('should extend an explicitly-passed context with explicitly-passed options', () => {
+    const inner = validator('inner', (input: unknown, context) => {
+      if (!context.coerce) context.fail(inner, 'not coerced', input);
+      return input;
+    });
+    const outer = validator('outer', (input: unknown, context) =>
+      inner(input, { coerce: true }, context),
+    );
+    expect(outer('x')).toStrictEqual('x');
   });
 
   it('should .silent() return result object', () => {

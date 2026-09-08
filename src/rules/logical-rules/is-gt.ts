@@ -8,8 +8,8 @@ import {
 import type { range } from './range.js';
 
 /**
- * Checks if value is grater than "minValue"
- * @validator iGt
+ * Checks if value is greater than "minValue"
+ * @validator isGt
  */
 export function isGt<T extends range.Input>(
   minValue: T,

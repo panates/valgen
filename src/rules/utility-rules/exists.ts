@@ -15,7 +15,8 @@ export function exists(options?: exists.Options) {
       if (
         input !== undefined ||
         (context.scope &&
-          Object.getOwnPropertyDescriptor(context.scope, input as any))
+          context.property != null &&
+          Object.getOwnPropertyDescriptor(context.scope, context.property))
       ) {
         return input;
       }

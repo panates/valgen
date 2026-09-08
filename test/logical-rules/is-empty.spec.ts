@@ -50,4 +50,9 @@ describe('isEmpty', () => {
   it('should throw if unknown type passed', () => {
     expect(() => isEmpty(NaN as any)).toThrow('Value must be empty');
   });
+
+  it('should treat null and undefined as empty', () => {
+    expect(isEmpty(null)).toStrictEqual(null);
+    expect(isEmpty(undefined)).toStrictEqual(undefined);
+  });
 });

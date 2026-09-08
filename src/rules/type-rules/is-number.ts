@@ -19,8 +19,12 @@ export function isNumber(options?: isNumber.Options) {
       if (output != null && typeof output !== 'number' && coerce) {
         if (typeof input === 'string') output = parseFloat(input);
         else if (typeof input === 'bigint') {
-          output = Number(input);
-          if (input === BigInt(output)) return output;
+          const n = Number(input);
+          if (input !== BigInt(n)) {
+            context.fail(_this, `Value must be a number`, input);
+            return;
+          }
+          output = n;
         }
       }
 

@@ -29,4 +29,10 @@ describe('isTime', () => {
       '08:30:15',
     );
   });
+
+  it('should include milliseconds when coercing a Date that has them', () => {
+    expect(
+      isTime(new Date('2025-01-10T08:30:15.042'), { coerce: true }),
+    ).toEqual('08:30:15.042');
+  });
 });

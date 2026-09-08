@@ -1,5 +1,5 @@
 import { expect } from 'expect';
-import { isDateString, vg } from 'valgen';
+import { isDateString, toDateString, vg } from 'valgen';
 
 let tz = '';
 {
@@ -159,5 +159,102 @@ describe('isDateString', () => {
         precisionMax: 'ms',
       })(d),
     ).toEqual('20201101102345.123');
+  });
+
+  it('should not append a fractional part for a Date with zero milliseconds', () => {
+    const d = new Date('2020-11-01T10:23:45.000');
+    expect(
+      vg.isDateString({ coerce: true, trim: true, precisionMax: 'ms' })(d),
+    ).toStrictEqual('2020-11-01T10:23:45');
+  });
+
+  it('should accept a compact (separator-less) date string as input', () => {
+    expect(vg.isDateString({ precisionMin: 'day' })('20201101')).toStrictEqual(
+      '20201101',
+    );
+    expect(
+      vg.isDateString({
+        coerce: true,
+        trim: true,
+        precisionMin: 'day',
+        precisionMax: 'day',
+      })('20201101'),
+    ).toStrictEqual('2020-11-01');
+    expect(
+      vg.isDateString({
+        coerce: true,
+        trim: true,
+        precisionMin: 'yr',
+        precisionMax: 'ms',
+      })('20201101102345.123+0300'),
+    ).toStrictEqual('2020-11-01T10:23:45.123');
+  });
+
+  it('should accept a compact timezone suffix with no minutes part', () => {
+    expect(
+      vg.isDateString({
+        coerce: true,
+        trim: true,
+        precisionMin: 'yr',
+        precisionMax: 'tz',
+      })('20201101102345+03'),
+    ).toStrictEqual('2020-11-01T10:23:45+03');
+  });
+
+  it('should reject an invalid number input', () => {
+    expect(() => vg.isDateString({ coerce: true })(NaN)).toThrow(
+      'is not a valid date string',
+    );
+  });
+
+  it('should use a "-" timezone sign for offsets behind UTC', () => {
+    const original = Date.prototype.getTimezoneOffset;
+    Date.prototype.getTimezoneOffset = function () {
+      return 300; // UTC-05:00, e.g. New York standard time
+    };
+    try {
+      const d = new Date('2020-11-01T10:23:45.123');
+      expect(
+        vg.isDateString({ coerce: true, trim: true, precisionMax: 'tz' })(d),
+      ).toStrictEqual('2020-11-01T10:23:45.123-05:00');
+    } finally {
+      Date.prototype.getTimezoneOffset = original;
+    }
+  });
+});
+
+describe('toDateString', () => {
+  it('should coerce to a date string at millisecond precision by default', () => {
+    const d = new Date('2020-11-01T10:23:45.123');
+    expect(toDateString(d)).toStrictEqual('2020-11-01T10:23:45.123');
+  });
+
+  it('should coerce a string input', () => {
+    expect(toDateString('2020-11-01T10:23')).toStrictEqual(
+      '2020-11-01T10:23:00',
+    );
+  });
+
+  it('should apply the requested trim precision', () => {
+    const d = new Date('2020-11-01T10:23:45.123');
+    expect(toDateString(d, { trim: 'day' })).toStrictEqual('2020-11-01');
+    expect(toDateString(d, { trim: 'hours' })).toStrictEqual('2020-11-01T10');
+  });
+
+  it('should not mix up cached validators across different precisions', () => {
+    const d = new Date('2020-11-01T10:23:45.123');
+    expect(toDateString(d, { trim: 'day' })).toStrictEqual('2020-11-01');
+    expect(toDateString(d, { trim: 'ms' })).toStrictEqual(
+      '2020-11-01T10:23:45.123',
+    );
+    // repeating an already-cached precision should still produce the same result
+    expect(toDateString(d, { trim: 'day' })).toStrictEqual('2020-11-01');
+  });
+
+  it('should hide separators when requested', () => {
+    const d = new Date('2020-11-01T10:23:45.123');
+    expect(toDateString(d, { trim: 'ms', separators: false })).toStrictEqual(
+      '20201101102345.123',
+    );
   });
 });

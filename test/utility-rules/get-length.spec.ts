@@ -38,4 +38,10 @@ describe('getLength', () => {
     expect(vg.getLength()({ length: 4 })).toStrictEqual(4);
     expect(vg.getLength()({ length: 0 })).toStrictEqual(0);
   });
+
+  it('should throw for a value with no length or size', () => {
+    expect(() => vg.getLength()(5 as any)).toThrow('Unable to get length');
+    expect(() => vg.getLength()({} as any)).toThrow('Unable to get length');
+    expect(() => vg.getLength()(true as any)).toThrow('Unable to get length');
+  });
 });

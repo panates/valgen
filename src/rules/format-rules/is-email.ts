@@ -16,8 +16,9 @@ export function isEmail(options?: isEmail.Options) {
   const emailOptions: _IsEmailOptions = {
     allow_display_name: true,
     allow_utf8_local_part: options?.utf8LocalPart,
-    ignore_max_length: true,
+    ignore_max_length: options?.ignoreMaxLength,
     allow_ip_domain: options?.allowIpDomain,
+    domain_specific_validation: options?.domainSpecificValidation,
   };
   return validator<string, string>(
     isEmail.name,
@@ -86,7 +87,7 @@ export function isEmail(options?: isEmail.Options) {
         }
         return input;
       }
-      context.fail(_this, `Value must much required e-mail format`, input);
+      context.fail(_this, `Value must match required e-mail format`, input);
     },
     options,
   );

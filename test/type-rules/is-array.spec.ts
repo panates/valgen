@@ -18,6 +18,22 @@ describe('isArray', () => {
     );
   });
 
+  it('should append the index to an already-set parent location', () => {
+    const codec = vg.isObject({ items: vg.isArray(isInteger) });
+    try {
+      codec({ items: ['1'] } as any);
+      throw new Error('should have thrown');
+    } catch (e: any) {
+      expect(e.issues[0].location).toStrictEqual('items[0]');
+    }
+  });
+
+  it('should coerce a non-array value into a single-item array', () => {
+    expect(vg.isArray(isString)('a' as any, { coerce: true })).toStrictEqual([
+      'a',
+    ]);
+  });
+
   it('should coerce value to array', () => {
     expect(vg.isArray(isBoolean)([1], { coerce: true })).toStrictEqual([true]);
     expect(vg.isArray(isString)([false, '1'], { coerce: true })).toStrictEqual([

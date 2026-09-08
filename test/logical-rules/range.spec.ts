@@ -117,44 +117,49 @@ describe('isGte', () => {
  *
  */
 describe('isLt', () => {
-  it('should validate number value is lover than maxValue', () => {
+  it('should validate number value is lower than maxValue', () => {
     expect(vg.isLt(5)(4)).toStrictEqual(4);
-    expect(() => vg.isLt(5)(5)).toThrow('must be lover than 5');
-    expect(() => vg.isLt(5)('x' as any)).toThrow('must be lover than 5');
+    expect(() => vg.isLt(5)(5)).toThrow('must be lower than 5');
+    expect(() => vg.isLt(5)('x' as any)).toThrow('must be lower than 5');
   });
 
-  it('should validate bigint value is lover than maxValue', () => {
+  it('should validate bigint value is lower than maxValue', () => {
     expect(vg.isLt(BigInt(5))(BigInt(4))).toStrictEqual(BigInt(4));
     expect(vg.isLt(BigInt(5))(4)).toStrictEqual(4);
-    expect(() => vg.isLt(BigInt(5))(BigInt(5))).toThrow('must be lover than 5');
-    expect(() => vg.isLt(BigInt(5))(5)).toThrow('must be lover than 5');
+    expect(() => vg.isLt(BigInt(5))(BigInt(5))).toThrow('must be lower than 5');
+    expect(() => vg.isLt(BigInt(5))(5)).toThrow('must be lower than 5');
     expect(() => vg.isLt(BigInt(5))('x' as any)).toThrow(
-      'must be lover than 5',
+      'must be lower than 5',
     );
   });
 
-  it('should validate Date value is lover than maxValue', () => {
+  it('should validate Date value is lower than maxValue', () => {
     const maxDate = new Date('2020-06-20T10:00:00');
     expect(vg.isLt(maxDate)(new Date('2020-06-02T10:00:00'))).toStrictEqual(
       new Date('2020-06-02T10:00:00'),
     );
-    expect(() => vg.isLt(maxDate)(maxDate)).toThrow('must be lover than');
+    expect(() => vg.isLt(maxDate)(maxDate)).toThrow('must be lower than');
     expect(() => vg.isLt(maxDate)(new Date('2020-07-01T10:00:00'))).toThrow(
-      'must be lover than',
+      'must be lower than',
     );
-    expect(() => vg.isLt(maxDate)('x' as any)).toThrow('must be lover than');
+    expect(() => vg.isLt(maxDate)('x' as any)).toThrow('must be lower than');
   });
 
-  it('should validate string value is lover than maxValue', () => {
+  it('should validate string value is lower than maxValue', () => {
     expect(vg.isLt('B')('A')).toStrictEqual('A');
     expect(vg.isLt('c')('A')).toStrictEqual('A');
-    expect(() => vg.isLt('B')('B')).toThrow('must be lover than "B"');
-    expect(() => vg.isLt('B')('a')).toThrow('must be lover than "B"');
-    expect(() => vg.isLt('B')(5 as any)).toThrow('must be lover than "B"');
+    expect(() => vg.isLt('B')('B')).toThrow('must be lower than "B"');
+    expect(() => vg.isLt('B')('a')).toThrow('must be lower than "B"');
+    expect(() => vg.isLt('B')(5 as any)).toThrow('must be lower than "B"');
   });
 
-  it('should validate string value is lover than maxValue - caseInsensitive', () => {
+  it('should validate string value is lower than maxValue - caseInsensitive', () => {
     expect(vg.isLt('b', { caseInsensitive: true })('A')).toStrictEqual('A');
+    // 'a' > 'B' case-sensitively (uppercase sorts before lowercase), but
+    // 'a' < 'b' once both sides are lower-cased - this exercises the
+    // caseInsensitive-specific branch rather than the plain comparison.
+    expect(vg.isLt('B', { caseInsensitive: true })('a')).toStrictEqual('a');
+    expect(() => vg.isLt('B')('a')).toThrow('must be lower than "B"');
   });
 });
 
@@ -162,59 +167,117 @@ describe('isLt', () => {
  *
  */
 describe('isLte', () => {
-  it('should validate number value is lover than or equal to maxValue', () => {
+  it('should validate number value is lower than or equal to maxValue', () => {
     expect(vg.isLte(5)(4)).toStrictEqual(4);
     expect(vg.isLte(5)(5)).toStrictEqual(5);
-    expect(() => vg.isLte(5)(6)).toThrow('must be lover than or equal to 5');
+    expect(() => vg.isLte(5)(6)).toThrow('must be lower than or equal to 5');
     expect(() => vg.isLte(5)('x' as any)).toThrow(
-      'must be lover than or equal to 5',
+      'must be lower than or equal to 5',
     );
   });
 
-  it('should validate bigint value is lover than or equal to maxValue', () => {
+  it('should validate bigint value is lower than or equal to maxValue', () => {
     expect(vg.isLte(BigInt(5))(BigInt(4))).toStrictEqual(BigInt(4));
     expect(vg.isLte(BigInt(5))(4)).toStrictEqual(4);
     expect(vg.isLte(BigInt(5))(BigInt(5))).toStrictEqual(BigInt(5));
     expect(vg.isLte(BigInt(5))(5)).toStrictEqual(5);
     expect(() => vg.isLte(BigInt(5))(BigInt(6))).toThrow(
-      'must be lover than or equal to 5',
+      'must be lower than or equal to 5',
     );
     expect(() => vg.isLte(BigInt(5))(6)).toThrow(
-      'must be lover than or equal to 5',
+      'must be lower than or equal to 5',
     );
     expect(() => vg.isLte(BigInt(5))('x' as any)).toThrow(
-      'must be lover than or equal to 5',
+      'must be lower than or equal to 5',
     );
   });
 
-  it('should validate Date value is lover than or equal to maxValue', () => {
+  it('should validate Date value is lower than or equal to maxValue', () => {
     const maxDate = new Date('2020-06-20T10:00:00');
     expect(vg.isLte(maxDate)(new Date('2020-06-02T10:00:00'))).toStrictEqual(
       new Date('2020-06-02T10:00:00'),
     );
     expect(vg.isLte(maxDate)(maxDate)).toStrictEqual(maxDate);
     expect(() => vg.isLte(maxDate)(new Date('2020-07-01T10:00:00'))).toThrow(
-      'must be lover than or equal to',
+      'must be lower than or equal to',
     );
     expect(() => vg.isLte(maxDate)('x' as any)).toThrow(
-      'must be lover than or equal to',
+      'must be lower than or equal to',
     );
   });
 
-  it('should validate string value is lover than or equal to maxValue', () => {
+  it('should validate string value is lower than or equal to maxValue', () => {
     expect(vg.isLte('B')('A')).toStrictEqual('A');
     expect(vg.isLte('B')('B')).toStrictEqual('B');
     expect(vg.isLte('c')('A')).toStrictEqual('A');
     expect(() => vg.isLte('B')('a')).toThrow(
-      'must be lover than or equal to "B"',
+      'must be lower than or equal to "B"',
     );
     expect(() => vg.isLte('B')(5 as any)).toThrow(
-      'must be lover than or equal to "B"',
+      'must be lower than or equal to "B"',
     );
   });
 
-  it('should validate string value is lover than or equal to maxValue - caseInsensitive', () => {
+  it('should validate string value is lower than or equal to maxValue - caseInsensitive', () => {
     expect(vg.isLte('b', { caseInsensitive: true })('A')).toStrictEqual('A');
+    expect(vg.isLte('B', { caseInsensitive: true })('a')).toStrictEqual('a');
+    expect(() => vg.isLte('B')('a')).toThrow(
+      'must be lower than or equal to "B"',
+    );
+  });
+});
+
+describe('range', () => {
+  it('should validate number value is within range (inclusive)', () => {
+    expect(vg.range(5, 10)(5)).toStrictEqual(5);
+    expect(vg.range(5, 10)(10)).toStrictEqual(10);
+    expect(vg.range(5, 10)(7)).toStrictEqual(7);
+    expect(() => vg.range(5, 10)(4)).toThrow('Value must be between 5 and 10');
+    expect(() => vg.range(5, 10)(11)).toThrow('Value must be between 5 and 10');
+    expect(() => vg.range(5, 10)('x' as any)).toThrow(
+      'Value must be between 5 and 10',
+    );
+  });
+
+  it('should validate bigint value is within range (inclusive)', () => {
+    expect(vg.range(BigInt(5), BigInt(10))(BigInt(5))).toStrictEqual(BigInt(5));
+    expect(vg.range(BigInt(5), BigInt(10))(BigInt(10))).toStrictEqual(
+      BigInt(10),
+    );
+    expect(() => vg.range(BigInt(5), BigInt(10))(BigInt(4))).toThrow(
+      'Value must be between 5 and 10',
+    );
+    expect(() => vg.range(BigInt(5), BigInt(10))(BigInt(11))).toThrow(
+      'Value must be between 5 and 10',
+    );
+  });
+
+  it('should validate Date value is within range (inclusive)', () => {
+    const minDate = new Date('2020-06-01T10:00:00');
+    const maxDate = new Date('2020-06-20T10:00:00');
+    expect(vg.range(minDate, maxDate)(minDate)).toStrictEqual(minDate);
+    expect(vg.range(minDate, maxDate)(maxDate)).toStrictEqual(maxDate);
+    expect(
+      vg.range(minDate, maxDate)(new Date('2020-06-10T10:00:00')),
+    ).toStrictEqual(new Date('2020-06-10T10:00:00'));
+    expect(() =>
+      vg.range(minDate, maxDate)(new Date('2020-05-01T10:00:00')),
+    ).toThrow('Value must be between');
+    expect(() =>
+      vg.range(minDate, maxDate)(new Date('2020-07-01T10:00:00')),
+    ).toThrow('Value must be between');
+  });
+
+  it('should validate string value is within range (inclusive)', () => {
+    expect(vg.range('B', 'D')('B')).toStrictEqual('B');
+    expect(vg.range('B', 'D')('D')).toStrictEqual('D');
+    expect(vg.range('B', 'D')('C')).toStrictEqual('C');
+    expect(() => vg.range('B', 'D')('A')).toThrow(
+      'Value must be between B and D',
+    );
+    expect(() => vg.range('B', 'D')('E')).toThrow(
+      'Value must be between B and D',
+    );
   });
 });
 

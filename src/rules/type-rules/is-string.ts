@@ -7,7 +7,7 @@ import {
 
 /**
  * Validates if the value is a string.
- * Converts input value to string if the oerce option is set to 'true'.
+ * Converts input value to string if the coerce option is set to 'true'.
  * @validator isString
  */
 export function isString(options?: isString.Options) {

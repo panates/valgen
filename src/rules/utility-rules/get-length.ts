@@ -1,14 +1,11 @@
 import { type Context, type Nullish, validator } from '../../core/index.js';
 
 type ExtractLengthInput =
-  | string
-  | any[]
-  | ArrayBuffer
-  | { length: number }
-  | { size: number };
+  string | any[] | ArrayBuffer | { length: number } | { size: number };
 
 /**
- * Returns length of an Array, String, ArrayBuffer, Buffer or any object with the "length" property.
+ * Returns length of an Array, String, ArrayBuffer, Buffer, Set, Map, or any
+ * object with a "length" or "size" property.
  * @validator getLength
  */
 export function getLength() {

@@ -10,7 +10,7 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a valid Email
+ * Validates if value is a valid mobile phone number
  * @validator isMobilePhone
  */
 export function isMobilePhone(options?: isMobilePhone.Options) {
@@ -26,7 +26,7 @@ export function isMobilePhone(options?: isMobilePhone.Options) {
       ) {
         return input;
       }
-      context.fail(_this, `Value must be a valid a Mobile Phone Number`, input);
+      context.fail(_this, `Value must be a valid Mobile Phone Number`, input);
     },
     options,
   );
