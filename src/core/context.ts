@@ -4,7 +4,7 @@ import { ValidationError } from './validation-error.js';
 import type { Validator } from './validator.js';
 
 const VARIABLE_REPLACE_PATTERN = /{{([^}]*)}}/g;
-const OPTIONAL_VAR_PATTERN = /^([^?]+)(?:\||(.*))?$/;
+const OPTIONAL_VAR_PATTERN = /^([^|]+)(?:\|(.*))?$/;
 
 export class Context implements ExecutionOptions {
   isRoot = true;

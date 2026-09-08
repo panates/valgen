@@ -225,7 +225,7 @@ const PRECISION_INDEX: Record<isDate.Precision, number> = {
   month: 2,
   mo: 2,
   day: 3,
-  d: 4,
+  d: 3,
   hours: 4,
   hr: 4,
   minutes: 5,
