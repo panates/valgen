@@ -1,5 +1,20 @@
 # API Reference
 
+<!--
+docs-baseline:
+  Everything under docs/api.md and docs/api/*.md was written and verified (every
+  signature/option/example checked against source and test/**/*.spec.ts, or run
+  directly against the library) as of the commit and package version below.
+
+  git-commit: 74dd52916e7e8dc30bfa950b4bd34e5d43ee009e
+  package-version: 6.2.2
+  date: 2026-09-08
+
+  To refresh after later changes: `git diff 74dd52916e7e8dc30bfa950b4bd34e5d43ee009e..HEAD -- src/`
+  (or a narrower path for one category) to see what moved since this baseline, update the
+  affected doc section(s), then bump git-commit/package-version/date above to the new HEAD.
+-->
+
 valgen validators all share the same small set of conventions. This page covers those shared
 conventions once; the per-category pages document every individual validator function.
 
