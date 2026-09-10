@@ -69,4 +69,16 @@ describe('oneOf', () => {
       "Value didn't match one of required rules",
     );
   });
+
+  it('should surface the last candidate error instead of only the generic message', () => {
+    const buggy = (() => {
+      throw new TypeError('unexpected bug');
+    }) as any;
+    const c = vg.oneOf([buggy]);
+    expect(() => c('anything')).toThrow(
+      "Value didn't match one of required rules (last error: unexpected bug)",
+    );
+    const result = c.silent('anything');
+    expect(result.errors?.[0].lastError).toBe('unexpected bug');
+  });
 });
