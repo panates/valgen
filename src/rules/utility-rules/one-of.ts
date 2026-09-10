@@ -26,8 +26,21 @@ export function oneOf(
       let discriminator: DiscriminatorRecord | undefined;
       let v: any;
       let passed = false;
-      // Mock fail method to prevent errors
-      context.fail = () => (passed = false);
+      // Every candidate failing is normal control flow here (that's how
+      // "try the next one" works), so a candidate's own context.fail must
+      // not throw or accumulate into the real error list. But swallowing it
+      // completely would hide the *reason* every candidate failed - including
+      // a genuine bug in a candidate rule, which would otherwise look
+      // identical to "the input just didn't match". So the mock still
+      // records the last failure's message, and it's reported directly as
+      // the final error (oneOf can only report one message anyway) instead
+      // of being discarded in favor of a generic one.
+      let lastFailMessage: string | undefined;
+      context.fail = (_rule: Validator, message: string | Error) => {
+        passed = false;
+        lastFailMessage =
+          message instanceof Error ? message.message : String(message);
+      };
       for (i = 0; i < l; i++) {
         passed = true;
         if (Array.isArray(rules[i])) {
@@ -51,7 +64,16 @@ export function oneOf(
               if (!passed) break;
             }
             if (!passed) continue;
-          } catch {
+          } catch (e: any) {
+            // A discriminator/rule that throws directly (bypassing
+            // context.fail entirely, e.g. a plain function rather than one
+            // built with validator()) must still count as "this candidate
+            // failed" - otherwise `passed` is left at its top-of-loop `true`
+            // and, if this is the last candidate, oneOf would silently
+            // return an unvalidated value instead of failing.
+            passed = false;
+            lastFailMessage =
+              e?.message != null ? String(e.message) : String(e);
             continue;
           }
         } else c = rules[i] as Validator;
@@ -59,14 +81,20 @@ export function oneOf(
           try {
             v = c(input, undefined, context);
             if (passed) break;
-          } catch {
-            //
+          } catch (e: any) {
+            passed = false;
+            lastFailMessage =
+              e?.message != null ? String(e.message) : String(e);
           }
       }
       // Restore fail method
       delete (context as any).fail;
       if (passed) return v;
-      context.fail(_this, `Value didn't match one of required rules`, input);
+      context.fail(
+        _this,
+        lastFailMessage || `Value didn't match one of required rules`,
+        input,
+      );
     },
     options,
   );

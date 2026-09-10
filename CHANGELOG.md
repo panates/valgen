@@ -1,6 +1,19 @@
 ## Changelog
 
-### [v7.0.0](https://github.com/panates/valgen/compare/v6.2.2...v7.0.0) - 
+### [v7.0.1](https://github.com/panates/valgen/compare/v7.0.0...v7.0.1) - 
+
+#### 🪲 Fixes
+
+- fix: oneOf was crushing the real error when every candidate failed @Eray Hanoğlu 
+- fix: oneOf reports the actual candidate error directly, not a generic one @Eray Hanoğlu 
+
+#### 📖 Documentation Changes
+
+- docs: track a baseline commit for the API reference, document the practice @Eray Hanoğlu 
+- docs: bump API docs baseline to the oneOf fix commit @Eray Hanoğlu 
+- docs: bump API docs baseline to the oneOf direct-error-message fix @Eray Hanoğlu 
+
+## [v7.0.0](https://github.com/panates/valgen/compare/v6.2.2...v7.0.0) -  8 September 2026 
 
 #### 🚀 New Features
 
