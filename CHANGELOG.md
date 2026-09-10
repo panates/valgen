@@ -1,6 +1,8 @@
 ## Changelog
 
-### [v7.0.1](https://github.com/panates/valgen/compare/v7.0.0...v7.0.1) - 
+### [v7.0.2](https://github.com/panates/valgen/compare/v7.0.1...v7.0.2) - 
+
+### [v7.0.1](https://github.com/panates/valgen/compare/v7.0.0...v7.0.1) -  10 September 2026 
 
 #### 🪲 Fixes
 
