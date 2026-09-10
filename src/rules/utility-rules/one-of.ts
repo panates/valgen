@@ -32,8 +32,9 @@ export function oneOf(
       // completely would hide the *reason* every candidate failed - including
       // a genuine bug in a candidate rule, which would otherwise look
       // identical to "the input just didn't match". So the mock still
-      // records the last failure's message; if nothing ends up passing, it's
-      // surfaced alongside the generic message instead of being discarded.
+      // records the last failure's message, and it's reported directly as
+      // the final error (oneOf can only report one message anyway) instead
+      // of being discarded in favor of a generic one.
       let lastFailMessage: string | undefined;
       context.fail = (_rule: Validator, message: string | Error) => {
         passed = false;
@@ -91,11 +92,8 @@ export function oneOf(
       if (passed) return v;
       context.fail(
         _this,
-        lastFailMessage
-          ? `Value didn't match one of required rules (last error: ${lastFailMessage})`
-          : `Value didn't match one of required rules`,
+        lastFailMessage || `Value didn't match one of required rules`,
         input,
-        { lastError: lastFailMessage },
       );
     },
     options,

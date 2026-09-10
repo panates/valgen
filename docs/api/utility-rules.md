@@ -181,7 +181,7 @@ oneOf(rules: (Validator | [Validator, Record<string, Validator>])[], options?: o
 - For a plain entry, `oneOf` calls it directly; if it throws or fails, it moves on to the next entry (short-circuits on the **first success**, not the first failure).
 - For a `[validator, discriminator]` tuple, `input` must be an object. `oneOf` first runs each rule in `discriminator` against the matching property of `input` (e.g. `discriminator.kind(input.kind)`); only if **every** discriminator key passes does it go on to run the tuple's main `validator` against the whole `input`. If any discriminator key fails (or `input` isn't an object), that entry is skipped entirely — the main validator never runs — and `oneOf` moves to the next candidate. This lets you dispatch between differently-shaped objects using a cheap "tag" check (e.g. a `kind` field) instead of trying and catching a full shape validation for each candidate.
 - An unexpected exception thrown by a discriminator or a rule (as opposed to a normal validation failure) is caught and treated the same as a failure — `oneOf` just moves on to the next candidate.
-- If no entry passes, it fails with `Value didn't match one of required rules` - and, if any candidate recorded a reason (a normal validation message, or an unexpected exception's message), that's appended as `(last error: <reason>)` and also placed on the issue's `lastError` field, so the underlying cause isn't silently lost when every candidate fails.
+- If no entry passes, `oneOf` reports the *last* candidate's own failure message directly (a normal validation message, or an unexpected exception's message) rather than a generic one - since it can only report a single message anyway, the actual reason is more useful than a vague "didn't match". The generic `Value didn't match one of required rules` message is only used as a fallback when nothing was actually tried (e.g. an empty `rules` array).
 
 **Example**
 ```ts
@@ -191,7 +191,7 @@ import { isNull, isNumber, isObject, isString, vg } from 'valgen';
 const simple = vg.oneOf([isNull, isNumber]);
 simple(6); // => 6
 simple(null); // => null
-simple('x'); // throws: "Value didn't match one of required rules (last error: Value must be a number)"
+simple('x'); // throws: "Value must be a number" (the last candidate's own error, reported directly)
 
 // discriminated form: pick the object shape based on `kind`
 const pet = vg.oneOf([
@@ -204,7 +204,7 @@ pet({ kind: 'cat', name: 'Molly' }); // => { kind: 'cat', name: 'Molly' }
 pet({ kind: 'dog', name: 'Daisy' }); // => { kind: 'dog', name: 'Daisy' }
 pet('Daisy'); // => 'Daisy'
 pet(5); // => 5
-pet({ kind: 'bird', name: 'Bluey' }); // throws: "Value didn't match one of required rules (last error: Value must be equal to \"5\")"
+pet({ kind: 'bird', name: 'Bluey' }); // throws: "Value must be equal to \"5\"" (the last candidate tried)
 ```
 
 ## optional

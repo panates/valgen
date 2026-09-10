@@ -6,9 +6,8 @@ describe('oneOf', () => {
     const c = vg.oneOf([isNull, isNumber]);
     expect(c(6)).toStrictEqual(6);
     expect(c(null)).toStrictEqual(null);
-    expect(() => c('x' as any)).toThrow(
-      "Value didn't match one of required rules",
-    );
+    // Reports the last candidate's own error directly, not a generic message.
+    expect(() => c('x' as any)).toThrow('Value must be a number');
   });
 
   it('should return one of valid object using discriminator', () => {
@@ -39,13 +38,13 @@ describe('oneOf', () => {
     expect(c('Daisy')).toStrictEqual('Daisy');
     expect(c(5)).toStrictEqual(5);
     expect(c(null)).toStrictEqual(null);
-    expect(() => c(1)).toThrow("Value didn't match one of required rules");
+    expect(() => c(1)).toThrow('Value must be equal to "5"');
     expect(() =>
       c({
         kind: 'bird',
         name: 'Bluey',
       }),
-    ).toThrow("Value didn't match one of required rules");
+    ).toThrow('Value must be equal to "5"');
   });
 
   it('should move on to the next rule if a discriminator throws unexpectedly', () => {
@@ -54,9 +53,8 @@ describe('oneOf', () => {
     }) as any;
     const c = vg.oneOf([[isObject, { kind: throwing }], isNumber]);
     expect(c(5)).toStrictEqual(5);
-    expect(() => c({ kind: 'x' } as any)).toThrow(
-      "Value didn't match one of required rules",
-    );
+    // isNumber (the next candidate) is what ultimately fails and reports.
+    expect(() => c({ kind: 'x' } as any)).toThrow('Value must be a number');
   });
 
   it('should move on to the next rule if a rule throws unexpectedly', () => {
@@ -65,20 +63,21 @@ describe('oneOf', () => {
     }) as any;
     const c = vg.oneOf([throwing, isNumber]);
     expect(c(5)).toStrictEqual(5);
-    expect(() => c('x' as any)).toThrow(
-      "Value didn't match one of required rules",
-    );
+    expect(() => c('x' as any)).toThrow('Value must be a number');
   });
 
-  it('should surface the last candidate error instead of only the generic message', () => {
+  it('should report the actual candidate error directly instead of a generic message', () => {
     const buggy = (() => {
       throw new TypeError('unexpected bug');
     }) as any;
     const c = vg.oneOf([buggy]);
-    expect(() => c('anything')).toThrow(
-      "Value didn't match one of required rules (last error: unexpected bug)",
+    expect(() => c('anything')).toThrow('unexpected bug');
+  });
+
+  it('should still fall back to a generic message when there is nothing to report', () => {
+    const c = vg.oneOf([]);
+    expect(() => c('anything' as any)).toThrow(
+      "Value didn't match one of required rules",
     );
-    const result = c.silent('anything');
-    expect(result.errors?.[0].lastError).toBe('unexpected bug');
   });
 });
