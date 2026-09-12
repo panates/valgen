@@ -48,7 +48,7 @@
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --max-warnings=0 --fix",
     "format": "prettier . --write --log-level=warn",
-    "check": "dpdm -T --no-warning --no-tree ./src/index.ts",
+    "check": "dpdm -T --no-warning --no-tree --skip-dynamic-imports circular --exit-code circular:1 ./src/index.ts",
     "test": "mocha",
     "bench": "TS_NODE_PROJECT=benchmark/tsconfig.json node --expose-gc --import @swc-node/register/esm-register benchmark/cli.ts",
     "precitest": "rimraf coverage",
