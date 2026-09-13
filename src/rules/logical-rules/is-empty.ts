@@ -5,7 +5,25 @@ import {
 } from '../../core/index.js';
 
 /**
- * Checks if the value is empty. Value should be string, array, set, map or object
+ * Checks that the value is empty. The value should be a string, array, Set,
+ * Map, Buffer, ArrayBuffer, or plain object.
+ *
+ * `null`/`undefined` pass through unchanged (treated as empty), and `Date`
+ * instances always pass since a date has no "empty" concept.
+ *
+ * @param options - Validation options (`onFail`, `coerce`, ...).
+ * @returns The input value unchanged when it is considered empty.
+ * @throws `Value must be an empty string` / `Value must be an empty array` /
+ * `Value must be an empty Set` / `Value must be an empty Map` / `Value must
+ * be an empty Buffer` / `Value must be an empty ArrayBuffer` / `Value must be
+ * an empty Object`, depending on the input's type, or the generic `Value
+ * must be empty` for any other non-empty type (e.g. `NaN`).
+ * @example
+ * ```ts
+ * isEmpty('');   // => ''
+ * isEmpty([]);   // => []
+ * isEmpty('dd'); // throws ValidationError: "Value must be an empty string"
+ * ```
  * @validator isEmpty
  */
 export function isEmpty(options?: isEmpty.Options) {
@@ -49,11 +67,30 @@ export function isEmpty(options?: isEmpty.Options) {
 }
 
 export namespace isEmpty {
+  /** Options for {@link isEmpty} - adds no properties beyond `ValidationOptions`. */
   export interface Options extends ValidationOptions {}
 }
 
 /**
- * Checks if the value is not empty. Value should be string, array, set, map or object
+ * Checks that the value is not empty. The value should be a string, array,
+ * Set, Map, Buffer, ArrayBuffer, or plain object.
+ *
+ * Unlike `isEmpty`, nullish input is rejected here rather than treated as
+ * passing, and `Date` instances always pass.
+ *
+ * @param options - Validation options (`onFail`, `coerce`, ...).
+ * @returns The input value unchanged when it is considered non-empty.
+ * @throws `Value must not be empty` for `null`/`undefined`/an empty string,
+ * `Value must not be NaN` for `NaN`, `Array must not be empty`, `Set must
+ * not be empty`, `Map must not be empty`, `Buffer must not be empty`,
+ * `ArrayBuffer must not be empty`, or `Object must not be empty`, depending
+ * on the input's type.
+ * @example
+ * ```ts
+ * isNotEmpty('abc'); // => 'abc'
+ * isNotEmpty('');    // throws ValidationError: "Value must not be empty"
+ * isNotEmpty([]);    // throws ValidationError: "Array must not be empty"
+ * ```
  * @validator isNotEmpty
  */
 export function isNotEmpty(options?: isNotEmpty.Options) {
@@ -106,5 +143,6 @@ export function isNotEmpty(options?: isNotEmpty.Options) {
 }
 
 export namespace isNotEmpty {
+  /** Options for {@link isNotEmpty} - adds no properties beyond `ValidationOptions`. */
   export interface Options extends ValidationOptions {}
 }

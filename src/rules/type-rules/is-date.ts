@@ -7,10 +7,27 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a "Date" instance. If the `coerce` option is `true`,
- * also accepts an ISO 8601 formatted date string or a numeric timestamp and
- * converts it to a Date instance.
+ * Validates that the value is a `Date` instance, with an optional
+ * precision-trimming step. With `coerce: true`, also accepts a `number`
+ * (epoch milliseconds) or a date-like `string` and converts it to a `Date`.
+ * Without `coerce`, a date *string* is rejected even if well-formed ISO
+ * 8601 - only actual `Date` instances validate by default.
  * @validator isDate
+ * @param options - Validation options.
+ * @returns The validated `Date` instance, with fields below `trim`'s
+ *   precision zeroed out when `trim` is given.
+ * @throws `Value is not valid date` if the input isn't (or can't be coerced
+ *   into) a valid `Date`.
+ * @example
+ * ```ts
+ * import { isDate, vg } from 'valgen';
+ *
+ * isDate(new Date(1)); // => new Date(1)
+ * isDate('2020-01-10T08:30:15Z', { coerce: true });
+ * // => new Date('2020-01-10T08:30:15Z')
+ * vg.isDate({ trim: 'day', coerce: true })('2020-05-10T08:30:15.123');
+ * // => new Date('2020-05-10T00:00:00')
+ * ```
  */
 export function isDate(options?: isDate.Options) {
   const trim = options?.trim;
@@ -60,14 +77,35 @@ export namespace isDate {
     | 'tz';
 
   export interface Options extends ValidationOptions {
+    /** Zeroes out the resulting `Date`'s fields below this precision (e.g. `'day'` zeroes hours/minutes/seconds/ms); only `year` through `seconds` have an effect - `milliseconds`/`ms`/`tz` are no-ops. */
     trim?: Precision;
   }
 }
 
 /**
- * Validates if value is DFS (date-formatted string).
- * Converts input value to DFS if the "coerce" option is set to 'true'.
+ * Validates that the value is (or, with `coerce: true`, can be normalized
+ * into) a date-formatted string within a `[precisionMin, precisionMax]`
+ * range. Accepts ISO-8601-like strings as well as `Date`/`number` values
+ * when `coerce: true`.
  * @validator isDateString
+ * @param options - Validation options.
+ * @returns The original string when valid (or, with `coerce: true`, the
+ *   normalized/trimmed date string).
+ * @throws `Minimum date precision should be <precisionMin>` if the parsed
+ *   precision is below `precisionMin`.
+ * @throws `Maximum date precision should be <precisionMax>` if the parsed
+ *   precision is above `precisionMax` (and the input wasn't already a `Date`).
+ * @throws `Value "<input>" is not a valid date string` if the input can't
+ *   be parsed as a date at all.
+ * @example
+ * ```ts
+ * import { isDateString, vg } from 'valgen';
+ *
+ * isDateString('2020-01-10T08:30:15Z'); // => '2020-01-10T08:30:15Z'
+ * vg.isDateString({ precisionMin: 'day' })('2020-11-01'); // => '2020-11-01'
+ * vg.isDateString({ coerce: true, trim: true, precisionMax: 'day' })('2020-11-01T00:00:00+03:00');
+ * // => '2020-11-01'
+ * ```
  */
 export function isDateString(options?: isDateString.Options) {
   const trim = options?.trim;
@@ -122,9 +160,13 @@ export function isDateString(options?: isDateString.Options) {
 export namespace isDateString {
   export type Precision = isDate.Precision;
   export interface Options extends ValidationOptions {
+    /** The minimum precision the input string must carry (e.g. `'day'` rejects a bare year). @defaultValue 'minutes' */
     precisionMin?: Precision;
+    /** The maximum precision accepted; a string more precise than this fails unless the input was already a `Date`. @defaultValue 'tz' */
     precisionMax?: Precision;
+    /** When `coerce: true`, truncates the output string down to `precisionMax` instead of only validating precision. @defaultValue false */
     trim?: boolean;
+    /** When coercing, controls whether `-`/`:`/`T` separators are included in the output (`false` produces a compact form like `20201101102345.123`). @defaultValue true */
     separators?: boolean;
   }
 }

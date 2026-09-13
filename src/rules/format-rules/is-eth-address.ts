@@ -7,8 +7,17 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is an ETH (Ethereum) address.
+ * Validates that a string is a valid Ethereum (ETH) address. Delegates to
+ * `validatorJS.isEthereumAddress`.
  * @validator isETHAddress
+ * @param options - Validation options.
+ * @returns The input string, unchanged, if valid.
+ * @throws if `input` is not a valid ETH address: `Value must be valid ETH (Ethereum) address`
+ * @example
+ * ```ts
+ * isETHAddress('0xb794f5ea0ba39494ce839613fffba74279579268'); // => '0xb794f5ea0ba39494ce839613fffba74279579268'
+ * isETHAddress('0xnothex'); // throws ValidationError: "Value must be valid ETH (Ethereum) address"
+ * ```
  */
 export function isETHAddress(options?: isETHAddress.Options) {
   return validator<string, string>(

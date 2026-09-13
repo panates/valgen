@@ -7,9 +7,19 @@ import {
 } from '../../core/index.js';
 
 /**
- * Check if the string represents a decimal number,
- * such as `0.1`, `.3`, `1.1`, `1.00003`, `4.0` etc.
+ * Validates that a string represents a decimal number, such as `0.1`, `.3`,
+ * `1.1`, `1.00003`, `4.0` etc. Delegates to `validatorJS.isDecimal(input)`
+ * with no options passed through, so it always uses the underlying
+ * library's default rules.
  * @validator isDecimal
+ * @param options - Validation options.
+ * @returns The input string, unchanged, if valid.
+ * @throws if `input` is not a decimal number string: `Value must be a decimal number string`
+ * @example
+ * ```ts
+ * isDecimal('1.5'); // => '1.5'
+ * isDecimal('abc'); // throws ValidationError: "Value must be a decimal number string"
+ * ```
  */
 export function isDecimal(options?: isDecimal.Options) {
   return validator<string, string>(

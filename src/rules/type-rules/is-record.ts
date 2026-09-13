@@ -8,9 +8,28 @@ import type {
 import { validator } from '../../core/index.js';
 
 /**
- * Validates the record object according to given "key" and "value" rules
- * Converts properties according to rules if the coerce option is set to 'true'.
+ * Validates a plain object as a "dictionary": every key must satisfy
+ * `keyRule` and every value must satisfy `valueRule`. With `coerce: true`,
+ * both keys and values may be coerced by their respective rules.
  * @validator isRecord
+ * @param keyRule - Rule every own key of the input is validated against.
+ * @param valueRule - Rule every value of the input is validated against.
+ * @param options - Validation options.
+ * @returns An object with the validated (and possibly coerced) keys and values.
+ * @throws `Value must be an object` if the input is `null`, `undefined`, or
+ *   not an object.
+ * @throws `<key> is not a valid key. <underlying message>` if a key fails
+ *   `keyRule`.
+ * @example
+ * ```ts
+ * import { isAny, isString, vg } from 'valgen';
+ *
+ * const validate = vg.isRecord(isString, isAny);
+ * validate(null as any); // throws ValidationError: 'Value must be an object'
+ *
+ * vg.isRecord(isString, isString)({ a: 1 as any, b: true as any }, { coerce: true });
+ * // => { a: '1', b: 'true' }
+ * ```
  */
 export function isRecord<TKeys extends string | number | symbol, TValues>(
   keyRule: Validator<TKeys>,

@@ -8,7 +8,26 @@ import {
 import type { range } from './range.js';
 
 /**
- * Checks if value is greater than or equal to minValue
+ * Checks that the value is greater than or equal to `minValue`. Supports
+ * `number`, `bigint`, `Date`, and `string` comparisons. Despite the
+ * `Nullish<T>` return type, there is **no** null/undefined passthrough here
+ * - nullish input falls through every branch and fails. This validator is
+ * also reused internally by `lengthMin` via
+ * `pipe([getLength(), isGte(minValue, { onFail: ... })])`.
+ *
+ * @typeParam T - The type of `minValue` (`range.Input`: `number | bigint | Date | string`).
+ * @param minValue - The value the input must be greater than or equal to.
+ * @param options - Validation options, including `caseInsensitive` for
+ * string comparisons.
+ * @returns The input value unchanged when it is `>= minValue`.
+ * @throws `Value must be greater than or equal to <minValue>` (string
+ * `minValue` quoted) if the comparison fails, or if `input`/`minValue` are
+ * not a matching comparable type.
+ * @example
+ * ```ts
+ * vg.isGte(5)(5); // => 5
+ * vg.isGte(5)(4); // throws ValidationError: "...must be greater than or equal to 5"
+ * ```
  * @validator isGte
  */
 export function isGte<T extends range.Input>(
@@ -53,6 +72,11 @@ export function isGte<T extends range.Input>(
 
 export namespace isGte {
   export interface Options extends ValidationOptions {
+    /**
+     * For string comparisons, also passes if the lower-cased input is `>=`
+     * the lower-cased `minValue`.
+     * @defaultValue false
+     */
     caseInsensitive?: boolean;
   }
 }

@@ -7,8 +7,17 @@ import {
 } from '../../core/index.js';
 
 /**
- * Check if the string contains ASCII chars only.
+ * Validates that a string contains only ASCII characters. Delegates to
+ * `validatorJS.isAscii`.
  * @validator isAscii
+ * @param options - Validation options.
+ * @returns The input string, unchanged, if valid.
+ * @throws if `input` contains non-ASCII characters: `Value must be an ascii string`
+ * @example
+ * ```ts
+ * isAscii('abc123!@#'); // => 'abc123!@#'
+ * isAscii('şiir'); // throws ValidationError: "Value must be an ascii string"
+ * ```
  */
 export function isAscii(options?: isAscii.Options) {
   return validator<string, string>(

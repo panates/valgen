@@ -9,8 +9,20 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a valid Email
+ * Validates that a string is a well-formed email address. Wraps
+ * `validatorJS.isEmail`, always passing `allow_display_name: true` as a
+ * base, then layers additional checks (display name requirement/
+ * prohibition, host black/white list, blacklisted characters) as separate
+ * re-validation passes, each producing a specific error message.
  * @validator isEmail
+ * @param options - Validation options.
+ * @returns The input string, unchanged, if valid.
+ * @throws if `input` is not a well-formed email address: `Value must match required e-mail format`
+ * @example
+ * ```ts
+ * isEmail('me@domain.com'); // => 'me@domain.com'
+ * isEmail('invalid'); // throws ValidationError: "Value must match required e-mail format"
+ * ```
  */
 export function isEmail(options?: isEmail.Options) {
   const emailOptions: _IsEmailOptions = {
@@ -98,35 +110,35 @@ export namespace isEmail {
     /**
      * If set to `true`, the validator will also match `Display Name <email-address>`.
      *
-     * @default false
+     * @defaultValue false
      */
     allowDisplayName?: boolean;
 
     /**
      * If set to `true`, the validator will reject strings without the format `Display Name <email-address>`.
      *
-     * @default false
+     * @defaultValue false
      */
     requireDisplayName?: boolean;
 
     /**
      * If set to `false`, the validator will not allow any non-English UTF8 character in email address' local part.
      *
-     * @default true
+     * @defaultValue true
      */
     utf8LocalPart?: boolean;
 
     /**
      * If set to `true`, the validator will not check for the standard max length of an email.
      *
-     * @default false
+     * @defaultValue false
      */
     ignoreMaxLength?: boolean;
 
     /**
      * If set to `true`, the validator will allow IP addresses in the host part.
      *
-     * @default false
+     * @defaultValue false
      */
     allowIpDomain?: boolean;
 
@@ -134,7 +146,7 @@ export namespace isEmail {
      * If set to `true`, some additional validation will be enabled,
      * e.g. disallowing certain syntactically valid email addresses that are rejected by GMail.
      *
-     * @default false
+     * @defaultValue false
      */
     domainSpecificValidation?: boolean;
 

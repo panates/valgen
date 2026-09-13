@@ -10,8 +10,24 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a valid mobile phone number
+ * Validates that a string is a valid mobile phone number. Delegates to
+ * `validatorJS.isMobilePhone(input, options.locale, { strictMode })`.
  * @validator isMobilePhone
+ * @param options - Validation options.
+ * @returns The validated mobile phone number string, unchanged.
+ * @throws `Value must be a valid Mobile Phone Number` when the input is not
+ *   a string, or is not a valid mobile phone number for the requested
+ *   locale(s)/strictness.
+ * @example
+ * ```ts
+ * import { isMobilePhone, vg } from 'valgen';
+ *
+ * isMobilePhone('+14155552671'); // => '+14155552671'
+ * isMobilePhone('12345'); // throws ValidationError: "Value must be a valid Mobile Phone Number"
+ *
+ * const trStrict = vg.isMobilePhone({ locale: 'tr-TR', strictMode: true });
+ * trStrict('+905321234567'); // => '+905321234567'
+ * ```
  */
 export function isMobilePhone(options?: isMobilePhone.Options) {
   const opts: _IsMobilePhoneOptions = {
@@ -37,13 +53,13 @@ export namespace isMobilePhone {
     /**
      * If this is set to `true`, the mobile phone number must be supplied with the country code and therefore must start with `+`.
      *
-     * @default false
+     * @defaultValue false
      */
     strictMode?: boolean;
 
     /**
      * Locale or locales of the mobile phone
-     * @default 'any'
+     * @defaultValue 'any'
      */
     locale?: 'any' | MobilePhoneLocale | MobilePhoneLocale[];
   }

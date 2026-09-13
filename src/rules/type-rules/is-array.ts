@@ -8,9 +8,30 @@ import type {
 import { validator } from '../../core/index.js';
 
 /**
- * Validates if the value is "array" and applies validation for each item.
- * Converts input value to array if the coerce option is set to 'true'.
+ * Validates that the value is an array, optionally validating (and
+ * coercing) each item against `itemValidator`. With `coerce: true`, a
+ * non-null, non-array input is wrapped into a single-item array before
+ * validating.
  * @validator isArray
+ * @param itemValidator - Optional rule applied to each array element; when
+ *   omitted, only array-ness is checked.
+ * @param options - Validation options.
+ * @returns The validated array, with each item replaced by its (possibly
+ *   coerced) validated value.
+ * @throws `Value must be an array` if the input is `null`, `undefined`, or
+ *   not an array (and not coercible into one).
+ * @throws `Item at index [i] is not valid. <underlying message>` if an item
+ *   fails `itemValidator`.
+ * @example
+ * ```ts
+ * import { isArray, vg } from 'valgen';
+ * import { isInteger } from 'valgen';
+ *
+ * isArray([true]); // => [true]
+ * vg.isArray(isInteger)([1, 2]); // => [1, 2]
+ * vg.isArray(isInteger)(['1', '2']);
+ * // throws: 'Item at index [0] is not valid. Value must be a valid integer value'
+ * ```
  */
 export function isArray<T, I>(
   itemValidator?: Validator<T, I>,

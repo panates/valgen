@@ -9,9 +9,24 @@ const TRUE_PATTERN = /^(?:true|t|1|yes|y)$/i;
 const FALSE_PATTERN = /^(?:false|f|0|no|n)$/i;
 
 /**
- * Validates if value is "boolean".
- * Converts input value to boolean if the coerce option is set to 'true'.
+ * Validates that the value is a `boolean`. With `coerce: true`, converts
+ * `1`/`0` and common boolean-like strings (`'true'`, `'yes'`, `'false'`,
+ * `'no'`, etc., case-insensitive) into `true`/`false`.
  * @validator isBoolean
+ * @param options - Validation options.
+ * @returns The validated (and possibly coerced) `boolean` value.
+ * @throws `Value must be a boolean` if the input is not an actual `boolean`
+ *   and cannot be coerced.
+ * @throws `Invalid boolean string` if `coerce: true` and a string input
+ *   matches neither the true nor the false pattern.
+ * @example
+ * ```ts
+ * import { isBoolean } from 'valgen';
+ *
+ * isBoolean(true); // => true
+ * isBoolean(1, { coerce: true }); // => true
+ * isBoolean('yes', { coerce: true }); // => true
+ * ```
  */
 export function isBoolean(options?: isBoolean.Options) {
   return validator<boolean | undefined, unknown>(
