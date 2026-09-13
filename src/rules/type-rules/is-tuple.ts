@@ -6,9 +6,28 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if the value is "tuple" and applies validation for each item.
- * Converts input value to tuple if the coerce option is set to 'true'.
+ * Validates that the value is an array of a fixed length, applying a
+ * distinct validator to each positional item. With `coerce: true`, a
+ * non-array, non-null input is wrapped into a single-item array before
+ * validating (only useful when `items.length === 1`).
  * @validator isTuple
+ * @param items - The per-position validators; the input array must have
+ *   exactly this many elements.
+ * @param options - Validation options.
+ * @returns A new array with each item replaced by its validated (and
+ *   possibly coerced) value.
+ * @throws `Value must be a tuple` if the input is `null`, `undefined`, or
+ *   not an array (and not coercible into one).
+ * @throws `Value must be a tuple of length <N>` if the array's length
+ *   doesn't exactly match `items.length`.
+ * @example
+ * ```ts
+ * import { isBoolean, isNumber, isString, vg } from 'valgen';
+ *
+ * vg.isTuple([isBoolean])([true]); // => [true]
+ * vg.isTuple([isString, isNumber, isBoolean])([1, '2', 0], { coerce: true });
+ * // => ['1', 2, false]
+ * ```
  */
 export function isTuple<T1, I1>(
   items: [Validator<T1, I1>],

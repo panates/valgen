@@ -7,8 +7,17 @@ import {
 } from '../../core/index.js';
 
 /**
- * Check if the string contains only letters and numbers.
+ * Validates that a string contains only letters and numbers. Delegates to
+ * `validatorJS.isAlphanumeric`.
  * @validator isAlphanumeric
+ * @param options - Validation options.
+ * @returns The input string, unchanged, if valid.
+ * @throws if `input` is not a string of letters/numbers only: `Value must be an alphanumeric string`
+ * @example
+ * ```ts
+ * isAlphanumeric('abc123'); // => 'abc123'
+ * isAlphanumeric('abc-123'); // throws ValidationError: "Value must be an alphanumeric string"
+ * ```
  */
 export function isAlphanumeric(options?: isAlphanumeric.Options) {
   return validator<string, string>(

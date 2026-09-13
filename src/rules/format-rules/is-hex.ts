@@ -7,8 +7,20 @@ import {
 } from '../../core/index.js';
 
 /**
- * Check if the string is a hexadecimal number.
+ * Validates that a string is a hexadecimal number. Delegates to
+ * `validatorJS.isHexadecimal(input)`.
  * @validator isHex
+ * @param options - Validation options.
+ * @returns The validated hexadecimal string, unchanged.
+ * @throws `Value must be an hexadecimal string` when the input is not a
+ *   string, or is not a valid hexadecimal number.
+ * @example
+ * ```ts
+ * import { isHex } from 'valgen';
+ *
+ * isHex('1a2B3c'); // => '1a2B3c'
+ * isHex('zzz'); // throws ValidationError: "Value must be an hexadecimal string"
+ * ```
  */
 export function isHex(options?: isHex.Options) {
   return validator<string, string>(

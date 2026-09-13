@@ -6,8 +6,28 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if the given value is one of enum values.
+ * Validates that the value is one of a fixed set of enumeration members.
+ * `values` may be a single value, an array of allowed values, or a plain
+ * object/TypeScript enum (its non-numeric-key values are used, so both
+ * string enums and numeric enums with reverse mappings work correctly).
  * @validator isEnum
+ * @param values - The allowed value(s): a single value, an array, or an
+ *   object/enum whose values are used.
+ * @param options - Validation options.
+ * @returns The input value, unchanged (original casing is preserved even
+ *   under `caseInSensitive`).
+ * @throws `Value must be one of enumeration member` (suffixed
+ *   ` (<enumName>)` when `enumName` is set) if the value doesn't match any
+ *   allowed member, or is `null`/`undefined`.
+ * @example
+ * ```ts
+ * import { vg } from 'valgen';
+ *
+ * vg.isEnum(['a', 'b'])('a'); // => 'a'
+ * vg.isEnum(['a', 'b'], { enumName: 'Suit' })('c');
+ * // throws: 'Value must be one of enumeration member (Suit)'
+ * vg.isEnum(['A', 'B'], { caseInSensitive: true })('a'); // => 'a'
+ * ```
  */
 export function isEnum<T1>(
   values: any,
@@ -60,7 +80,9 @@ export function isEnum<T1>(
 
 export namespace isEnum {
   export interface Options extends ValidationOptions {
+    /** Compares `string` values case-insensitively (matching is done on `.toUpperCase()`), but the original input casing is returned. @defaultValue false */
     caseInSensitive?: boolean;
+    /** Included in the failure message as `... (enumName)` for clearer errors. */
     enumName?: string;
   }
 }

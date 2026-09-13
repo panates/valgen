@@ -9,8 +9,17 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a "Base64" string.
+ * Validates that a string is Base64-encoded. Delegates to
+ * `validatorJS.isBase64(input, options)`.
  * @validator isBase64
+ * @param options - Validation options.
+ * @returns The input string, unchanged, if valid.
+ * @throws if `input` is not a valid Base64 string: `Value must be a Base64 string`
+ * @example
+ * ```ts
+ * isBase64('SGVsbG8gV29ybGQ='); // => 'SGVsbG8gV29ybGQ='
+ * isBase64('not-base64!!'); // throws ValidationError: "Value must be a Base64 string"
+ * ```
  */
 export function isBase64(options?: isBase64.Options) {
   return validator<string, string>(
@@ -26,5 +35,17 @@ export function isBase64(options?: isBase64.Options) {
 }
 
 export namespace isBase64 {
-  export interface Options extends ValidationOptions, _IsBase64Options {}
+  export interface Options extends ValidationOptions, _IsBase64Options {
+    /**
+     * If `true`, expects URL-safe Base64 (`-`/`_` instead of `+`/`/`).
+     * @defaultValue false
+     */
+    urlSafe?: boolean;
+
+    /**
+     * Whether trailing `=` padding is required.
+     * @defaultValue !urlSafe
+     */
+    padding?: boolean;
+  }
 }

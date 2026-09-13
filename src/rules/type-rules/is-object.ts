@@ -11,14 +11,47 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates the object according to schema. Converts properties according to
- * schema rules if the coerce option is set to 'true'. Supports
- * `additionalFields` (allow/strip/reject/validate unknown properties -
- * defaults to allowing them when no schema is given, and rejecting them
- * otherwise), `caseInSensitive` (match property names ignoring case), and
- * `detectCircular` (guard against circular references when the schema
- * validates itself, e.g. via `forwardRef`).
+ * Validates an object against a property `schema`, with support for nested
+ * schemas, renaming/relabeling fields via `[Validator, PropertyOptions]`
+ * tuples, controlling unknown properties via `additionalFields`,
+ * case-insensitive key matching via `caseInSensitive`, and
+ * circular-reference detection via `detectCircular`. Converts properties
+ * according to schema rules if the `coerce` option is set to `true`.
  * @validator isObject
+ * @typeParam T - The validated output object type.
+ * @typeParam I - The accepted input type.
+ * @param schema - Maps property keys to a `Validator` (or a
+ *   `[Validator, PropertyOptions]` tuple to customize the error `label` or
+ *   rename the output key via `as`); omit for a schema-less "is this an
+ *   object" check.
+ * @param options - Validation options.
+ * @returns The validated object; when `ctor` is set, its prototype is
+ *   `ctor.prototype` (so `instanceof ctor` is `true`). Properties whose
+ *   validated value is `undefined` are omitted from the output.
+ * @throws `Value must be an object` if the (possibly JSON-parsed) input is
+ *   not a non-null object.
+ * @throws `Object has no field '<key>' and does not accept additional
+ *   fields` (or `<name> has no field...` when `name`/`ctor` is set) if
+ *   `additionalFields: 'error'` and the input has an undeclared property.
+ * @throws Whatever the failing property's own rule throws, located at that
+ *   property's path (e.g. `address.country`).
+ * @example
+ * ```ts
+ * import { isNumber, isString, vg } from 'valgen';
+ *
+ * class Person {
+ *   declare name: string;
+ *   declare age: number;
+ * }
+ * const personDef: vg.isObject.Schema = {
+ *   name: [vg.required(isString), { label: 'Full Name', as: 'fullName' }],
+ *   age: [vg.required(isNumber), { label: 'Age' }],
+ * };
+ * const validatePerson = vg.isObject(personDef, { ctor: Person });
+ *
+ * validatePerson({ name: 'John', age: '22' }, { coerce: true });
+ * // => { fullName: 'John', age: 22 }  (instance of Person)
+ * ```
  */
 export function isObject<T extends object = object, I = object | string>(
   schema?: isObject.Schema,
@@ -171,10 +204,15 @@ export namespace isObject {
   >;
 
   export interface Options<T> extends ValidationOptions {
+    /** Used as the error `context` label for this object (e.g. a class name). @defaultValue `ctor?.name` */
     name?: string;
+    /** Sets the prototype of the output object to `ctor.prototype` (`instanceof ctor` becomes `true`); may also define static `[preValidation]`/`[postValidation]` hooks invoked before/after this rule's own logic. */
     ctor?: Type<T>;
+    /** Controls properties not declared in `schema`: `true` passes them through unchanged, `false` silently drops them, a `Validator` applies that rule to each of them, and `'error'` throws when any are present. @defaultValue `true` if `schema` is omitted entirely; otherwise `false` */
     additionalFields?: boolean | Validator_ | 'error';
+    /** Matches input property names to schema keys case-insensitively; on a case-insensitive duplicate (e.g. both `name` and `Name` present), only the first-encountered key is used. @defaultValue false */
     caseInSensitive?: boolean;
+    /** Tracks input objects already being converted (per root validation call) and returns the same (in-progress) output object instead of recursing infinitely when a cycle is found. @defaultValue false */
     detectCircular?: boolean;
   }
 }

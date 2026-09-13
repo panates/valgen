@@ -1,6 +1,19 @@
 ## Changelog
 
-### [v7.0.1](https://github.com/panates/valgen/compare/v7.0.0...v7.0.1) - 
+### [v7.0.3](https://github.com/panates/valgen/compare/v7.0.2...v7.0.3) - 
+
+#### 🪲 Fixes
+
+- fix: point coverage badge at dev instead of the stale master record @Eray Hanoğlu 
+
+#### 📖 Documentation Changes
+
+- docs: add real TSDoc to every rule function across all categories @Eray Hanoğlu 
+- docs: add real TSDoc to the core module @Eray Hanoğlu 
+
+### [v7.0.2](https://github.com/panates/valgen/compare/v7.0.1...v7.0.2) -  10 September 2026 
+
+### [v7.0.1](https://github.com/panates/valgen/compare/v7.0.0...v7.0.1) -  10 September 2026 
 
 #### 🪲 Fixes
 

@@ -119,5 +119,5 @@ at the end of the run.
 [downloads-url]: https://npmjs.org/package/valgen
 [ci-test-image]: https://github.com/panates/valgen/actions/workflows/test.yml/badge.svg
 [ci-test-url]: https://github.com/panates/valgen/actions/workflows/test.yml
-[coveralls-image]: https://img.shields.io/coveralls/panates/valgen/master.svg
+[coveralls-image]: https://img.shields.io/coveralls/panates/valgen/dev.svg
 [coveralls-url]: https://coveralls.io/r/panates/valgen

@@ -7,7 +7,23 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a passport number
+ * Validates that a string is a valid passport number for the given country,
+ * by delegating to `validatorJS.isPassportNumber(input, countryCode)`.
+ *
+ * @param countryCode - The ISO country code to validate the passport number against.
+ * @param options - Validation options.
+ * @returns The validated passport number string, unchanged.
+ * @throws `Value must be a valid <countryCode> Passport Number` when the input
+ *   isn't a valid passport number for `countryCode`.
+ *
+ * @example
+ * ```ts
+ * import { vg } from 'valgen';
+ *
+ * const isUSPassport = vg.isPassportNumber('US');
+ * isUSPassport('123456789'); // => '123456789'
+ * isUSPassport('12345'); // throws ValidationError: "Value must be a valid US Passport Number"
+ * ```
  * @validator isPassportNumber
  */
 export function isPassportNumber(

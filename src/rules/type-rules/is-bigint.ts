@@ -6,9 +6,21 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is "BigInt".
- * Converts input value to BigInt if the coerce option is set to 'true'.
+ * Validates that the value is a `bigint`. With `coerce: true`, allows
+ * converting a `number` or a numeric `string` to `bigint` via
+ * `BigInt(input)`.
  * @validator isBigint
+ * @param options - Validation options.
+ * @returns The `bigint` value.
+ * @throws `Value must be a BigInt` if the input is not a `bigint` (and,
+ *   with `coerce`, cannot be converted into one via `BigInt(input)`).
+ * @example
+ * ```ts
+ * import { isBigint } from 'valgen';
+ *
+ * isBigint(1n); // => 1n
+ * isBigint('4', { coerce: true }); // => 4n
+ * ```
  */
 export function isBigint(options?: isBigint.Options) {
   return validator<bigint, unknown>(

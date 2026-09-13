@@ -9,8 +9,23 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is an MACAddress
+ * Validates that a string is a valid MAC address. Delegates to
+ * `validatorJS.isMACAddress(input, { no_separators, eui })`.
  * @validator isMACAddress
+ * @param options - Validation options.
+ * @returns The validated MAC address string, unchanged.
+ * @throws `Value must be a valid MAC address` when the input is not a
+ *   string, or does not match the requested MAC address format.
+ * @example
+ * ```ts
+ * import { isMACAddress, vg } from 'valgen';
+ *
+ * isMACAddress('01:02:03:04:05:ab'); // => '01:02:03:04:05:ab'
+ * isMACAddress('0102030405ab'); // throws ValidationError: "Value must be a valid MAC address"
+ *
+ * const noSeparators = vg.isMACAddress({ noSeparators: true });
+ * noSeparators('0102030405ab'); // => '0102030405ab'
+ * ```
  */
 export function isMACAddress(options?: isMACAddress.Options) {
   const opts: _IsMACAddressOptions = {
@@ -41,12 +56,14 @@ export namespace isMACAddress {
      *
      * e.g. `01 02 03 04 05 ab` or `01-02-03-04-05-ab`.
      *
-     * @default false
+     * @defaultValue false
      */
     noSeparators?: boolean;
 
     /**
      * Setting `eui` allows for validation against EUI-48 or EUI-64 instead of both.
+     *
+     * @defaultValue undefined
      */
     eui?: '48' | '64';
   }

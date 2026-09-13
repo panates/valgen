@@ -6,11 +6,23 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if the value is undefined.
- * If `coerce` is `true`, always succeeds and returns `undefined` regardless
- * of the input value - "coerce" here means "force to undefined", not
- * "convert values that merely look like undefined".
+ * Validates that the value is `undefined`. With `coerce: true`, the rule
+ * never fails - every input, including `null` or `5`, resolves to
+ * `undefined` ("coerce" here means "force to undefined", not "convert
+ * values that merely look like undefined").
  * @validator isUndefined
+ * @param options - Validation options.
+ * @returns `undefined`.
+ * @throws `Value must be undefined` if the input is anything other than
+ *   `undefined` (and `coerce` is not set).
+ * @example
+ * ```ts
+ * import { isUndefined } from 'valgen';
+ *
+ * isUndefined(undefined); // => undefined
+ * isUndefined(5); // throws ValidationError: 'Value must be undefined'
+ * isUndefined(0, { coerce: true }); // => undefined
+ * ```
  */
 export function isUndefined(options?: isUndefined.Options) {
   return validator<any, unknown>(

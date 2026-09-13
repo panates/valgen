@@ -8,7 +8,26 @@ import {
 import type { range } from './range.js';
 
 /**
- * Checks if value is greater than "minValue"
+ * Checks that the value is greater than `minValue`. Supports `number`,
+ * `bigint`, `Date`, and `string` comparisons (numbers and bigints can be
+ * compared against each other). Despite the `Nullish<T>` return type, there
+ * is **no** null/undefined passthrough here - nullish input falls through
+ * every branch and fails.
+ *
+ * @typeParam T - The type of `minValue` (`range.Input`: `number | bigint | Date | string`).
+ * @param minValue - The value the input must be strictly greater than.
+ * @param options - Validation options, including `caseInsensitive` for
+ * string comparisons.
+ * @returns The input value unchanged when it is greater than `minValue`.
+ * @throws `Value must be greater than <minValue>` (string `minValue` quoted,
+ * e.g. `"B"`) if the comparison fails, or if `input`/`minValue` are not a
+ * matching comparable type.
+ * @example
+ * ```ts
+ * vg.isGt(5)(6);     // => 6
+ * vg.isGt(5)(5);     // throws ValidationError: "...must be greater than 5"
+ * vg.isGt('B')('C'); // => 'C'
+ * ```
  * @validator isGt
  */
 export function isGt<T extends range.Input>(
@@ -53,6 +72,12 @@ export function isGt<T extends range.Input>(
 
 export namespace isGt {
   export interface Options extends ValidationOptions {
+    /**
+     * For string comparisons, also passes if the lower-cased input is
+     * greater than the lower-cased `minValue` (in addition to the
+     * case-sensitive comparison).
+     * @defaultValue false
+     */
     caseInsensitive?: boolean;
   }
 }

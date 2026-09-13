@@ -7,7 +7,21 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value is a BIC (Bank Identification Code) or SWIFT code
+ * Validates that a string is a valid BIC (Bank Identification Code) or SWIFT
+ * code, by delegating to `validatorJS.isBIC(input)`.
+ *
+ * @param options - Validation options.
+ * @returns The validated BIC/SWIFT code string, unchanged.
+ * @throws `Value must be a valid BIC (Bank Identification Code) or SWIFT code`
+ *   when the input isn't a valid BIC/SWIFT code.
+ *
+ * @example
+ * ```ts
+ * import { isSWIFT } from 'valgen';
+ *
+ * isSWIFT('DEUTDEFF500'); // => 'DEUTDEFF500'
+ * isSWIFT('1234DEFF'); // throws ValidationError: "Value must be a valid BIC (Bank Identification Code) or SWIFT code"
+ * ```
  * @validator isSWIFT
  */
 export function isSWIFT(options?: isSWIFT.Options) {

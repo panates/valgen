@@ -7,8 +7,20 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value a Lowercase string
+ * Validates that a string contains only lowercase characters. Delegates to
+ * `validatorJS.isLowercase(input)`.
  * @validator isLowercase
+ * @param options - Validation options.
+ * @returns The validated lowercase string, unchanged.
+ * @throws `Value must be a lowercase string` when the input is not a
+ *   string, or contains any non-lowercase characters.
+ * @example
+ * ```ts
+ * import { isLowercase } from 'valgen';
+ *
+ * isLowercase('abc'); // => 'abc'
+ * isLowercase('ABC'); // throws ValidationError: "Value must be a lowercase string"
+ * ```
  */
 export function isLowercase(options?: isLowercase.Options) {
   return validator<string, string>(

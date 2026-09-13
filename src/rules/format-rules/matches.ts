@@ -6,7 +6,29 @@ import {
 } from '../../core/index.js';
 
 /**
- * Validates if value matches the given regular expression, or returns undefined if nullish
+ * Validates that a string matches a given regular expression pattern.
+ * Returns `undefined` for nullish input instead of failing. A string pattern
+ * is compiled via `new RegExp(format)`.
+ *
+ * @param format - The pattern to match against - a `RegExp`, or a string
+ *   compiled into one.
+ * @param options - Validation options.
+ * @returns The validated string, unchanged, or `undefined` when the input
+ *   was `null`/`undefined`.
+ * @throws `Value must match <formatName> format` (using `'requested'` when
+ *   `formatName` is omitted) when the input isn't a string or doesn't match.
+ *
+ * @example
+ * ```ts
+ * import { vg } from 'valgen';
+ *
+ * const isDigits = vg.matches(/\d+/);
+ * isDigits('0123'); // => '0123'
+ * isDigits('abc'); // throws ValidationError: "Value must match requested format"
+ *
+ * const isPositiveNumber = vg.matches(/\d+/, { formatName: 'positive number' });
+ * isPositiveNumber('abc'); // throws ValidationError: "Value must match positive number format"
+ * ```
  * @validator matches
  */
 export function matches(format: string | RegExp, options?: matches.Options) {
@@ -34,6 +56,10 @@ export function matches(format: string | RegExp, options?: matches.Options) {
 
 export namespace matches {
   export interface Options extends ValidationOptions {
+    /**
+     * Name used in the error message (`Value must match <formatName> format`).
+     * @defaultValue `'requested'`
+     */
     formatName?: string;
   }
 }
