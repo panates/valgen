@@ -1,6 +1,20 @@
 # Changelog
 
-<!-- rman:documented-up-to d9f6be67e321e0d3ca97df5dd8891483ce3f0a13 -->
+<!-- rman:documented-up-to eacc770f77c4677ea9cef893e5343f382f5bb5b9 -->
+
+## v7.0.4 (2026-10-10)
+
+### 🐛 Bug Fixes
+
+- import only isValid and parseISO from date-fns (7252ce0)
+
+### 🧹 Chores
+
+- add contributors (1931582)
+- migrate to rman 2.x and the shared GitHub Actions workflows (ac8b0c5)
+- update dependencies and remove unused packages in package-lock.json (bd847ee)
+
+---
 
 ## v7.0.3 (2026-09-13)
 
