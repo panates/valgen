@@ -84,9 +84,11 @@ The full API reference lives under [`docs/`](docs/api.md):
 |---|---|
 | `npm test` | Run the test suite (mocha). |
 | `npm run citest` | Run the test suite with coverage (c8). |
-| `npm run qc` | Lint + circular-dependency check. |
+| `npm run compile` | Type-check `src` and `test` without emitting. |
 | `npm run bench` | Run the benchmark suite (see below). |
-| `npm run build` | Type-check and compile to `build/`. |
+| `rman lint` / `rman check` | Lint the repository / check the manifest and circular dependencies. |
+| `rman build` | Check, lint, clean, then compile to `build/`. |
+| `rman deps` | List outdated dependencies (`-u` to upgrade). |
 
 ## Benchmarking
 

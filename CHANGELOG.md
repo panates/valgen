@@ -1,560 +1,767 @@
-## Changelog
+# Changelog
 
-### [v7.0.3](https://github.com/panates/valgen/compare/v7.0.2...v7.0.3) - 
+<!-- rman:documented-up-to d9f6be67e321e0d3ca97df5dd8891483ce3f0a13 -->
 
-#### 🪲 Fixes
+## v7.0.3 (2026-09-13)
 
-- fix: point coverage badge at dev instead of the stale master record @Eray Hanoğlu 
+### 🐛 Bug Fixes
 
-#### 📖 Documentation Changes
+- point coverage badge at dev instead of the stale master record (bb5abeb)
 
-- docs: add real TSDoc to every rule function across all categories @Eray Hanoğlu 
-- docs: add real TSDoc to the core module @Eray Hanoğlu 
+### 📚 Documentation
 
-### [v7.0.2](https://github.com/panates/valgen/compare/v7.0.1...v7.0.2) -  10 September 2026 
+- add real TSDoc to the core module (cac3693)
+- add real TSDoc to every rule function across all categories (8b23503)
 
-### [v7.0.1](https://github.com/panates/valgen/compare/v7.0.0...v7.0.1) -  10 September 2026 
+### 🧹 Chores
 
-#### 🪲 Fixes
+- remove deprecated homepage field from package.json (be403e3)
+- update dpdm check script to skip dynamic imports and set circular dependency exit code (6a3f716)
 
-- fix: oneOf was crushing the real error when every candidate failed @Eray Hanoğlu 
-- fix: oneOf reports the actual candidate error directly, not a generic one @Eray Hanoğlu 
+---
 
-#### 📖 Documentation Changes
+## v7.0.2 (2026-09-10)
 
-- docs: track a baseline commit for the API reference, document the practice @Eray Hanoğlu 
-- docs: bump API docs baseline to the oneOf fix commit @Eray Hanoğlu 
-- docs: bump API docs baseline to the oneOf direct-error-message fix @Eray Hanoğlu 
+### 🧹 Chores
 
-## [v7.0.0](https://github.com/panates/valgen/compare/v6.2.2...v7.0.0) -  8 September 2026 
+- update dependencies and homepage in package.json and package-lock.json (decb178)
 
-#### 🚀 New Features
+---
 
-- feat: add a benchmark tool and fix real perf/correctness issues it found @Eray Hanoğlu 
-- feat: write benchmark results to BENCHMARKS.md and show live progress @Eray Hanoğlu 
-- feat: Integrate `graphify` for knowledge graph generation and add related documentation and scripts @Eray Hanoğlu 
+## v7.0.1 (2026-09-10)
 
-#### 🪲 Fixes
+### 🐛 Bug Fixes
 
-- fix: bugs found while writing the API reference docs @Eray Hanoğlu 
-- fix: stop the memory pass's own forceGc() from erasing what it measures @Eray Hanoğlu 
-- fix: forward options in allOf/oneOf and fix iif's success check @Eray Hanoğlu 
-- fix: more validator correctness fixes and a doc correction @Eray Hanoğlu 
-- fix: correct several validator edge-case bugs @Eray Hanoğlu 
-- fix: stateful regex and wrong property lookup in two rules @Eray Hanoğlu 
+- oneOf was crushing the real error when every candidate failed (e5870e1)
+- oneOf reports the actual candidate error directly, not a generic one (f6c5490)
 
-#### 📖 Documentation Changes
+### 📚 Documentation
 
-- docs: add a detailed API reference and rewrite the README @Eray Hanoğlu 
+- track a baseline commit for the API reference, document the practice (2af6d02)
+- bump API docs baseline to the oneOf fix commit (398e85a)
+- bump API docs baseline to the oneOf direct-error-message fix (d504378)
 
-#### 🧪 Changes to Test Assests
+---
 
-- test: raise coverage to ~99% and fix bugs found along the way @Eray Hanoğlu 
-- test: add benchmarks for all format-rules and fix two stale JSDoc comments @Eray Hanoğlu 
+## v7.0.0 (2026-09-08)
 
-#### ⚡️ Performance Improvments
+### ✨ Features
 
-- perf: fix remaining wrong-slot nested calls, benchmark rest of utility-rules @Eray Hanoğlu 
+- Integrate `graphify` for knowledge graph generation and add related documentation and scripts (c51144f)
+- add a benchmark tool and fix real perf/correctness issues it found (c8660e7)
+- write benchmark results to BENCHMARKS.md and show live progress (9bfb49c)
 
-### [v6.2.2](https://github.com/panates/valgen/compare/v6.2.1...v6.2.2) -  21 May 2026 
+### 🐛 Bug Fixes
 
-#### 🚀 New Features
+- correct several validator edge-case bugs (e313dd3)
+- more validator correctness fixes and a doc correction (f96c5ae)
+- stateful regex and wrong property lookup in two rules (bf875e4)
+- forward options in allOf/oneOf and fix iif's success check (bf76ca5)
+- stop the memory pass's own forceGc() from erasing what it measures (01cf98e)
+- bugs found while writing the API reference docs (21940b8)
 
-- feat: Add `separators` option to `toDateString` for enhanced formatting customization @Eray Hanoğlu 
+### ⚡ Performance and Optimizations
 
-### [v6.2.1](https://github.com/panates/valgen/compare/v6.2.0...v6.2.1) -  21 May 2026 
+- fix remaining wrong-slot nested calls, benchmark rest of utility-rules (d60ee5d)
 
-#### 🚀 New Features
+### 📚 Documentation
 
-- feat: Added `separators` option to `isDateString`, updated logic and tests for custom separator handling @Eray Hanoğlu 
+- add a detailed API reference and rewrite the README (96f6697)
 
-### [v6.2.0](https://github.com/panates/valgen/compare/v6.1.0...v6.2.0) -  14 May 2026 
+### 🧪 Tests
 
-#### 🚀 New Features
+- raise coverage to ~99% and fix bugs found along the way (fc7d6b3)
+- add benchmarks for all format-rules and fix two stale JSDoc comments (ce39180)
 
-- feat: Added `fixed` validator @Eray Hanoğlu 
+### 🧹 Chores
 
-#### 🛠 Refactoring and Updates
+- Updated dependencies (4bae352)
+- update dependencies (npm packages) (36ec1b4)
+- remove dead helper files (7c17682)
+- refresh BENCHMARKS.md from a new run (74dd529)
 
-- refactor: Replaced hardcoded validator names with function names, added nullable validator and tests @Eray Hanoğlu 
+---
 
-### [v6.1.0](https://github.com/panates/valgen/compare/v6.0.3...v6.1.0) -  30 April 2026 
+## v6.2.2 (2026-05-21)
 
-#### 🚀 New Features
+### ✨ Features
 
-- feat: Added isInstanceOf validator with tests and export @Eray Hanoğlu 
+- Add `separators` option to `toDateString` for enhanced formatting customization (39c3016)
 
-#### 🛠 Refactoring and Updates
+---
 
-- refactor: Updated imports for consistency and maintenance, upgraded dependencies in package-lock.json @Eray Hanoğlu 
+## v6.2.1 (2026-05-21)
 
-### [v6.0.3](https://github.com/panates/valgen/compare/v6.0.2...v6.0.3) -  6 April 2026 
+### ✨ Features
 
-#### 🛠 Refactoring and Updates
+- Added `separators` option to `isDateString`, updated logic and tests for custom separator handling (3a35c11)
 
-- refactor: Removed isPassportNumber.CountryCode type @Eray Hanoğlu 
+### 🧹 Chores
 
-### [v6.0.2](https://github.com/panates/valgen/compare/v6.0.1...v6.0.2) -  6 April 2026 
+- updated dependencies (7ecff7e)
 
-#### 🛠 Refactoring and Updates
+---
 
-- refactor: Exposed "isPassportNumber.Locale" type @Eray Hanoğlu 
-- refactor: Exposed "isPassportNumber.CountryCode" type @Eray Hanoğlu 
-- refactor: Exposed "isCreditCard.Provider" type @Eray Hanoğlu 
+## v6.2.0 (2026-05-14)
 
-### [v6.0.1](https://github.com/panates/valgen/compare/v6.0.0...v6.0.1) -  6 April 2026 
+### ✨ Features
 
-#### 🛠 Refactoring and Updates
+- Added `fixed` validator (96f0101)
 
-- refactor: Exposed "MobilePhoneLocale" @Eray Hanoğlu 
+### 🔧 Refactoring
 
-## [v6.0.0](https://github.com/panates/valgen/compare/v5.20.0...v6.0.0) -  6 April 2026 
+- Replaced hardcoded validator names with function names, added nullable validator and tests (569d1b2)
 
-#### 🛠 Refactoring and Updates
+---
 
-- refactor: Improved typing exports using namespaces @Eray Hanoğlu 
-- refactor: Minor typing update @Eray Hanoğlu 
+## v6.1.0 (2026-04-30)
 
-#### 💬 General Changes
+### ✨ Features
 
-- dev: Fixed issues for new lint rules @Eray Hanoğlu 
+- Added isInstanceOf validator with tests and export (2bee3dc)
 
-### [v5.20.0](https://github.com/panates/valgen/compare/v5.19.5...v5.20.0) -  6 April 2026 
+### 🔧 Refactoring
 
-#### 🚀 New Features
+- Updated imports for consistency and maintenance, upgraded dependencies in package-lock.json (b9a25a2)
 
-- feat: Added UID version 6,7 and 8 validation support @Eray Hanoğlu 
+---
 
-### [v5.19.5](https://github.com/panates/valgen/compare/v5.19.4...v5.19.5) -  23 February 2026 
+## v6.0.3 (2026-04-06)
 
-#### 🪲 Fixes
+### 🔧 Refactoring
 
-- fix: Fixed "ms" serialization issue @Eray Hanoğlu 
+- Removed isPassportNumber.CountryCode type (1bd50a1)
 
-### [v5.19.4](https://github.com/panates/valgen/compare/v5.19.3...v5.19.4) -  20 January 2026 
+---
 
-#### 🚀 New Features
+## v6.0.2 (2026-04-06)
 
-- feat: Handle TypeScript enums in isEnum validator @Eray Hanoğlu 
+### 🔧 Refactoring
 
-### [v5.19.3](https://github.com/panates/valgen/compare/v5.19.2...v5.19.3) -  19 January 2026 
+- Exposed "isCreditCard.Provider" type (b3c042e)
+- Exposed "isPassportNumber.Locale" type (6e8b29c)
+- Exposed "isPassportNumber.CountryCode" type (1591c10)
 
-#### 🪲 Fixes
+---
 
-- fix: toDateString do not trim @Eray Hanoğlu 
+## v6.0.1 (2026-04-06)
 
-### [v5.19.2](https://github.com/panates/valgen/compare/v5.19.1...v5.19.2) -  19 January 2026 
+### 🔧 Refactoring
 
-#### 🛠 Refactoring and Updates
+- Exposed "MobilePhoneLocale" (3770944)
 
-- refactor: Refactored isDateString options @Eray Hanoğlu 
+---
 
-### [v5.19.1](https://github.com/panates/valgen/compare/v5.19.0...v5.19.1) -  19 January 2026 
+## v6.0.0 (2026-04-06)
 
-#### 🚀 New Features
+### 🔧 Refactoring
 
-- feat: Added "trim" option to "toDateString" @Eray Hanoğlu 
+- Minor typing update (8c09683)
+- Improved typing exports using namespaces (6e755fb)
 
-#### 🧪 Changes to Test Assests
+### 🧹 Chores
 
-- test: Set timezone for entire job in test workflow @Eray Hanoğlu 
-- test: Set timezone for entire job in test workflow @Eray Hanoğlu 
+- Ignored .tsbuildinfo in .gitignore (80b08e0)
 
-### [v5.19.0](https://github.com/panates/valgen/compare/v5.18.3...v5.19.0) -  19 January 2026 
+### 💬 General Changes
 
-#### 💬 General Changes
+- Fixed issues for new lint rules (9fdde3a)
 
-- dev: Removed cjs support @Eray Hanoğlu 
+---
 
-### [v5.18.3](https://github.com/panates/valgen/compare/v5.18.2...v5.18.3) -  19 January 2026 
+## v5.20.0 (2026-04-06)
 
-#### 🪲 Fixes
+### ✨ Features
 
-- fix: Fixed precision and trim issue of isDate rule @Eray Hanoğlu 
+- Added UID version 6,7 and 8 validation support (f4ea352)
 
-#### 💬 General Changes
+### 🧹 Chores
 
-- dev: npm Trusted publishing update @Eray Hanoğlu 
+- Updated deps (ae6473f)
 
-### [v5.18.2](https://github.com/panates/valgen/compare/v5.18.1...v5.18.2) -  29 August 2025 
+---
 
-#### 🛠 Refactoring and Updates
+## v5.19.5 (2026-02-23)
 
-- refactor: Set precision of toDateString() to "day" @Eray Hanoğlu 
+### 🐛 Bug Fixes
 
-### [v5.18.1](https://github.com/panates/valgen/compare/v5.18.0...v5.18.1) -  27 August 2025 
+- Fixed "ms" serialization issue (1d5e0ee)
 
-#### 🪲 Fixes
+### 🧹 Chores
 
-- fix: Increased ms precision @Eray Hanoğlu 
+- Removed unnecessary comment (93e8104)
 
-### [v5.18.0](https://github.com/panates/valgen/compare/v5.17.3...v5.18.0) -  31 July 2025 
+---
 
-#### 🚀 New Features
+## v5.19.4 (2026-01-20)
 
-- feat: isTime accept Date instance @Eray Hanoğlu 
+### ✨ Features
 
-#### 🪲 Fixes
+- Handle TypeScript enums in isEnum validator (7a2dbd9)
 
-- fix: Minor fix in isDate rule @Eray Hanoğlu 
+---
 
-### [v5.17.3](https://github.com/panates/valgen/compare/v5.17.2...v5.17.3) -  30 July 2025 
+## v5.19.3 (2026-01-19)
 
-#### 🚀 New Features
+### 🐛 Bug Fixes
 
-- feat: isDate can parse date string without signs @Eray Hanoğlu 
+- toDateString do not trim (123495e)
 
-### [v5.17.2](https://github.com/panates/valgen/compare/v5.17.1...v5.17.2) -  29 July 2025 
+---
 
-#### 🛠 Refactoring and Updates
+## v5.19.2 (2026-01-19)
 
-- refactor: Minor date rule optimization @Eray Hanoğlu 
+### 🔧 Refactoring
 
-### [v5.17.1](https://github.com/panates/valgen/compare/v5.17.0...v5.17.1) -  24 July 2025 
+- Refactored isDateString options (01919ae)
 
-#### 🪲 Fixes
+---
 
-- fix: isDate milliseconds padding @Eray Hanoğlu 
+## v5.19.1 (2026-01-19)
 
-### [v5.17.0](https://github.com/panates/valgen/compare/v5.16.0...v5.17.0) -  24 July 2025 
+### ✨ Features
 
-#### 🪲 Fixes
+- Added "trim" option to "toDateString" (bbc3793)
 
-- refactor: Refactored isDate and isDateString validation rules @Eray Hanoğlu 
+### 🧪 Tests
 
-#### 🛠 Refactoring and Updates
+- Set timezone for entire job in test workflow (345cb19)
 
-- refactor: Refactored isDate and isDateString validation rules @Eray Hanoğlu 
+---
 
-### [v5.16.0](https://github.com/panates/valgen/compare/v5.15.4...v5.16.0) -  16 July 2025 
+## v5.19.0 (2026-01-19)
 
-#### 🛠 Refactoring and Updates
+### 💬 General Changes
 
-- refactor: Refactored isDate and isDateString validation rules @Eray Hanoğlu 
+- Removed cjs support (7fe05c6)
 
-### [v5.15.4](https://github.com/panates/valgen/compare/v5.15.3...v5.15.4) -  11 July 2025 
+---
 
-#### 🛠 Refactoring and Updates
+## v5.18.3 (2026-01-19)
 
-- refactor: Exported default isTime rule @Eray Hanoğlu 
+### 🐛 Bug Fixes
 
-### [v5.15.3](https://github.com/panates/valgen/compare/v5.15.2...v5.15.3) -  20 June 2025 
+- Fixed precision and trim issue of isDate rule (33a7de2)
 
-#### 🚀 New Features
+### 🧹 Chores
 
-- feat: Adde default value option to "required" rule @Eray Hanoğlu 
+- Updated deps (9448baa)
 
-### [v5.15.2](https://github.com/panates/valgen/compare/v5.15.1...v5.15.2) -  27 May 2025 
+### 💬 General Changes
 
-#### 🛠 Refactoring and Updates
+- npm Trusted publishing update (b5ebdd2)
 
-- refactor: Refactored isGte, isGt, isLte, isLt typing @Eray Hanoğlu 
+---
 
-### [v5.15.1](https://github.com/panates/valgen/compare/v5.15.0...v5.15.1) -  27 May 2025 
+## v5.18.2 (2025-08-29)
 
-#### 🚀 New Features
+### 🔧 Refactoring
 
-- feat: Added isTime rule @Eray Hanoğlu 
+- Set precision of toDateString() to "day" (0de2c4d)
 
-#### 🪲 Fixes
+### 🧹 Chores
 
-- fix: Error message fix @Eray Hanoğlu 
+- Updated node ver (cdedcc9)
+- Updated node options (b649be9)
+- Updated deps (9f0e4ac)
 
-#### 🛠 Refactoring and Updates
+---
 
-- refactor: Removed path filter @Eray Hanoğlu 
+## v5.18.1 (2025-08-27)
 
-### [v5.15.0](https://github.com/panates/valgen/compare/v5.14.1...v5.15.0) -  24 April 2025 
+### 🐛 Bug Fixes
 
-#### 🚀 New Features
+- Increased ms precision (f4b2d16)
 
-- feat: Added discriminator validation to oneOf rule @Eray Hanoğlu 
-- feat: Added isEqual, isNotEqual rules @Eray Hanoğlu 
+### 🧹 Chores
 
-#### 🛠 Refactoring and Updates
+- Updated deps (c2b75d7)
 
-- refactor: Fixes and improvements @Eray Hanoğlu 
-- refactor: Removed union rule. Use oneOf rule instead @Eray Hanoğlu 
+---
 
-### [v5.14.1](https://github.com/panates/valgen/compare/v5.14.0...v5.14.1) -  21 April 2025 
+## v5.18.0 (2025-07-31)
 
-#### 🪲 Fixes
+### ✨ Features
 
-- fix: Fixed validation issue while using silent mode @Eray Hanoğlu 
+- isTime accept Date instance (4e0fbb0)
 
-#### 💬 General Changes
+### 🐛 Bug Fixes
 
-- dev: Moved from nyc to c8 @Eray Hanoğlu 
-- ci: Added workflows @Eray Hanoğlu 
-- dev: Fixed nycrc file @Eray Hanoğlu 
-- dev: Added publishConfig @Eray Hanoğlu 
-- dev: Fixed nycrc file @Eray Hanoğlu 
-- dev: Fixed paths @Eray Hanoğlu 
-- dev: Fixed nycrc file @Eray Hanoğlu 
-- dev: Fixed nycrc file @Eray Hanoğlu 
-- dev: Added qc script @Eray Hanoğlu 
+- Minor fix in isDate rule (c79b729)
 
-### [v5.14.0](https://github.com/panates/valgen/compare/v5.13.4...v5.14.0) -  30 March 2025 
+---
 
-#### 🛠 Refactoring and Updates
+## v5.17.3 (2025-07-30)
 
-- refactor: Moved from jest to mocha @Eray Hanoğlu 
+### ✨ Features
 
-### [v5.13.4](https://github.com/panates/valgen/compare/v5.13.3...v5.13.4) -  26 March 2025 
+- isDate can parse date string without signs (e7b9170)
 
-#### 🪲 Fixes
+---
 
-- fix: isNotEmpty do not work for number and boolean types @Eray Hanoğlu 
+## v5.17.2 (2025-07-29)
 
-### [v5.13.3](https://github.com/panates/valgen/compare/v5.13.2...v5.13.3) -  17 March 2025 
+### 🔧 Refactoring
 
-#### 🪲 Fixes
+- Minor date rule optimization (aac3924)
 
-- fix: isEmpty and isNotEmpty rules adds error issue twice @Eray Hanoğlu 
+---
 
-### [v5.13.2](https://github.com/panates/valgen/compare/v5.13.1...v5.13.2) -  15 March 2025 
+## v5.17.1 (2025-07-24)
 
-#### 🪲 Fixes
+### 🐛 Bug Fixes
 
-- fix: Fixed ignoring pipe validators if context.errors has items. @Eray Hanoğlu 
+- isDate milliseconds padding (501650a)
 
-### [v5.13.1](https://github.com/panates/valgen/compare/v5.13.0...v5.13.1) -  14 March 2025 
+### 🧹 Chores
 
-#### 🪲 Fixes
+- Removed js-temporal/polyfill from package.json (3c8702b)
 
-- fix: Fixed validation of Date, Buffer and ArrayBuffer objects of isEmpty and isNotEmpty rules @Eray Hanoğlu 
-- fix: Fixed validation of Date, Buffer and ArrayBuffer objects of isEmpty and isNotEmpty rules @Eray Hanoğlu 
+---
 
-### [v5.13.0](https://github.com/panates/valgen/compare/v5.12.0...v5.13.0) -  3 February 2025 
+## v5.17.0 (2025-07-24)
 
-#### 🛠 Refactoring and Updates
+### 🔧 Refactoring
 
-- refactor: Updated dependencies @Eray Hanoğlu 
-- refactor: Changed error messages to "positive sentences" @Eray Hanoğlu 
+- Refactored isDate and isDateString validation rules refactor: Optimizations fix: Minor bug fixes chore: Updated dependencies (18a86ec)
 
-#### 💬 General Changes
+---
 
-- dev: Fixed ts config @Eray Hanoğlu 
-- dev: Added missing script @Eray Hanoğlu 
+## v5.16.0 (2025-07-16)
 
-### [v5.12.0](https://github.com/panates/valgen/compare/v5.11.0...v5.12.0) -  4 November 2024 
+### 🔧 Refactoring
 
-#### 🛠 Refactoring and Updates
+- Refactored isDate and isDateString validation rules (de4c59b)
 
-- refactor: Move from 'validator' library to "@browsery/validator" for ESM compatibility @Eray Hanoğlu 
+---
 
-### [v5.11.0](https://github.com/panates/valgen/compare/v5.10.0...v5.11.0) -  4 November 2024 
+## v5.15.4 (2025-07-11)
 
-#### 💬 General Changes
+### 🔧 Refactoring
 
-- nit: Updated dependencies @Eray Hanoğlu 
+- Exported default isTime rule (edfbce1)
 
-### [v5.10.0](https://github.com/panates/valgen/compare/v5.9.0...v5.10.0) -  14 September 2024 
+---
 
-#### 💬 General Changes
+## v5.15.3 (2025-06-20)
 
-- fixed: Circular imports @Eray Hanoğlu 
+### ✨ Features
 
-### [v5.9.0](https://github.com/panates/valgen/compare/v5.8.2...v5.9.0) -  20 August 2024 
+- Adde default value option to "required" rule (378329d)
 
-#### 💬 General Changes
+### 🧹 Chores
 
-- Fixed compatibility for "Node16" and "NodeNext" moduleResolution options @Eray Hanoğlu 
+- Corrected test describe text (0971c4b)
+- Updated dependencies (d5929d7)
 
-### [v5.8.2](https://github.com/panates/valgen/compare/v5.8.1...v5.8.2) -  12 August 2024 
+---
 
-#### 💬 General Changes
+## v5.15.2 (2025-05-27)
 
-- Applied publint to check package.json @Eray Hanoğlu 
+### 🔧 Refactoring
 
-### [v5.8.1](https://github.com/panates/valgen/compare/v5.8.0...v5.8.1) -  12 August 2024 
+- Refactored isGte, isGt, isLte, isLt typing (c5bb3c6)
 
-#### 💬 General Changes
+---
 
-- Applied publint to check package.json @Eray Hanoğlu 
+## v5.15.1 (2025-05-27)
 
-### [v5.8.0](https://github.com/panates/valgen/compare/v5.7.0...v5.8.0) -  12 August 2024 
+### ✨ Features
 
-#### 💬 General Changes
+- Added isTime rule (fcc15e7)
 
-- Rollback to ES2020 @Eray Hanoğlu 
+### 🐛 Bug Fixes
 
-### [v5.7.0](https://github.com/panates/valgen/compare/v5.6.0...v5.7.0) -  9 August 2024 
+- Error message fix (3414801)
 
-#### 💬 General Changes
+### 🔧 Refactoring
 
-- Made ready for Node16 moduleResolution @Eray Hanoğlu 
+- Removed path filter (28d9c17)
 
-### [v5.6.0](https://github.com/panates/valgen/compare/v5.5.0...v5.6.0) -  14 July 2024 
+### 🧹 Chores
 
-#### 💬 General Changes
+- Updated dependencies (6e476f8)
 
-- Added isNotNull and isNotNullish rules @Eray Hanoğlu 
-- Added isNotNull and isNotNullish rules @Eray Hanoğlu 
+---
 
-### [v5.5.0](https://github.com/panates/valgen/compare/v5.4.1...v5.5.0) -  14 July 2024 
+## v5.15.0 (2025-04-24)
 
-#### 💬 General Changes
+### ✨ Features
 
-- Moved eslint config to @panates/eslint-config @Eray Hanoğlu 
-- Changed error message @Eray Hanoğlu 
-- Removed coercing of isNull and isNullish rules @Eray Hanoğlu 
-- Now pipe can return original input value when returnIndex = -1 @Eray Hanoğlu 
+- Added isEqual, isNotEqual rules (8d8bdaf)
+- Added discriminator validation to oneOf rule (12a806c)
 
-### [v5.4.1](https://github.com/panates/valgen/compare/v5.4.0...v5.4.1) -  18 May 2024 
+### 🔧 Refactoring
 
-#### 💬 General Changes
+- Removed union rule. Use oneOf rule instead (ca378c6)
+- Fixes and improvements (5d569f4)
 
-- Exposed toBigint @Eray Hanoğlu 
+---
 
-### [v5.4.0](https://github.com/panates/valgen/compare/v5.3.2...v5.4.0) -  18 May 2024 
+## v5.14.1 (2025-04-21)
 
-#### 💬 General Changes
+### 🐛 Bug Fixes
 
-- Added returnIndex to pipe() @Eray Hanoğlu 
-- Updated circleci config @Eray Hanoğlu 
+- Fixed validation issue while using silent mode (524afed)
 
-### [v5.3.2](https://github.com/panates/valgen/compare/v5.3.1...v5.3.2) -  18 May 2024 
+### 🤖 Continuous Integration
 
-#### 💬 General Changes
+- Added workflows (b47cca1)
 
-- Updated dependencies @Eray Hanoğlu 
-- Fixed coveralls token @Eray Hanoğlu 
+### 💬 General Changes
 
-### [v5.3.1](https://github.com/panates/valgen/compare/v5.3.0...v5.3.1) -  18 May 2024 
+- Added qc script (cf01918)
+- Fixed nycrc file (277bf4f)
+- Added publishConfig (c48e1bd)
+- Fixed paths (9cbf033)
+- Moved from nyc to c8 (9ff73ec)
 
-#### 💬 General Changes
+---
 
-- Reorganized many rules @Eray Hanoğlu 
-- Updated code documentation @Eray Hanoğlu 
-- Fixed rule name @Eray Hanoğlu 
+## v5.14.0 (2025-03-30)
 
-### [v5.3.0](https://github.com/panates/valgen/compare/v5.2.2...v5.3.0) -  6 May 2024 
+### 🔧 Refactoring
 
-#### 💬 General Changes
+- Moved from jest to mocha refactor: Updated dependencies doc: Updated CHANGELOG template ci: Moved to new workflows (acea761)
 
-- Added validation generation option to enable coercing by default. @Eray Hanoğlu 
+---
 
-### [v5.2.2](https://github.com/panates/valgen/compare/v5.2.1...v5.2.2) -  29 March 2024 
+## v5.13.4 (2025-03-26)
 
-#### 💬 General Changes
+### 🐛 Bug Fixes
 
-- Updated dependencies @Eray Hanoğlu 
-- Updated dependencies @Eray Hanoğlu 
+- isNotEmpty do not work for number and boolean types (e5175d8)
 
-### [v5.2.1](https://github.com/panates/valgen/compare/v5.2.0...v5.2.1) -  27 March 2024 
+---
 
-#### 💬 General Changes
+## v5.13.3 (2025-03-17)
 
-- Updated dependencies @Eray Hanoğlu 
+### 🐛 Bug Fixes
 
-### [v5.2.0](https://github.com/panates/valgen/compare/v5.1.0...v5.2.0) -  4 January 2024 
+- isEmpty and isNotEmpty rules adds error issue twice (d74b9af)
 
-#### 💬 General Changes
+---
 
-- Now validator options persist in context @Eray Hanoğlu 
+## v5.13.2 (2025-03-15)
 
-### [v5.1.0](https://github.com/panates/valgen/compare/v5.0.1...v5.1.0) -  23 December 2023 
+### 🐛 Bug Fixes
 
-#### 💬 General Changes
+- Fixed ignoring pipe validators if context.errors has items. (0b02ca1)
 
-- Moved from "dayjs" to "date-fns" @Eray Hanoğlu 
+---
 
-### [v5.0.1](https://github.com/panates/valgen/compare/v5.0.0...v5.0.1) -  23 December 2023 
+## v5.13.1 (2025-03-14)
 
-#### 💬 General Changes
+### 🐛 Bug Fixes
 
-- Added new rules @Eray Hanoğlu 
-- Moved all validator factories into "factories" namespace, @Eray Hanoğlu 
+- Fixed validation of Date, Buffer and ArrayBuffer objects of isEmpty and isNotEmpty rules (24992b8)
 
-## [v5.0.0](https://github.com/panates/valgen/compare/v4.3.2...v5.0.0) -  21 December 2023 
+### 🧹 Chores
 
-#### 💬 General Changes
+- Removed Node 16 tests (606e01a)
 
-- Moved all validator factories into "factories" namespace, @Eray Hanoğlu 
+---
 
-### [v4.3.2](https://github.com/panates/valgen/compare/v4.3.1...v4.3.2) -  8 December 2023 
+## v5.13.0 (2025-02-03)
 
-#### 💬 General Changes
+### 🔧 Refactoring
 
-- Updated dependenices @Eray Hanoğlu 
-- Pass "_this" parameter to preValidation and postValidation methods @Eray Hanoğlu 
+- Updated dependencies (dca11c1)
+- Changed error messages to "positive sentences" refactor: Optimized Context extending chore: Updated dependencies (3b746df)
 
-### [v4.3.1](https://github.com/panates/valgen/compare/v4.3.0...v4.3.1) -  4 December 2023 
+### 🧹 Chores
 
-#### 💬 General Changes
+- Updated github workflow (661738f)
 
-- Made preValidation and postValidation static @Eray Hanoğlu 
+### 💬 General Changes
 
-### [v4.3.0](https://github.com/panates/valgen/compare/v4.2.5...v4.3.0) -  2 December 2023 
+- Added missing script (dd019d9)
+- Fixed ts config (e3251ce)
 
-#### 💬 General Changes
+---
 
-- Updated dependencies @Eray Hanoğlu 
-- Added [preValidation] and [postValidation] to isObject rule @Eray Hanoğlu 
+## v5.12.0 (2024-11-04)
 
-### [v4.2.5](https://github.com/panates/valgen/compare/v4.2.4...v4.2.5) -  27 November 2023 
+### 🔧 Refactoring
 
-#### 💬 General Changes
+- Move from 'validator' library to "@browsery/validator" for ESM compatibility (5a0d1bd)
 
-- Fixed isArray error location property. @Eray Hanoğlu 
+---
 
-### [v4.2.4](https://github.com/panates/valgen/compare/v4.2.3...v4.2.4) -  20 November 2023 
+## v5.11.0 (2024-11-04)
 
-#### 💬 General Changes
+### 💬 General Changes
 
-- Added json parsing feature to isObject validator @Eray Hanoğlu 
+- Updated dependencies (f348c6c)
 
-### [v4.2.3](https://github.com/panates/valgen/compare/v4.2.2...v4.2.3) -  20 November 2023 
+---
 
-#### 💬 General Changes
+## v5.10.0 (2024-09-14)
 
-- Optimized error messages @Eray Hanoğlu 
+### 🧹 Chores
 
-### [v4.2.2](https://github.com/panates/valgen/compare/v4.2.1...v4.2.2) -  15 November 2023 
+- Moved from circleci to github actions (179e630)
 
-#### 💬 General Changes
+### 💬 General Changes
 
-- Changed "trim" option @Eray Hanoğlu 
+- Circular imports (f2a83b9)
 
-### [v4.2.1](https://github.com/panates/valgen/compare/v4.2.0...v4.2.1) -  15 November 2023 
+---
 
-#### 💬 General Changes
+## v5.9.0 (2024-08-20)
 
-- Fixed generating invalid date string @Eray Hanoğlu 
+### 💬 General Changes
 
-### [v4.2.0](https://github.com/panates/valgen/compare/v4.1.0...v4.2.0) -  15 November 2023 
+- Fixed compatibility for "Node16" and "NodeNext" moduleResolution options (9985ad6)
 
-#### 💬 General Changes
+---
 
-- Removed "format" option and added "precision" option to isDate validator @Eray Hanoğlu 
-- Added test for "label" option @Eray Hanoğlu 
+## v5.8.2 (2024-08-12)
 
-### [v4.1.0](https://github.com/panates/valgen/compare/v4.0.1...v4.1.0) -  31 October 2023 
+### 💬 General Changes
 
-#### 💬 General Changes
+- Applied publint to check package.json (cbb7553)
 
-- Updated validation messages. @Eray Hanoğlu 
+---
 
-### [v4.0.1](https://github.com/panates/valgen/compare/v4.0.0...v4.0.1) -  24 October 2023 
+## v5.8.1 (2024-08-12)
 
-#### 💬 General Changes
+### 💬 General Changes
 
-- Added "coerce" option to isNull and isUndefined rules @Eray Hanoğlu 
+- Applied publint to check package.json (cf051f4)
 
-## [v4.0.0](https://github.com/panates/valgen/compare/v3.2.1...v4.0.0) -  17 August 2023 
+---
 
-#### 💬 General Changes
+## v5.8.0 (2024-08-12)
 
-- Initial release of v4.0.0-alpha.1 @Eray Hanoğlu 
-- Implemented all initial validators and tests @Eray Hanoğlu 
-- Updated dependencies @Eray Hanoğlu 
-- Better error handling @Eray Hanoğlu 
-- Updated deps @Eray Hanoğlu 
-- Added isBigint validator @Eray Hanoğlu 
-- Fixed isObject coerce issue @Eray Hanoğlu 
-- Improved isDateString @Eray Hanoğlu 
-- Updated dayjs @Eray Hanoğlu 
-- Updated deps @Eray Hanoğlu 
-- Updated deps @Eray Hanoğlu 
-- Fixed isObject coerce issue @Eray Hanoğlu 
+### 💬 General Changes
+
+- Rollback to ES2020 (bb198c6)
+
+---
+
+## v5.7.0 (2024-08-09)
+
+### 💬 General Changes
+
+- Made ready for Node16 moduleResolution (fc45964)
+
+---
+
+## v5.6.0 (2024-07-14)
+
+### 💬 General Changes
+
+- Added isNotNull and isNotNullish rules (19902a5)
+
+---
+
+## v5.5.0 (2024-07-14)
+
+### 💬 General Changes
+
+- Now pipe can return original input value when returnIndex = -1 (baf698c)
+- Removed coercing of isNull and isNullish rules (4337d0a)
+- Changed error message (3edf948)
+- Moved eslint config to @panates/eslint-config Moved code formatting to prettier Improved error handling (c2f3e2d)
+
+---
+
+## v5.4.1 (2024-05-18)
+
+### 💬 General Changes
+
+- Exposed toBigint (50ad810)
+
+---
+
+## v5.4.0 (2024-05-18)
+
+### 💬 General Changes
+
+- Updated circleci config (101361c)
+- Added returnIndex to pipe() (87458ad)
+
+---
+
+## v5.3.2 (2024-05-18)
+
+### 💬 General Changes
+
+- Fixed coveralls token (ede2734)
+- Updated dependencies (9e618ab)
+
+---
+
+## v5.3.1 (2024-05-18)
+
+### 💬 General Changes
+
+- Fixed rule name (73d90d1)
+- Reorganized many rules (e470fe7)
+- Updated code documentation (81e7ccf)
+
+---
+
+## v5.3.0 (2024-05-06)
+
+### 💬 General Changes
+
+- Added validation generation option to enable coercing by default. Exposed toArray, toBoolean, toDate, toDateString, toInteger, toNumber,toString validators Changed rule error messages (5b012ee)
+
+---
+
+## v5.2.2 (2024-03-29)
+
+### 💬 General Changes
+
+- Updated dependencies (636ce75)
+- Updated dependencies Updated typing (9d9af6f)
+
+---
+
+## v5.2.1 (2024-03-27)
+
+### 💬 General Changes
+
+- Updated dependencies (117bab5)
+
+---
+
+## v5.2.0 (2024-01-04)
+
+### 💬 General Changes
+
+- Now validator options persist in context (418901f)
+
+---
+
+## v5.1.0 (2023-12-23)
+
+### 💬 General Changes
+
+- Moved from "dayjs" to "date-fns" (fd240af)
+
+---
+
+## v5.0.1 (2023-12-23)
+
+### 💬 General Changes
+
+- Moved all validator factories into "factories" namespace, Exposed default created validators (2ac5abd)
+- Added new rules (ddcab7c)
+
+---
+
+## v5.0.0 (2023-12-21)
+
+### 💬 General Changes
+
+- Moved all validator factories into "factories" namespace, Exposed default created validators (e93dddd)
+
+---
+
+## v4.3.2 (2023-12-08)
+
+### 💬 General Changes
+
+- Pass "_this" parameter to preValidation and postValidation methods (bdb6a97)
+- Updated dependenices (a539d1b)
+
+---
+
+## v4.3.1 (2023-12-04)
+
+### 💬 General Changes
+
+- Made preValidation and postValidation static (71fa530)
+
+---
+
+## v4.3.0 (2023-12-02)
+
+### 💬 General Changes
+
+- Added [preValidation] and [postValidation] to isObject rule (2f8351d)
+- Updated dependencies (4ff01f0)
+
+---
+
+## v4.2.5 (2023-11-27)
+
+### 💬 General Changes
+
+- Fixed isArray error location property. Updated dependencies (b42ca30)
+
+---
+
+## v4.2.4 (2023-11-20)
+
+### 💬 General Changes
+
+- Added json parsing feature to isObject validator (0cd128a)
+
+---
+
+## v4.2.3 (2023-11-20)
+
+### 💬 General Changes
+
+- Optimized error messages (21e29dc)
+
+---
+
+## v4.2.2 (2023-11-15)
+
+### 💬 General Changes
+
+- Changed "trim" option Fixed bugs (b5eff4f)
+
+---
+
+## v4.2.1 (2023-11-15)
+
+### 💬 General Changes
+
+- Fixed generating invalid date string (6407ac6)
+
+---
+
+## v4.2.0 (2023-11-15)
+
+### 💬 General Changes
+
+- Added test for "label" option (162f41a)
+- Removed "format" option and added "precision" option to isDate validator Removed "format" option and added "precision" and "trim" options to isDateString validator (2e332a6)
+
+---
+
+## v4.1.0 (2023-10-31)
+
+### 💬 General Changes
+
+- Updated validation messages. Added isNullish validator (066fc4e)
+
+---
+
+## v4.0.1 (2023-10-24)
+
+### 💬 General Changes
+
+- Added "coerce" option to isNull and isUndefined rules (8c02040)
+
+---
+
+## v4.0.0 (2023-08-17)
+
+### 💬 General Changes
+
+- Initial release of v4.0.0-alpha.1 (499af8e)
+- Implemented all initial validators and tests (0ff5c5c)
+- Improved isDateString (59d0d14)
+- Added isBigint validator (87ba007)
+- Fixed isObject coerce issue (47c7d4e)
+- Updated dayjs (e212dd2)
+- Updated deps (d20588e)
+- Better error handling (91dae2f)
+- Updated dependencies (804e00c)

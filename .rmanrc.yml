@@ -1,0 +1,5 @@
+extends: '@panates/rman-preset'
+
+changelog:
+  # Releases before v4.0.0 stay out of the changelog, as they did under auto-changelog.
+  startingAt: v4.0.0
