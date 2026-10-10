@@ -1,4 +1,5 @@
-import * as datefns from 'date-fns';
+import { isValid } from 'date-fns/isValid';
+import { parseISO } from 'date-fns/parseISO';
 import { type Nullish } from 'ts-gems';
 import {
   type Context,
@@ -46,7 +47,7 @@ export function isDate(options?: isDate.Options) {
           }
         }
       }
-      if (datefns.isValid(d)) {
+      if (isValid(d)) {
         setPrecision(d!, trim);
         return d!;
       }
@@ -195,7 +196,7 @@ function coerceDateString(
   let detectedPrecision: number;
   if (input instanceof Date || typeof input === 'number') {
     const d = typeof input === 'number' ? new Date(input) : input;
-    if (!datefns.isValid(d)) return;
+    if (!isValid(d)) return;
     dateParts = [
       String(d.getFullYear()).padStart(4, '0'),
       String(d.getMonth() + 1).padStart(2, '0'),
@@ -218,9 +219,9 @@ function coerceDateString(
       dateParts.push(tz);
     }
   } else if (typeof input === 'string') {
-    const d = datefns.parseISO(input);
+    const d = parseISO(input);
     let m = DATE_PATTERN.exec(input);
-    if (m && datefns.isValid(d)) {
+    if (m && isValid(d)) {
       m.shift();
       dateParts = m;
     } else {
