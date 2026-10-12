@@ -1,6 +1,19 @@
 # Changelog
 
-<!-- rman:documented-up-to eacc770f77c4677ea9cef893e5343f382f5bb5b9 -->
+<!-- rman:documented-up-to 88d78fca4a6923eefb800bbb06c2ffd751ecfe65 -->
+
+## v7.0.5 (2026-10-12)
+
+### 🧹 Chores
+
+- sync lockfile (820b08f)
+- update dependencies (5b4812d)
+
+### 💬 General Changes
+
+- Merge remote-tracking branch 'origin/dev' into dev (f9befff)
+
+---
 
 ## v7.0.4 (2026-10-10)
 
