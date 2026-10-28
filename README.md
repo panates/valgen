@@ -109,7 +109,7 @@ at the end of the run.
 
 ## Node Compatibility
 
-- node `>= 20.0`
+- node `>= 22.0`
 
 ### License
 
