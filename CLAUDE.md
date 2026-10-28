@@ -23,3 +23,17 @@ Rules:
   doc section(s) - don't regenerate everything unless the diff is broad enough to warrant it.
 - After updating, bump `git-commit`/`package-version`/`date` in the baseline block to the new
   `HEAD` (only once the docs are verified accurate as of that commit).
+
+## Before every push
+
+Run these in order before any `git push`, and push only if every step passes:
+
+1. `rman deps` - check for newer dependency versions.
+2. If it lists any update, `rman deps -u` to apply it.
+3. `rman ci` - clean install: deletes `node_modules` and the lockfile and reinstalls from scratch
+   (pnpm, per `packageManager`).
+4. Checks: `npm run compile`, `rman lint`, `rman check`, `rman build`.
+5. Tests: `npm run citest`.
+6. Commit any dependency/lockfile changes these produced, then push.
+
+If an upgrade or the clean install breaks a check or a test, stop and report instead of pushing.
