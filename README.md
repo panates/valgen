@@ -82,10 +82,10 @@ The full API reference lives under [`docs/`](docs/api.md):
 
 | Command | Description |
 |---|---|
-| `npm test` | Run the test suite (mocha). |
-| `npm run citest` | Run the test suite with coverage (c8). |
-| `npm run compile` | Type-check `src` and `test` without emitting. |
-| `npm run bench` | Run the benchmark suite (see below). |
+| `pnpm test` | Run the test suite (mocha). |
+| `pnpm run citest` | Run the test suite with coverage (c8). |
+| `pnpm run compile` | Type-check `src` and `test` without emitting. |
+| `pnpm run bench` | Run the benchmark suite (see below). |
 | `rman lint` / `rman check` | Lint the repository / check the manifest and circular dependencies. |
 | `rman build` | Check, lint, clean, then compile to `build/`. |
 | `rman deps` | List outdated dependencies (`-u` to upgrade). |
@@ -97,11 +97,11 @@ memory allocation (heap/RSS), under `benchmark/rules/`.
 
 ```sh
 # Run every rule
-npm run bench
+pnpm run bench
 
 # Run one or more rules (case-insensitive, comma-separated, "*" wildcards allowed)
-npm run bench -- -s isEmail,isURL
-npm run bench -- -s "is*"
+pnpm run bench -- -s isEmail,isURL
+pnpm run bench -- -s "is*"
 ```
 
 Results print to the console as they complete and are also written to [`BENCHMARKS.md`](BENCHMARKS.md)
@@ -109,7 +109,7 @@ at the end of the run.
 
 ## Node Compatibility
 
-- node `>= 20.0`
+- node `>= 22.0`
 
 ### License
 
