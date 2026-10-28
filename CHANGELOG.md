@@ -1,6 +1,20 @@
 # Changelog
 
-<!-- rman:documented-up-to 88d78fca4a6923eefb800bbb06c2ffd751ecfe65 -->
+<!-- rman:documented-up-to 11f2888f2fc2c7cf66b004afb4260a51070d249a -->
+
+## v7.0.6 (2026-10-28)
+
+### 📚 Documentation
+
+- add the pre-push routine to CLAUDE.md (d03f974)
+
+### 🧹 Chores
+
+- sync lockfile (68c2fcd)
+- require Node 22 (40f4039)
+- install with pnpm, upgrade dependencies (3e1dad1)
+
+---
 
 ## v7.0.5 (2026-10-12)
 
