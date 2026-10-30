@@ -1,6 +1,18 @@
 # Changelog
 
-<!-- rman:documented-up-to 11f2888f2fc2c7cf66b004afb4260a51070d249a -->
+<!-- rman:documented-up-to 9b6258b00ea7b029602846584b40a07bb199af0c -->
+
+## v7.0.7 (2026-10-30)
+
+### 📚 Documentation
+
+- bump API docs baseline to 7.0.6, name isIBAN.IBANLocale (f4ab152)
+
+### 🧹 Chores
+
+- upgrade dependencies (d90f7dc)
+
+---
 
 ## v7.0.6 (2026-10-28)
 
