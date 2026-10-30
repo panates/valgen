@@ -375,11 +375,13 @@ isIBAN(options?: isIBAN.Options): Validator<string, string>
 **Options**
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `whitelist` | `IBANLocale[]` | `undefined` | Only accept IBANs from these country codes. |
-| `blacklist` | `IBANLocale[]` | `undefined` | Reject IBANs from these country codes. |
+| `whitelist` | `isIBAN.IBANLocale[]` | `undefined` | Only accept IBANs from these country codes. |
+| `blacklist` | `isIBAN.IBANLocale[]` | `undefined` | Reject IBANs from these country codes. |
 
 **Behavior**
 - Delegates to `validatorJS.isIBAN(input, options)`, which checks structure and the mod-97 checksum for the country.
+- `isIBAN.IBANLocale` is the union of supported country codes (`'DE'`, `'TR'`, ...), exported from
+  `'valgen'` for typing a whitelist or blacklist built elsewhere.
 
 **Example**
 ```ts
