@@ -1,6 +1,29 @@
 # Changelog
 
-<!-- rman:documented-up-to 9b6258b00ea7b029602846584b40a07bb199af0c -->
+<!-- rman:documented-up-to 6ecb66dd86c9a54287af5b049007025a2828e95a -->
+
+## v7.0.8 (2026-11-04)
+
+### 📚 Documentation
+
+- add the security policy and fix the code of conduct contact (c9cc31c)
+- put the README sentence above the badges and add project notes to CLAUDE.md (09e0d58)
+
+### 🤖 Continuous Integration
+
+- test every branch but main and check that main takes pull requests from dev (ec2a247)
+
+### 🧹 Chores
+
+- install and publish with pnpm through rman (5ecc414)
+- add the lint, check and format root scripts (17539a3)
+- remove renovate.json and set minimumReleaseAge to 0 (1b46f39)
+- add the template's ignore entries (c99a106)
+- commit .claude/settings.json with the panates plugin (75510ab)
+- lint with mocha globals and emit source maps (a9f3896)
+- upgrade dependencies with rman deps -u (66b7c29)
+
+---
 
 ## v7.0.7 (2026-10-30)
 
