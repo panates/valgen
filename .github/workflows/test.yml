@@ -7,10 +7,10 @@ on:
   # Can be run manually
   workflow_dispatch:
 
-  # on git push
+  # Every push but to main, which gets its tests from release.yml
   push:
-    branches:
-      - dev
+    branches-ignore:
+      - main
 
 # This workflow only ever reads the repository.
 permissions:
@@ -56,10 +56,10 @@ jobs:
         run: rman check
 
       - name: Run type check
-        run: npm run compile
+        run: pnpm run compile
 
       - name: Run unit tests
-        run: npm run citest
+        run: pnpm run citest
         env:
           NODE_OPTIONS: "--max_old_space_size=4096 --no-experimental-strip-types"
 

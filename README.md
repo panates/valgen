@@ -1,12 +1,12 @@
 # VALGEN
 
+Fast runtime type validator, converter and io (encoding/decoding) library for TypeScript and
+JavaScript.
+
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![CI Tests][ci-test-image]][ci-test-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
-
-Fast runtime type validator, converter and io (encoding/decoding) library for TypeScript and
-JavaScript.
 
 - **Composable** - build complex schemas out of small validators with `allOf`, `oneOf`, `pipe`,
   `optional`, `nullable`, `isObject`, `isArray`, ...

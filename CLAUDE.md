@@ -1,3 +1,17 @@
+# valgen
+
+valgen is a runtime type validator, converter and encoder/decoder for TypeScript and JavaScript,
+published to npm as the single package `valgen` and released with rman.
+
+## Layout
+
+- `src/core`: the validator, its context and `ValidationError`. `src/rules`: the rules, grouped
+  into `type-rules`, `format-rules`, `logical-rules` and `utility-rules`. `src/helpers`: small
+  shared functions.
+- `test/**/*.spec.ts`: mocha tests, run through `@swc-node/register`.
+- `benchmark/`: `pnpm run bench` measures the rules; `BENCHMARKS.md` holds the last results.
+- `docs/api.md`, `docs/api/`: the API reference, written by hand.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
