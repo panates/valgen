@@ -1,5 +1,9 @@
 extends: '@panates/rman-preset'
 
+# Install, sync the lockfile and publish with pnpm.
+packageManager:
+  node: pnpm
+
 changelog:
   # Releases before v4.0.0 stay out of the changelog, as they did under auto-changelog.
   startingAt: v4.0.0
