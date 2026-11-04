@@ -28,7 +28,6 @@
     "expect": "^30.5.2",
     "globals": "^17.13.0",
     "mocha": "^12.0.3",
-    "rman": "^2.40.1",
     "typescript": "^6.0.3",
     "yargs": "^18.2.0"
   },
@@ -38,6 +37,9 @@
     "bench": "TS_NODE_PROJECT=benchmark/tsconfig.json node --expose-gc --import @swc-node/register/esm-register benchmark/cli.ts",
     "precitest": "rman clean",
     "citest": "c8 mocha",
+    "lint": "rman lint",
+    "check": "rman check",
+    "format": "rman format",
     "graph": "graphify update ."
   },
   "type": "module",
