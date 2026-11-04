@@ -1,11 +1,14 @@
 node_modules
 /build
+build/
 *.tsbuildinfo
 graphify-out
 .claude
 
 # environment variables
 .env
+.env.*
+!.env.example
 .development.env
 
 # Logs
