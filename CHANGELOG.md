@@ -1,6 +1,18 @@
 # Changelog
 
-<!-- rman:documented-up-to 6ecb66dd86c9a54287af5b049007025a2828e95a -->
+<!-- rman:documented-up-to da1f6b0842278f068bb484323513e8e71912d581 -->
+
+## v7.0.9 (2026-11-15)
+
+### 🐛 Bug Fixes
+
+- accept UTC+13 and UTC+14 offsets in date strings (b76b5fe)
+
+### 🧹 Chores
+
+- upgrade dependencies with rman deps -u (7367bbb)
+
+---
 
 ## v7.0.8 (2026-11-04)
 
