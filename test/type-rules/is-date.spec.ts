@@ -30,6 +30,18 @@ describe('isDate', () => {
     );
   });
 
+  it('should coerce strings with UTC+13 and UTC+14 offsets', () => {
+    expect(isDate('2024-01-15T13:00:00+13:00', { coerce: true })).toEqual(
+      new Date('2024-01-15T00:00:00Z'),
+    );
+    expect(isDate('2024-01-15T13:45:00+13:45', { coerce: true })).toEqual(
+      new Date('2024-01-15T00:00:00Z'),
+    );
+    expect(isDate('2024-01-15T14:00:00+14:00', { coerce: true })).toEqual(
+      new Date('2024-01-15T00:00:00Z'),
+    );
+  });
+
   it('should apply precision', () => {
     const d = '2020-05-10T08:30:15.123';
     expect(vg.isDate({ trim: 'year', coerce: true })(d)).toEqual(

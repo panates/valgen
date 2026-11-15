@@ -14,12 +14,12 @@
     "tslib": "^2.9.1"
   },
   "devDependencies": {
-    "@panates/eslint-config": "^2.3.5",
-    "@panates/eslint-config-ts": "^2.3.5",
+    "@panates/eslint-config": "^2.4.0",
+    "@panates/eslint-config-ts": "^2.4.0",
     "@panates/rman-preset": "^2.2.2",
     "@panates/tsconfig": "^2.1.8",
     "@swc-node/register": "^1.12.1",
-    "@swc/core": "^1.16.21",
+    "@swc/core": "^1.16.22",
     "@swc/helpers": "^0.5.24",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.6.6",

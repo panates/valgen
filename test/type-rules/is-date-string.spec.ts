@@ -201,6 +201,44 @@ describe('isDateString', () => {
     ).toStrictEqual('2020-11-01T10:23:45+03');
   });
 
+  it('should accept UTC+13 and UTC+14 offsets', () => {
+    for (const s of [
+      '2024-01-15T13:00:00+13:00',
+      '2024-01-15T13:45:00+13:45',
+      '2024-01-15T14:00:00+14:00',
+    ]) {
+      expect(isDateString(s)).toStrictEqual(s);
+    }
+    expect(() => isDateString('2024-01-15T15:00:00+15:00')).toThrow(
+      'is not a valid date string',
+    );
+  });
+
+  it('should accept compact UTC+13 and UTC+14 offsets', () => {
+    expect(vg.isDateString({ coerce: true })('20240115130000+1300')).toEqual(
+      expect.stringMatching(/^2024-01-15T13:00:00(\.0+)?\+13:00$/),
+    );
+    expect(vg.isDateString({ coerce: true })('20240115140000+1400')).toEqual(
+      expect.stringMatching(/^2024-01-15T14:00:00(\.0+)?\+14:00$/),
+    );
+  });
+
+  it('should accept its own output when coercing a Date in UTC+13', () => {
+    const original = Date.prototype.getTimezoneOffset;
+    Date.prototype.getTimezoneOffset = function () {
+      return -780; // UTC+13:00, e.g. Pacific/Auckland daylight time
+    };
+    try {
+      const s = vg.isDateString({ coerce: true, precisionMax: 'tz' })(
+        new Date('2024-01-15T00:00:00Z'),
+      );
+      expect(s.endsWith('+13:00')).toBe(true);
+      expect(isDateString(s)).toStrictEqual(s);
+    } finally {
+      Date.prototype.getTimezoneOffset = original;
+    }
+  });
+
   it('should reject an invalid number input', () => {
     expect(() => vg.isDateString({ coerce: true })(NaN)).toThrow(
       'is not a valid date string',
