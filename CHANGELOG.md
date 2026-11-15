@@ -1,6 +1,18 @@
 # Changelog
 
-<!-- rman:documented-up-to da1f6b0842278f068bb484323513e8e71912d581 -->
+<!-- rman:documented-up-to e4dc4ec47bfd89b54ebf7f441eac017aab288d21 -->
+
+## v7.0.10 (2026-11-15)
+
+### 📚 Documentation
+
+- document the UTC offset range and move the API docs baseline to 7.0.9 (3d996cf)
+
+### 🧹 Chores
+
+- refresh pnpm-lock.yaml from rman ci (d524326)
+
+---
 
 ## v7.0.9 (2026-11-15)
 
