@@ -156,7 +156,7 @@ isDate(options?: isDate.Options): Validator<Date, Date | number | string>
 **Behavior**
 - A `Date` instance passes through as long as it is itself valid (`date-fns.isValid`); an invalid `Date` (e.g. `new Date('invalid')`) fails.
 - **Without `coerce: true`, a date *string* is rejected** even if well-formed ISO 8601 - only actual `Date` instances validate by default.
-- With `coerce: true`, a `number` is treated as epoch milliseconds, and a `string` is parsed via an internal ISO-8601-like parser (accepting missing time parts, `Z`/`±HH:MM` offsets, etc.).
+- With `coerce: true`, a `number` is treated as epoch milliseconds, and a `string` is parsed via an internal ISO-8601-like parser (accepting missing time parts, `Z`/`±HH:MM` offsets from `-14:00` to `+14:00`, etc.).
 - Throws `Value is not valid date` for anything that isn't (or can't be coerced into) a valid `Date`.
 
 **Example**
@@ -194,6 +194,7 @@ isDateString(options?: isDateString.Options): Validator<string, Date | number | 
 
 **Behavior**
 - Accepts ISO-8601-like strings (`2020-01-10T08:30:15Z`, `2020-01-10T08:30`, `2020-01-10 08:30`, compact `20201101` form, etc.) as well as `Date`/`number` values when `coerce: true`.
+- A timezone suffix is `Z`, `±HH`, `±HH:MM` or compact `±HHMM`, with the offset hour from `00` to `14` (so `+13:00`, `+13:45` and `+14:00` are accepted; `+15:00` is not).
 - Without `coerce`, the original input string is returned unchanged if it parses and its precision falls within `[precisionMin, precisionMax]`.
 - Throws `Minimum date precision should be <precisionMin>` / `Maximum date precision should be <precisionMax>` when precision is out of range, and `Value "<input>" is not a valid date string` when the input can't be parsed at all.
 - With `coerce: true` and `trim: true`, the output is truncated to `precisionMax` (e.g. `precisionMax: 'day'` on a full timestamp yields just `'2020-11-01'`).
