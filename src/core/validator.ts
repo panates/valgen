@@ -1,4 +1,5 @@
 import type { Nullish } from 'ts-gems';
+import { hasOptions } from '../helpers/has-options.js';
 import { camelCase } from '../helpers/string.utils.js';
 import { kOptions, kValidatorFn } from './constants.js';
 import { Context } from './context.js';
@@ -171,7 +172,14 @@ export function validator(arg0: any, arg1?: any, arg2?: any) {
       context?: Context,
     ): any {
       if (context) {
-        if (options || validatorOptions)
+        // Extend only when there is an option to apply. A root context is
+        // still extended, as before, so that a nested call never acts as the
+        // root call (which throws once it finishes with errors).
+        if (
+          hasOptions(options) ||
+          hasOptions(validatorOptions) ||
+          (context.isRoot && (options || validatorOptions))
+        )
           context = context.extend({ ...validatorOptions, ...options });
       } else {
         context =
