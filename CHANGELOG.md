@@ -1,6 +1,19 @@
 # Changelog
 
-<!-- rman:documented-up-to dbce75d11fd33c60fc94adf2b918dd728ee21a37 -->
+<!-- rman:documented-up-to bb685ad3ba44c048de681a7c2c9344d56e70fe9d -->
+
+## v7.0.12 (2026-11-20)
+
+### ⚡ Performance and Optimizations
+
+- pass only context fields from a rule's own options to the context (ebe546d)
+- walk only the schema keys that can matter for plain objects in isObject (9c320e8)
+
+### 📚 Documentation
+
+- move the API docs baseline to the rule options change (c27255b)
+
+---
 
 ## v7.0.11 (2026-11-20)
 
