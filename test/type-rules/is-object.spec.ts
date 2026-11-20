@@ -317,6 +317,46 @@ describe('isObject', () => {
       expect({ ...out }).toStrictEqual({ a: 'x' });
     });
 
+    it('should validate prototype getters on every call, per class', () => {
+      class WithGetter {
+        constructor(public n: number) {}
+        get label() {
+          return this.n > 0 ? 'positive' : (0 as any);
+        }
+      }
+      class Plain {
+        declare label?: string;
+        constructor(public n: number) {}
+      }
+      const v = vg.isObject({
+        n: isNumber,
+        label: vg.optional(isString),
+      });
+      expect(v(new WithGetter(1) as any)).toStrictEqual({
+        n: 1,
+        label: 'positive',
+      });
+      expect(v(new Plain(2) as any)).toStrictEqual({ n: 2 });
+      expect(v.silent(new WithGetter(-1) as any).errors?.[0].location).toBe(
+        'label',
+      );
+      expect(v(new WithGetter(3) as any)).toStrictEqual({
+        n: 3,
+        label: 'positive',
+      });
+    });
+
+    it('should read inherited values through a subclass', () => {
+      class Base {
+        get kind() {
+          return 'base';
+        }
+      }
+      class Child extends Base {}
+      const v = vg.isObject({ kind: vg.optional(isString) });
+      expect(v(new Child() as any)).toStrictEqual({ kind: 'base' });
+    });
+
     it('should validate a class instance that has every schema key', () => {
       class Point {
         constructor(

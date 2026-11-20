@@ -517,6 +517,7 @@ Each schema entry is either a bare `Validator` for that property, or a `[Validat
 - Throws `Value must be an object` if the (possibly JSON-parsed) input is not a non-null object.
 - Runs each schema property's validator against the corresponding input value; a required sub-rule (`vg.required(...)`) that finds the property missing raises a `Value required` error located at that property's path (e.g. `address.country`).
 - Properties whose value comes back `undefined` are omitted from the output object entirely.
+- A value the input inherits (e.g. a getter on a class prototype) is validated like an own property. Which inherited names to look at is worked out once per prototype, so a member added to a prototype after an instance of it was validated is not seen.
 - Errors from nested properties accumulate `location`/`property`/`context`/`label` fields describing exactly where the failure occurred.
 - An invalid schema entry (not a `Validator`, and not a `[Validator, PropertyOptions]` tuple whose first element is a `Validator`) throws synchronously when `isObject(...)` is *called* (a build-time error, not a validation-time one).
 

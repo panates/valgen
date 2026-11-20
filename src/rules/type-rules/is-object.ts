@@ -116,12 +116,15 @@ export function isObject<T extends object = object, I = object | string>(
       schemaEntries.push(entry);
     }
   }
-  // The schema keys the second pass must look at for a plain object: an
-  // absent optional() key there reads undefined and is skipped anyway,
-  // unless Object.prototype has a member of that name.
-  const plainObjectEntries = schemaEntries.filter(
-    e => !e.optionalNested || e.inputKey in Object.prototype,
-  );
+  // The schema keys the second pass must look at for an input with a given
+  // prototype: an absent optional() key reads undefined and is skipped
+  // anyway, unless the prototype chain has a member of that name (a getter,
+  // a method, an Object.prototype member). Worked out once per prototype;
+  // a member added to a prototype after that is not seen.
+  const entriesFor = (proto: object) =>
+    schemaEntries.filter(e => !e.optionalNested || e.inputKey in proto);
+  const plainObjectEntries = entriesFor(Object.prototype);
+  const entriesByProto = new WeakMap<object, PropertyEntry[]>();
 
   const _rule = validator<T, object>(
     isObject.name,
@@ -175,7 +178,6 @@ export function isObject<T extends object = object, I = object | string>(
 
       // Pass 1: the input's own keys, in input order.
       const ownKeys = Object.keys(output);
-      let matched = 0;
       for (let i = 0; i < ownKeys.length; i++) {
         const inputKey = ownKeys[i];
         const key = caseInSensitive ? inputKey.toLowerCase() : inputKey;
@@ -186,7 +188,6 @@ export function isObject<T extends object = object, I = object | string>(
             if (processed[key]) continue;
             processed[key] = true;
           }
-          if (entry) matched++;
           if (v === undefined && entry?.optionalNested) continue;
           v = runProperty(
             subCtx,
@@ -214,15 +215,18 @@ export function isObject<T extends object = object, I = object | string>(
       // still runs (required(), default values, ...), except for optional()
       // rules, which pass an undefined value through untouched. The value is
       // still read, so one coming from the prototype chain is validated.
-      // For a plain object only the keys that can matter are walked; for
-      // others it is skipped when the first pass already met every key.
+      // Only the keys that can matter for the input's prototype are walked.
       const proto = Object.getPrototypeOf(output);
-      const entries =
-        proto === Object.prototype || proto === null
-          ? plainObjectEntries
-          : matched < schemaEntries.length
-            ? schemaEntries
-            : EMPTY;
+      let entries: PropertyEntry[];
+      if (proto === Object.prototype || proto === null) {
+        entries = plainObjectEntries;
+      } else {
+        entries = entriesByProto.get(proto)!;
+        if (!entries) {
+          entries = entriesFor(proto);
+          entriesByProto.set(proto, entries);
+        }
+      }
       for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
         let v = output[entry.inputKey];
@@ -294,8 +298,6 @@ interface PropertyEntry {
   /** The rule to call for a defined value in place of `rule`, when that is the same. */
   direct?: Validator_;
 }
-
-const EMPTY: PropertyEntry[] = [];
 
 export namespace isObject {
   export interface Validator<
