@@ -12,3 +12,11 @@ export const kValidatorFn = Symbol.for('kValidatorFn');
  * @internal
  */
 export const kOptions = Symbol.for('kOptions');
+
+/**
+ * Symbol key `optional()` stores its nested rule under, so `isObject` can skip
+ * an absent optional property without a call and, when `optional` was built
+ * without options, call the nested rule directly. Not intended for direct use.
+ * @internal
+ */
+export const kOptionalNested = Symbol.for('kOptionalNested');

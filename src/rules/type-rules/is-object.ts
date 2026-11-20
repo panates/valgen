@@ -1,14 +1,16 @@
-import type { RequiredSome } from 'ts-gems';
 import { postValidation, preValidation } from '../../constants.js';
 import {
   type Context,
   isValidator,
+  kOptionalNested,
+  kOptions,
   type Nullish,
   type Type,
   type ValidationOptions,
   type Validator as Validator_,
   validator,
 } from '../../core/index.js';
+import { hasOptions } from '../../helpers/has-options.js';
 
 /**
  * Validates an object against a property `schema`, with support for nested
@@ -60,31 +62,52 @@ export function isObject<T extends object = object, I = object | string>(
   const ctor = options?.ctor;
   const ctorName = options?.name || ctor?.name;
   const additionalFields = options?.additionalFields ?? !schema;
+  const additionalRule = isValidator(additionalFields)
+    ? additionalFields
+    : undefined;
   const caseInSensitive = !!options?.caseInSensitive;
   const detectCircular = !!options?.detectCircular;
-  const propertyRules: Record<any, Validator_> = {};
-  const propertyOptions: Record<
-    any,
-    RequiredSome<isObject.PropertyOptions, 'as'>
-  > = {};
+  const properties = new Map<string, PropertyEntry>();
   schema = schema || {};
   const schemaKeys = Object.keys(schema);
+  const schemaEntries: PropertyEntry[] = [];
   for (const k of schemaKeys) {
     const n = schema[k];
     const key = caseInSensitive ? k.toLowerCase() : k;
+    let rule: Validator_;
+    let propOptions: isObject.PropertyOptions | undefined;
     if (Array.isArray(n)) {
       if (!isValidator(n[0])) {
         throw new TypeError(
           `Invalid tuple definition in validation schema (${k})`,
         );
       }
-      propertyRules[key] = n[0];
-      propertyOptions[key] = { as: k, ...n[1] };
+      rule = n[0];
+      propOptions = n[1];
     } else if (isValidator(n)) {
-      propertyRules[key] = n;
-      propertyOptions[key] = { as: k };
+      rule = n;
     } else {
       throw new TypeError(`Invalid definition in validation schema (${k})`);
+    }
+    const entry: PropertyEntry = {
+      inputKey: k,
+      key,
+      // Same as the former `{ as: k, ...propOptions }`, read with
+      // `as || key`: an `as` given as undefined or '' falls back to the key.
+      as: (propOptions && 'as' in propOptions ? propOptions.as : k) || key,
+      label: propOptions?.label,
+      rule,
+      optionalNested: (rule as any)[kOptionalNested],
+    };
+    // Two schema keys can match the same key case-insensitively. As before,
+    // the first one keeps its place and is read from the input, and the
+    // last one's rule and options apply.
+    const existing = properties.get(key);
+    if (existing)
+      Object.assign(existing, entry, { inputKey: existing.inputKey });
+    else {
+      properties.set(key, entry);
+      schemaEntries.push(entry);
     }
   }
 
@@ -108,14 +131,6 @@ export function isObject<T extends object = object, I = object | string>(
         return;
       }
 
-      const keys = Array.from(new Set([...Object.keys(output), ...schemaKeys]));
-      const l = keys.length;
-      let i: number;
-      let inputKey: string;
-      let schemaKey: string;
-      let v: any;
-      let _propRule: Validator_ | undefined;
-
       const out: any = {};
       if (ctor) Object.setPrototypeOf(out, ctor.prototype);
       if (detectCircular) {
@@ -128,38 +143,46 @@ export function isObject<T extends object = object, I = object | string>(
 
       if (context.root == null) context.root = context.root || ctorName || '';
       const location = context.location || '';
-      const processedSchemaKeys: Record<string, boolean> = {};
+      const locationPrefix = location ? location + '.' : '';
+      // With case-insensitive matching two input keys can map to the same
+      // schema key, so the keys already handled have to be tracked; with
+      // exact matching, own keys are unique and an own-property check is
+      // enough to tell which schema keys the first pass already handled.
+      const processed: Record<string, boolean> | undefined = caseInSensitive
+        ? Object.create(null)
+        : undefined;
       // Reused across every property instead of allocated per-property.
       // `scope`/`context` never change between properties, so they're set
-      // once; `location`/`property` are reassigned every iteration, and
-      // `label` is reassigned-or-deleted every iteration (see below) so no
-      // field can leak from a previous property into the next one.
+      // once; `runProperty` reassigns `location`/`property` and sets or
+      // deletes `label` for every property that runs a rule, so no field can
+      // leak from one property into the next.
       const subCtx = context.extend();
       subCtx.scope = output;
       subCtx.context = ctorName;
-      // Iterate object keys and perform rules
-      for (i = 0; i < l; i++) {
-        inputKey = keys[i];
-        schemaKey = caseInSensitive ? inputKey.toLowerCase() : inputKey;
-        v = output[inputKey];
 
-        _propRule =
-          propertyRules[schemaKey] ||
-          (isValidator(additionalFields) ? additionalFields : undefined);
-        if (_propRule) {
-          if (processedSchemaKeys[schemaKey]) continue;
-          processedSchemaKeys[schemaKey] = true;
-          subCtx.location = location + (location ? '.' : '') + schemaKey;
-          subCtx.property = schemaKey;
-          const propLabel = propertyOptions[schemaKey]?.label;
-          // Assign (not just skip) when there's no per-property label, so a
-          // label left over from a previous property can't leak in - but
-          // `delete` rather than `= undefined`, so the lookup still falls
-          // through to an inherited label from the parent context, exactly
-          // like the original per-iteration `context.extend()` did.
-          if (propLabel) subCtx.label = propLabel;
-          else delete subCtx.label;
-          v = _propRule(v, undefined, subCtx);
+      // Pass 1: the input's own keys, in input order.
+      const ownKeys = Object.keys(output);
+      let matched = 0;
+      for (let i = 0; i < ownKeys.length; i++) {
+        const inputKey = ownKeys[i];
+        const key = caseInSensitive ? inputKey.toLowerCase() : inputKey;
+        let v = output[inputKey];
+        const entry = properties.get(key);
+        if (entry || additionalRule) {
+          if (processed) {
+            if (processed[key]) continue;
+            processed[key] = true;
+          }
+          if (entry) matched++;
+          if (v === undefined && entry?.optionalNested) continue;
+          v = runProperty(
+            subCtx,
+            locationPrefix,
+            entry,
+            additionalRule,
+            key,
+            v,
+          );
         } else if (v !== undefined) {
           if (!additionalFields) continue;
           if (additionalFields === 'error') {
@@ -170,11 +193,31 @@ export function isObject<T extends object = object, I = object | string>(
             );
           }
         }
-
-        if (v !== undefined) {
-          out[propertyOptions[schemaKey]?.as || schemaKey] = v;
-        }
+        if (v !== undefined) out[entry ? entry.as : key] = v;
       }
+
+      // Pass 2: schema keys the input does not have as own keys. Their rule
+      // still runs (required(), default values, ...), except for optional()
+      // rules, which pass an undefined value through untouched. The value is
+      // still read, so one coming from the prototype chain is validated.
+      // Skipped when the first pass already met every schema key.
+      for (
+        let i = 0;
+        matched < schemaEntries.length && i < schemaEntries.length;
+        i++
+      ) {
+        const entry = schemaEntries[i];
+        let v = output[entry.inputKey];
+        if (v === undefined && entry.optionalNested) continue;
+        if (processed) {
+          if (processed[entry.key]) continue;
+          processed[entry.key] = true;
+        } else if (Object.prototype.hasOwnProperty.call(output, entry.inputKey))
+          continue;
+        v = runProperty(subCtx, locationPrefix, entry, undefined, entry.key, v);
+        if (v !== undefined) out[entry.as] = v;
+      }
+
       if (ctor && ctor[postValidation]) {
         ctor[postValidation](out, context, _this);
         return out;
@@ -187,6 +230,48 @@ export function isObject<T extends object = object, I = object | string>(
 
   _rule.schema = schema;
   return _rule;
+}
+
+/**
+ * Validates one property with its rule (or the `additionalFields` rule),
+ * pointing the shared `subCtx` at that property first.
+ */
+function runProperty(
+  subCtx: Context,
+  locationPrefix: string,
+  entry: PropertyEntry | undefined,
+  additionalRule: Validator_ | undefined,
+  key: string,
+  v: any,
+): any {
+  const rule = entry ? entry.rule : additionalRule!;
+  subCtx.location = locationPrefix + key;
+  subCtx.property = key;
+  // Deleting (rather than assigning undefined) keeps a label inherited from
+  // the parent context, and measured faster than always assigning `label`.
+  const propLabel = entry && entry.label;
+  if (propLabel) subCtx.label = propLabel;
+  else delete subCtx.label;
+  const nested = entry && entry.optionalNested;
+  // optional() built without options only forwards a defined value to its
+  // nested rule with the same context, so do that directly.
+  if (nested && !hasOptions(rule[kOptions])) {
+    return nested(v, undefined, subCtx);
+  }
+  return rule(v, undefined, subCtx);
+}
+
+interface PropertyEntry {
+  /** The key as written in the schema. */
+  inputKey: string;
+  /** The key used for matching and in `location` (lower-cased when `caseInSensitive`). */
+  key: string;
+  /** The output key. */
+  as: string;
+  label?: string;
+  rule: Validator_;
+  /** Set when `rule` is an `optional()` rule: the rule it wraps. */
+  optionalNested?: Validator_;
 }
 
 export namespace isObject {
