@@ -4,6 +4,23 @@ import { ValidationError } from './validation-error.js';
 import type { Validator } from './validator.js';
 
 const VARIABLE_REPLACE_PATTERN = /{{([^}]*)}}/g;
+/** The fields of `Context` that `extend()` copies one by one. */
+const CONTEXT_FIELDS = new Set([
+  'isRoot',
+  'errors',
+  'maxErrors',
+  'onFail',
+  'coerce',
+  'root',
+  'location',
+  'scope',
+  'context',
+  'property',
+  'index',
+  'label',
+  'circMap',
+  'customKeys',
+]);
 const OPTIONAL_VAR_PATTERN = /^([^|]+)(?:\|(.*))?$/;
 
 /**
@@ -41,14 +58,26 @@ export class Context implements ExecutionOptions {
   index?: number;
   /** A human-readable label for the current value, used to resolve `{{label}}` in message templates. */
   label?: string;
+  /** Objects already being converted in this run, kept by `isObject` when `detectCircular` is on. */
+  circMap?: Map<object, object>;
+  /**
+   * Names of the options that are not fields of `Context` (custom options
+   * passed in `ExecutionOptions`), so {@link Context.extend} can copy them
+   * to the child too.
+   * @internal
+   */
+  customKeys?: string[];
 
   [key: string]: any;
 
   /**
    * @param options - Initial execution options, assigned directly onto the new context.
+   * @param parent - Used by {@link Context.extend} only: copies `parent`'s
+   *   fields instead of starting a new run. @internal
    */
-  constructor(options?: ExecutionOptions) {
-    Object.assign(this, options);
+  constructor(options?: ExecutionOptions, parent?: Context) {
+    if (parent) copyFields(this, parent);
+    else if (options) assignOptions(this, options, false);
   }
 
   /**
@@ -120,9 +149,14 @@ export class Context implements ExecutionOptions {
   }
 
   /**
-   * Creates a child context for a nested validator call, inheriting every
-   * field from this context via the prototype chain and overriding it with
-   * `options` where given.
+   * Creates a child context for a nested validator call: a copy of this
+   * context's fields (sharing the same `errors` array), with `options`
+   * applied on top where given.
+   *
+   * The child is a snapshot: a field changed on this context after the child
+   * was made does not reach the child. Custom options (keys outside the
+   * `Context` fields) are carried over when they were passed as options to
+   * the root call or to `extend()`.
    *
    * Nested rules (an object schema's properties, an array's items, a pipe's
    * steps, ...) should reuse the *same* extended context across every call
@@ -131,30 +165,85 @@ export class Context implements ExecutionOptions {
    * the validator wrapper doesn't extend the context a second time.
    *
    * @param options - Fields to override on the child context; `undefined`
-   *   values are skipped so they fall through to the parent instead of
-   *   shadowing it.
-   * @returns A new `Context` with `isRoot: false`, prototypically inheriting from this one.
+   *   values are skipped so the parent's value is kept.
+   * @returns A new `Context` with `isRoot: false`.
    */
   extend(options?: ExecutionOptions): Context {
-    // Object.create(this) sets the prototype at creation time. Setting it
-    // afterward via Object.setPrototypeOf() (the previous approach) is one
-    // of the slowest object operations in V8 - it invalidates hidden-class
-    // based optimizations for the object - and this runs on every nested
-    // validator call, so it showed up heavily in profiling.
-    const extended: Context = Object.create(this);
-    if (options) {
-      // Same filtering as the old Object.entries()+destructure (skip
-      // undefined values, so an unset option falls through to the
-      // prototype chain instead of shadowing it) but without allocating an
-      // array of [key, value] pairs just to throw it away.
-      const keys = Object.keys(options);
-      for (let i = 0; i < keys.length; i++) {
-        const k = keys[i];
-        const v = (options as Record<string, unknown>)[k];
-        if (v !== undefined) extended[k] = v;
-      }
+    // A copy rather than Object.create(this): making a context the
+    // prototype of its child, then writing location/property to it for
+    // every property and item, is slow in V8 (stores to prototype objects
+    // invalidate its caches), and lookups walked the whole chain.
+    let extended: Context;
+    if (this.constructor === Context) {
+      extended = new Context(undefined, this);
+    } else {
+      // A subclass may not pass `parent` on to this constructor; copy its
+      // own fields onto an object with the same prototype instead.
+      extended = Object.assign(
+        Object.create(Object.getPrototypeOf(this)),
+        this,
+      );
+      extended.isRoot = false;
     }
-    extended.isRoot = false;
+    if (options) assignOptions(extended, options, true);
     return extended;
   }
+}
+
+/**
+ * Copies `options` onto `context`, recording the names of custom
+ * (non-`Context`) options in `customKeys` so `extend()` carries them over.
+ */
+function assignOptions(
+  context: Context,
+  options: ExecutionOptions,
+  skipUndefined: boolean,
+): void {
+  const keys = Object.keys(options);
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i];
+    const v = (options as Record<string, unknown>)[k];
+    if (skipUndefined && v === undefined) continue;
+    context[k] = v;
+    if (!CONTEXT_FIELDS.has(k)) {
+      const customKeys = context.customKeys;
+      if (!customKeys) context.customKeys = [k];
+      else if (!customKeys.includes(k)) {
+        // Copied, not pushed: the parent shares the same array.
+        context.customKeys = [...customKeys, k];
+      }
+    }
+  }
+}
+
+/**
+ * Fills a new child context with a copy of `parent`'s fields. Every field is
+ * set in the same order on every context, so all contexts share one hidden
+ * class and property reads stay fast. Kept out of the constructor so that it
+ * stays small for the root context made on every top-level call.
+ */
+function copyFields(c: Context, parent: Context): void {
+  c.isRoot = false;
+  c.errors = parent.errors;
+  c.maxErrors = parent.maxErrors;
+  c.onFail = parent.onFail;
+  c.coerce = parent.coerce;
+  c.root = parent.root;
+  c.location = parent.location;
+  c.scope = parent.scope;
+  c.context = parent.context;
+  c.property = parent.property;
+  c.index = parent.index;
+  c.label = parent.label;
+  c.circMap = parent.circMap;
+  const customKeys = parent.customKeys;
+  c.customKeys = customKeys;
+  if (customKeys) {
+    for (let i = 0; i < customKeys.length; i++) {
+      c[customKeys[i]] = parent[customKeys[i]];
+    }
+  }
+  // A rule may replace `fail` on a context for the duration of a call
+  // (oneOf does); contexts made from it inside that call must use it too.
+  if (parent.fail !== Context.prototype.fail) c.fail = parent.fail;
 }

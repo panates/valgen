@@ -1,5 +1,13 @@
 import { expect } from 'expect';
-import { isBigint, isBoolean, isNumber, isString, validator, vg } from 'valgen';
+import {
+  Context,
+  isBigint,
+  isBoolean,
+  isNumber,
+  isString,
+  validator,
+  vg,
+} from 'valgen';
 
 describe('Context message templates', () => {
   it('should suppress the error when onFail returns a falsy value', () => {
@@ -129,5 +137,121 @@ describe('Context coerce inheritance', () => {
       b: true,
       big: BigInt(5),
     });
+  });
+});
+
+describe('Context.extend', () => {
+  // Reads a custom option from the context it runs in.
+  const readsTenant = validator('readsTenant', (input: any, context) => {
+    return `${input}@${context.tenant}`;
+  });
+
+  it('should copy the parent fields and share the errors array', () => {
+    const parent = new Context({ coerce: true, label: 'L', maxErrors: 3 });
+    parent.location = 'a.b';
+    const child = parent.extend();
+    expect(child.isRoot).toStrictEqual(false);
+    expect(child.errors).toBe(parent.errors);
+    expect(child.coerce).toStrictEqual(true);
+    expect(child.label).toStrictEqual('L');
+    expect(child.maxErrors).toStrictEqual(3);
+    expect(child.location).toStrictEqual('a.b');
+  });
+
+  it('should apply options on top and skip undefined ones', () => {
+    const parent = new Context({ coerce: true, label: 'L' });
+    const child = parent.extend({ coerce: false, label: undefined });
+    expect(child.coerce).toStrictEqual(false);
+    expect(child.label).toStrictEqual('L');
+    expect(parent.coerce).toStrictEqual(true);
+  });
+
+  it('should not let a child change its parent', () => {
+    const parent = new Context();
+    const child = parent.extend({ location: 'x' });
+    child.label = 'changed';
+    expect(parent.location).toBeUndefined();
+    expect(parent.label).toBeUndefined();
+  });
+
+  it('should carry custom options from the root call to nested rules', () => {
+    const v = vg.isObject({
+      items: vg.isArray(vg.isObject({ user: readsTenant })),
+    });
+    expect(
+      v(
+        { items: [{ user: 'a' }, { user: 'b' }] } as any,
+        {
+          tenant: 't1',
+        } as any,
+      ),
+    ).toStrictEqual({ items: [{ user: 'a@t1' }, { user: 'b@t1' }] });
+  });
+
+  it('should carry custom options given to extend() without changing the parent', () => {
+    const parent = new Context({ tenant: 't1' } as any);
+    const child = parent.extend({ region: 'eu' } as any);
+    const grandChild = child.extend();
+    expect(grandChild.tenant).toStrictEqual('t1');
+    expect(grandChild.region).toStrictEqual('eu');
+    expect(parent.region).toBeUndefined();
+    expect(parent.customKeys).toStrictEqual(['tenant']);
+  });
+
+  it('should carry custom options set on a rule to its nested rules', () => {
+    const v = vg.isObject({ inner: vg.isObject({ user: readsTenant }) }, {
+      tenant: 't2',
+    } as any);
+    expect(v({ inner: { user: 'a' } } as any)).toStrictEqual({
+      inner: { user: 'a@t2' },
+    });
+  });
+
+  it('should keep the subclass of a subclassed context', () => {
+    class MyContext extends Context {
+      hello() {
+        return 'hi';
+      }
+    }
+    const parent = new MyContext({ coerce: true });
+    const child = parent.extend({ label: 'x' }) as MyContext;
+    expect(child).toBeInstanceOf(MyContext);
+    expect(child.hello()).toStrictEqual('hi');
+    expect(child.coerce).toStrictEqual(true);
+    expect(child.isRoot).toStrictEqual(false);
+    expect(child.errors).toBe(parent.errors);
+  });
+
+  it('should pass a replaced fail method to contexts made from it', () => {
+    const parent = new Context();
+    const calls: string[] = [];
+    parent.fail = (_rule, message) => {
+      calls.push(String(message));
+    };
+    const child = parent.extend({ label: 'x' });
+    child.fail(isString, 'boom', 1);
+    expect(calls).toStrictEqual(['boom']);
+    expect(parent.errors).toStrictEqual([]);
+  });
+
+  it('should keep failures inside nested oneOf rules out of the result', () => {
+    const v = vg.oneOf([
+      vg.isObject({ a: vg.oneOf([isNumber, vg.isObject({ x: isNumber })]) }),
+      vg.isObject({ b: isString }),
+    ]);
+    expect(v({ a: { x: 1 } } as any)).toStrictEqual({ a: { x: 1 } });
+    expect(v({ b: 'ok' } as any)).toStrictEqual({ b: 'ok' });
+    expect(() => v({ a: 'nope' } as any)).toThrow();
+  });
+
+  it('should stop at maxErrors across nested contexts', () => {
+    const v = vg.isObject({
+      a: vg.isObject({ x: isNumber, y: isNumber }),
+      b: isNumber,
+    });
+    const r = v.silent({ a: { x: 's', y: 's' }, b: 's' } as any, {
+      maxErrors: 2,
+    });
+    expect(r.errors?.length).toStrictEqual(2);
   });
 });

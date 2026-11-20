@@ -41,6 +41,14 @@ const withCaseInSensitive = vg.isObject(
   { caseInSensitive: true },
 );
 
+// A wide schema of optional fields with a sparse input - the shape of
+// generated schemas (FHIR, opra), where a type declares ~100 fields and an
+// instance carries a few.
+const sparseSchema: Record<string, any> = {};
+for (let i = 0; i < 100; i++) sparseSchema[`field${i}`] = vg.optional(isString);
+const sparse = vg.isObject(sparseSchema);
+const validSparse = { field0: 'a', field1: 'b', field2: 'c' };
+
 const addressSchema = { city: isString, zip: isString };
 const nested = vg.isObject({
   name: isString,
@@ -75,6 +83,12 @@ export const cases: BenchCase[] = [
     name: 'isObject - wide schema (50 fields) - valid (pass)',
     fn: () => {
       wide(validWide);
+    },
+  },
+  {
+    name: 'isObject - sparse input (3 of 100 optional fields) - valid (pass)',
+    fn: () => {
+      sparse(validSparse);
     },
   },
   {

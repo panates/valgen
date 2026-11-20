@@ -194,4 +194,129 @@ describe('isObject', () => {
       "has no field 'b' and does not accept additional fields",
     );
   });
+
+  describe('wide schemas with sparse input', () => {
+    const wide: vg.isObject.Schema = {};
+    for (let i = 0; i < 20; i++) wide['f' + i] = vg.optional(isString);
+
+    it('should validate present optional fields and omit absent ones', () => {
+      const v = vg.isObject({
+        ...wide,
+        n: vg.optional(isNumber),
+      });
+      expect(v({ f3: 'a', n: '5' } as any, { coerce: true })).toStrictEqual({
+        f3: 'a',
+        n: 5,
+      });
+      expect(v.silent({ f3: 1 } as any).errors?.[0].location).toStrictEqual(
+        'f3',
+      );
+    });
+
+    it('should still run non-optional rules for absent keys', () => {
+      const v = vg.isObject({
+        ...wide,
+        id: vg.required(isNumber),
+        kind: vg.required(isString, { default: 'patient' }),
+      });
+      expect(v({ id: 1 } as any)).toStrictEqual({ id: 1, kind: 'patient' });
+      const r = v.silent({ f1: 'x' } as any);
+      expect(r.errors?.map(e => e.location)).toStrictEqual(['id']);
+    });
+
+    it('should keep input key order, then schema order for absent keys', () => {
+      const v = vg.isObject({
+        a: vg.optional(isString),
+        b: vg.required(isString, { default: 'B' }),
+        c: vg.optional(isString),
+      });
+      expect(Object.keys(v({ c: 'C', a: 'A' } as any))).toStrictEqual([
+        'c',
+        'a',
+        'b',
+      ]);
+    });
+
+    it('should validate an optional value inherited through the prototype', () => {
+      class Base {
+        get name() {
+          return 'from-getter';
+        }
+      }
+      const v = vg.isObject({ name: vg.optional(isString) });
+      expect(v(new Base() as any)).toStrictEqual({ name: 'from-getter' });
+      const w = vg.isObject({ name: vg.optional(isNumber) });
+      expect(() => w(new Base() as any)).toThrow();
+    });
+
+    it('should skip an optional key whose own value is undefined', () => {
+      const v = vg.isObject({ a: vg.optional(isString) });
+      expect(v({ a: undefined } as any)).toStrictEqual({});
+    });
+
+    it('should apply the options of an optional() rule to its nested rule', () => {
+      const v = vg.isObject({
+        n: vg.optional(isNumber, { coerce: true }),
+      });
+      expect(v({ n: '7' } as any)).toStrictEqual({ n: 7 });
+    });
+
+    it('should match absent optional keys case-insensitively', () => {
+      const v = vg.isObject(
+        { ...wide, Name: vg.optional(isString) },
+        { caseInSensitive: true },
+      );
+      expect(v({ NAME: 'x', F2: 'y' } as any)).toStrictEqual({
+        Name: 'x',
+        f2: 'y',
+      });
+    });
+
+    it('should not report a required key met case-insensitively as missing', () => {
+      const v = vg.isObject(
+        { Name: vg.required(isString), Age: vg.required(isNumber) },
+        { caseInSensitive: true },
+      );
+      const r = v.silent({ name: 'x' } as any);
+      expect(r.errors?.map(e => e.location)).toStrictEqual(['age']);
+    });
+
+    it('should use the last of two schema keys that match case-insensitively', () => {
+      const v = vg.isObject(
+        { Name: vg.optional(isString), name: vg.optional(isNumber) },
+        { caseInSensitive: true },
+      );
+      expect(v({ NAME: '5' } as any, { coerce: true })).toStrictEqual({
+        name: 5,
+      });
+    });
+
+    it('should not treat Object.prototype members as schema keys', () => {
+      const v = vg.isObject({ a: vg.optional(isString) });
+      expect(
+        v({ a: 'x', constructor: 'y', toString: 'z' } as any),
+      ).toStrictEqual({ a: 'x' });
+    });
+
+    it('should use the parent label for properties without their own label', () => {
+      const v = vg.isObject({
+        inner: [vg.isObject({ x: isString }), { label: 'Inner' }],
+      });
+      const r = v.silent({ inner: { x: 1 } } as any);
+      expect(r.errors?.[0].label).toStrictEqual('Inner');
+      expect(r.errors?.[0].location).toStrictEqual('inner.x');
+    });
+  });
+
+  describe('rules built with an empty options object', () => {
+    it('should collect every error and throw once at the root', () => {
+      const v = vg.isObject(
+        { a: vg.isString({}), b: vg.isNumber({}) } as any,
+        {},
+      );
+      const r = v.silent({ a: 1, b: 'x' } as any);
+      expect(r.errors?.map(e => e.location)).toStrictEqual(['a', 'b']);
+      expect(() => vg.isString({})(1 as any)).toThrow();
+    });
+  });
 });

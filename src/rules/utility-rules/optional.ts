@@ -1,6 +1,7 @@
 import type { Maybe } from 'ts-gems';
 import {
   type Context,
+  kOptionalNested,
   type ValidationOptions,
   type Validator,
   validator,
@@ -41,7 +42,7 @@ export function optional<T, I>(
   nested: Validator<T, I>,
   options?: optional.Options,
 ) {
-  return validator<Maybe<T>, Maybe<I>>(
+  const rule = validator<Maybe<T>, Maybe<I>>(
     optional.name,
     (input: Maybe<I>, context: Context): Maybe<T> => {
       if (input === undefined) return input as any;
@@ -49,6 +50,8 @@ export function optional<T, I>(
     },
     options,
   );
+  (rule as any)[kOptionalNested] = nested;
+  return rule;
 }
 
 export namespace optional {

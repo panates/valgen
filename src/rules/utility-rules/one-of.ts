@@ -84,6 +84,11 @@ export function oneOf(
       // the final error (oneOf can only report one message anyway) instead
       // of being discarded in favor of a generic one.
       let lastFailMessage: string | undefined;
+      // An enclosing oneOf may have replaced `fail` already; put back
+      // whatever was there when done.
+      const ownFail = Object.prototype.hasOwnProperty.call(context, 'fail')
+        ? context.fail
+        : undefined;
       context.fail = (_rule: Validator, message: string | Error) => {
         passed = false;
         lastFailMessage =
@@ -136,7 +141,8 @@ export function oneOf(
           }
       }
       // Restore fail method
-      delete (context as any).fail;
+      if (ownFail) context.fail = ownFail;
+      else delete (context as any).fail;
       if (passed) return v;
       context.fail(
         _this,
