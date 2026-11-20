@@ -1,6 +1,24 @@
 # Changelog
 
-<!-- rman:documented-up-to e4dc4ec47bfd89b54ebf7f441eac017aab288d21 -->
+<!-- rman:documented-up-to dbce75d11fd33c60fc94adf2b918dd728ee21a37 -->
+
+## v7.0.11 (2026-11-20)
+
+### ⚡ Performance and Optimizations
+
+- skip context.extend when a nested call has no options to apply (faabf7a)
+- skip absent optional properties in isObject (411065f)
+- copy context fields in Context.extend instead of chaining prototypes (832693f)
+
+### 📚 Documentation
+
+- move the API docs baseline to the context and isObject changes (f31aa54)
+
+### 🧹 Chores
+
+- refresh pnpm-lock.yaml from rman ci (d8c6088)
+
+---
 
 ## v7.0.10 (2026-11-15)
 
