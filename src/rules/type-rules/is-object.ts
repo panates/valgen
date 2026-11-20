@@ -144,6 +144,7 @@ export function isObject<T extends object = object, I = object | string>(
       if (context.root == null) context.root = context.root || ctorName || '';
       const location = context.location || '';
       const locationPrefix = location ? location + '.' : '';
+      const parentLabel = context.label;
       // With case-insensitive matching two input keys can map to the same
       // schema key, so the keys already handled have to be tracked; with
       // exact matching, own keys are unique and an own-property check is
@@ -153,9 +154,9 @@ export function isObject<T extends object = object, I = object | string>(
         : undefined;
       // Reused across every property instead of allocated per-property.
       // `scope`/`context` never change between properties, so they're set
-      // once; `runProperty` reassigns `location`/`property` and sets or
-      // deletes `label` for every property that runs a rule, so no field can
-      // leak from one property into the next.
+      // once; `runProperty` reassigns `location`/`property`/`label` for
+      // every property that runs a rule, so no field can leak from one
+      // property into the next.
       const subCtx = context.extend();
       subCtx.scope = output;
       subCtx.context = ctorName;
@@ -178,6 +179,7 @@ export function isObject<T extends object = object, I = object | string>(
           v = runProperty(
             subCtx,
             locationPrefix,
+            parentLabel,
             entry,
             additionalRule,
             key,
@@ -214,7 +216,15 @@ export function isObject<T extends object = object, I = object | string>(
           processed[entry.key] = true;
         } else if (Object.prototype.hasOwnProperty.call(output, entry.inputKey))
           continue;
-        v = runProperty(subCtx, locationPrefix, entry, undefined, entry.key, v);
+        v = runProperty(
+          subCtx,
+          locationPrefix,
+          parentLabel,
+          entry,
+          undefined,
+          entry.key,
+          v,
+        );
         if (v !== undefined) out[entry.as] = v;
       }
 
@@ -239,6 +249,7 @@ export function isObject<T extends object = object, I = object | string>(
 function runProperty(
   subCtx: Context,
   locationPrefix: string,
+  parentLabel: string | undefined,
   entry: PropertyEntry | undefined,
   additionalRule: Validator_ | undefined,
   key: string,
@@ -247,11 +258,8 @@ function runProperty(
   const rule = entry ? entry.rule : additionalRule!;
   subCtx.location = locationPrefix + key;
   subCtx.property = key;
-  // Deleting (rather than assigning undefined) keeps a label inherited from
-  // the parent context, and measured faster than always assigning `label`.
-  const propLabel = entry && entry.label;
-  if (propLabel) subCtx.label = propLabel;
-  else delete subCtx.label;
+  // A property without its own label keeps the parent's label.
+  subCtx.label = (entry && entry.label) || parentLabel;
   const nested = entry && entry.optionalNested;
   // optional() built without options only forwards a defined value to its
   // nested rule with the same context, so do that directly.

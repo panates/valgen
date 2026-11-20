@@ -96,6 +96,9 @@ rule-specific options a given function documents:
 | `maxErrors` | `number` | Stop collecting further issues once this many have been recorded for the current validation run (throws immediately instead of continuing to accumulate). Defaults to unlimited. |
 | `onFail` | `(issue, context) => string \| Partial<ErrorIssue>` | Intercepts a failure before it's recorded - return a string to replace the message, an object to patch the issue, or a falsy value to suppress the issue entirely. |
 
+Any other key is passed through too: it is set on the `Context` and carried to the context of
+every nested rule, so a custom rule can read it as `context.<key>`.
+
 ## Errors
 
 A failed validation throws a `ValidationError` (extends `Error`) carrying an `issues: ErrorIssue[]`
@@ -175,3 +178,7 @@ validator itself, used to attribute errors to the right rule) and should either 
 validated (or coerced) value, or call `context.fail(_this, message, value)` to record an issue -
 `validator()`'s wrapper takes care of turning accumulated issues into a thrown `ValidationError`
 (or a `.silent()` result) for you.
+
+A nested rule gets a copy of the context made when the call enters it, so a field a rule writes on
+its own `context` reaches nested rules it calls afterwards, but never the rules that called it.
+To hand a value down to nested rules, write it before calling them or pass it as an option.
