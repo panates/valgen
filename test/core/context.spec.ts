@@ -198,13 +198,27 @@ describe('Context.extend', () => {
     expect(parent.customKeys).toStrictEqual(['tenant']);
   });
 
-  it('should carry custom options set on a rule to its nested rules', () => {
-    const v = vg.isObject({ inner: vg.isObject({ user: readsTenant }) }, {
+  it('should pass only context fields from the options a rule is built with', () => {
+    let seen: Context | undefined;
+    const spy = validator('spy', (input: any, context) => {
+      seen = context;
+      return input;
+    });
+    const v = vg.isObject({ inner: vg.isObject({ n: isNumber, s: spy }) }, {
+      coerce: true,
+      label: 'Outer',
+      name: 'Thing',
+      additionalFields: 'error',
       tenant: 't2',
     } as any);
-    expect(v({ inner: { user: 'a' } } as any)).toStrictEqual({
-      inner: { user: 'a@t2' },
+    expect(v({ inner: { n: '5', s: 'x' } } as any)).toStrictEqual({
+      inner: { n: 5, s: 'x' },
     });
+    expect(seen?.coerce).toStrictEqual(true);
+    expect(seen?.label).toStrictEqual('Outer');
+    expect(seen?.tenant).toBeUndefined();
+    expect(seen?.additionalFields).toBeUndefined();
+    expect(seen?.name).toBeUndefined();
   });
 
   it('should keep the subclass of a subclassed context', () => {

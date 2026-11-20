@@ -97,7 +97,9 @@ rule-specific options a given function documents:
 | `onFail` | `(issue, context) => string \| Partial<ErrorIssue>` | Intercepts a failure before it's recorded - return a string to replace the message, an object to patch the issue, or a falsy value to suppress the issue entirely. |
 
 Any other key is passed through too: it is set on the `Context` and carried to the context of
-every nested rule, so a custom rule can read it as `context.<key>`.
+every nested rule, so a custom rule can read it as `context.<key>`. Of the options a rule is built
+with (e.g. `vg.isObject(schema, { coerce: true })`), only `coerce`, `onFail`, `label` and
+`maxErrors` reach the context; the rest are the rule's own settings.
 
 ## Errors
 
