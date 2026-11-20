@@ -1,6 +1,18 @@
 # Changelog
 
-<!-- rman:documented-up-to bb685ad3ba44c048de681a7c2c9344d56e70fe9d -->
+<!-- rman:documented-up-to b3959546688bbec20fdc80a07f12d6243588b047 -->
+
+## v7.0.13 (2026-11-20)
+
+### ⚡ Performance and Optimizations
+
+- work out the inherited keys isObject must read once per prototype (ee6e054)
+
+### 📚 Documentation
+
+- move the API docs baseline to the per-prototype isObject change (8a015d7)
+
+---
 
 ## v7.0.12 (2026-11-20)
 
