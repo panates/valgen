@@ -164,6 +164,10 @@ export function validator(arg0: any, arg1?: any, arg2?: any) {
   }
   id = id || fn.name || 'validator' + ++unnamedValidatorIndex;
   const name = fn.name || camelCase(id);
+  // Of the options a rule is built with, only these reach the context; the
+  // rest (`ctor`, `default`, ...) belong to the rule itself, which reads them
+  // from its own options object.
+  const contextOptions = pickContextOptions(validatorOptions);
 
   const _rule = {
     [name](
@@ -175,17 +179,24 @@ export function validator(arg0: any, arg1?: any, arg2?: any) {
         // Extend only when there is an option to apply. A root context is
         // still extended, as before, so that a nested call never acts as the
         // root call (which throws once it finishes with errors).
-        if (
-          hasOptions(options) ||
-          hasOptions(validatorOptions) ||
+        if (hasOptions(options)) {
+          context = context.extend(
+            contextOptions ? { ...contextOptions, ...options } : options,
+          );
+        } else if (
+          contextOptions ||
           (context.isRoot && (options || validatorOptions))
-        )
-          context = context.extend({ ...validatorOptions, ...options });
+        ) {
+          context = context.extend(contextOptions);
+        }
+      } else if (options instanceof Context) {
+        context = options.extend(contextOptions);
       } else {
-        context =
-          options instanceof Context
-            ? options.extend({ ...validatorOptions })
-            : new Context({ ...validatorOptions, ...options });
+        context = new Context(
+          contextOptions && options
+            ? { ...contextOptions, ...options }
+            : contextOptions || options,
+        );
       }
 
       let value: any;
@@ -230,4 +241,23 @@ export function validator(arg0: any, arg1?: any, arg2?: any) {
  */
 export function isValidator(x: any): x is Validator {
   return !!(typeof x === 'function' && x.id && x[kValidatorFn]);
+}
+
+/** The {@link ExecutionOptions} fields a rule's own options pass to the context. */
+const CONTEXT_OPTION_KEYS = ['coerce', 'onFail', 'label', 'maxErrors'] as const;
+
+/**
+ * Picks the context fields with a defined value out of a rule's options.
+ * Returns `undefined` when there is none, so the wrapper can skip
+ * `context.extend()`.
+ */
+function pickContextOptions(
+  options: Record<string, any> | undefined,
+): ExecutionOptions | undefined {
+  if (!options) return;
+  let picked: ExecutionOptions | undefined;
+  for (const k of CONTEXT_OPTION_KEYS) {
+    if (options[k] !== undefined) (picked ||= {})[k] = options[k];
+  }
+  return picked;
 }

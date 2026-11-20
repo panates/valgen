@@ -6,11 +6,11 @@ docs-baseline:
   signature/option/example checked against source and test/**/*.spec.ts, or run
   directly against the library) as of the commit and package version below.
 
-  git-commit: 832693f64b8ffb7a1b2ea47a825a908965e53891
-  package-version: 7.0.10
+  git-commit: 9c320e885610ad275cbe314619c0470ff0724314
+  package-version: 7.0.11
   date: 2026-11-20
 
-  To refresh after later changes: `git diff 832693f64b8ffb7a1b2ea47a825a908965e53891..HEAD -- src/`
+  To refresh after later changes: `git diff 9c320e885610ad275cbe314619c0470ff0724314..HEAD -- src/`
   (or a narrower path for one category) to see what moved since this baseline, update the
   affected doc section(s), then bump git-commit/package-version/date above to the new HEAD.
 -->
@@ -97,7 +97,9 @@ rule-specific options a given function documents:
 | `onFail` | `(issue, context) => string \| Partial<ErrorIssue>` | Intercepts a failure before it's recorded - return a string to replace the message, an object to patch the issue, or a falsy value to suppress the issue entirely. |
 
 Any other key is passed through too: it is set on the `Context` and carried to the context of
-every nested rule, so a custom rule can read it as `context.<key>`.
+every nested rule, so a custom rule can read it as `context.<key>`. Of the options a rule is built
+with (e.g. `vg.isObject(schema, { coerce: true })`), only `coerce`, `onFail`, `label` and
+`maxErrors` reach the context; the rest are the rule's own settings.
 
 ## Errors
 

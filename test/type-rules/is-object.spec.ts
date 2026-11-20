@@ -291,6 +291,52 @@ describe('isObject', () => {
       });
     });
 
+    it('should run the last rule of colliding keys when only the first is a plain optional', () => {
+      const v = vg.isObject(
+        {
+          Name: vg.optional(isString),
+          name: vg.optional(isNumber, { coerce: true }),
+        },
+        { caseInSensitive: true },
+      );
+      expect(v({ NAME: '5' } as any)).toStrictEqual({ name: 5 });
+    });
+
+    it('should validate an optional key that Object.prototype also has', () => {
+      const v = vg.isObject({ toString: vg.optional(isString) });
+      expect(v.silent({} as any).errors?.[0].location).toStrictEqual(
+        'toString',
+      );
+    });
+
+    it('should give the output the ctor prototype', () => {
+      class Thing {}
+      const v = vg.isObject({ a: vg.optional(isString) }, { ctor: Thing });
+      const out = v({ a: 'x' } as any);
+      expect(out).toBeInstanceOf(Thing);
+      expect({ ...out }).toStrictEqual({ a: 'x' });
+    });
+
+    it('should validate a class instance that has every schema key', () => {
+      class Point {
+        constructor(
+          public x: number,
+          public y: number,
+        ) {}
+      }
+      const v = vg.isObject({ x: isNumber, y: vg.optional(isNumber) });
+      expect(v(new Point(1, 2) as any)).toStrictEqual({ x: 1, y: 2 });
+    });
+
+    it('should validate optional keys of an object with a null prototype', () => {
+      const input = Object.assign(Object.create(null), { a: 1 });
+      const v = vg.isObject({
+        a: vg.optional(isNumber),
+        b: vg.optional(isString),
+      });
+      expect({ ...v(input) }).toStrictEqual({ a: 1 });
+    });
+
     it('should not treat Object.prototype members as schema keys', () => {
       const v = vg.isObject({ a: vg.optional(isString) });
       expect(

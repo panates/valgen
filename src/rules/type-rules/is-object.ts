@@ -98,7 +98,13 @@ export function isObject<T extends object = object, I = object | string>(
       label: propOptions?.label,
       rule,
       optionalNested: (rule as any)[kOptionalNested],
+      // Always set, so merging a duplicate key below replaces it too.
+      direct: undefined,
     };
+    // optional() built without context options only forwards a defined
+    // value to its nested rule with the same context, so call that directly.
+    if (entry.optionalNested && !hasOptions((rule as any)[kOptions]))
+      entry.direct = entry.optionalNested;
     // Two schema keys can match the same key case-insensitively. As before,
     // the first one keeps its place and is read from the input, and the
     // last one's rule and options apply.
@@ -110,6 +116,12 @@ export function isObject<T extends object = object, I = object | string>(
       schemaEntries.push(entry);
     }
   }
+  // The schema keys the second pass must look at for a plain object: an
+  // absent optional() key there reads undefined and is skipped anyway,
+  // unless Object.prototype has a member of that name.
+  const plainObjectEntries = schemaEntries.filter(
+    e => !e.optionalNested || e.inputKey in Object.prototype,
+  );
 
   const _rule = validator<T, object>(
     isObject.name,
@@ -131,8 +143,8 @@ export function isObject<T extends object = object, I = object | string>(
         return;
       }
 
-      const out: any = {};
-      if (ctor) Object.setPrototypeOf(out, ctor.prototype);
+      // Created with its prototype: setting it afterwards is slow in V8.
+      const out: any = ctor ? Object.create(ctor.prototype) : {};
       if (detectCircular) {
         context.circMap = context.circMap || new Map<object, object>();
         if (context.circMap.has(output)) {
@@ -202,13 +214,17 @@ export function isObject<T extends object = object, I = object | string>(
       // still runs (required(), default values, ...), except for optional()
       // rules, which pass an undefined value through untouched. The value is
       // still read, so one coming from the prototype chain is validated.
-      // Skipped when the first pass already met every schema key.
-      for (
-        let i = 0;
-        matched < schemaEntries.length && i < schemaEntries.length;
-        i++
-      ) {
-        const entry = schemaEntries[i];
+      // For a plain object only the keys that can matter are walked; for
+      // others it is skipped when the first pass already met every key.
+      const proto = Object.getPrototypeOf(output);
+      const entries =
+        proto === Object.prototype || proto === null
+          ? plainObjectEntries
+          : matched < schemaEntries.length
+            ? schemaEntries
+            : EMPTY;
+      for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
         let v = output[entry.inputKey];
         if (v === undefined && entry.optionalNested) continue;
         if (processed) {
@@ -260,13 +276,8 @@ function runProperty(
   subCtx.property = key;
   // A property without its own label keeps the parent's label.
   subCtx.label = (entry && entry.label) || parentLabel;
-  const nested = entry && entry.optionalNested;
-  // optional() built without options only forwards a defined value to its
-  // nested rule with the same context, so do that directly.
-  if (nested && !hasOptions(rule[kOptions])) {
-    return nested(v, undefined, subCtx);
-  }
-  return rule(v, undefined, subCtx);
+  const direct = entry && entry.direct;
+  return direct ? direct(v, undefined, subCtx) : rule(v, undefined, subCtx);
 }
 
 interface PropertyEntry {
@@ -280,7 +291,11 @@ interface PropertyEntry {
   rule: Validator_;
   /** Set when `rule` is an `optional()` rule: the rule it wraps. */
   optionalNested?: Validator_;
+  /** The rule to call for a defined value in place of `rule`, when that is the same. */
+  direct?: Validator_;
 }
+
+const EMPTY: PropertyEntry[] = [];
 
 export namespace isObject {
   export interface Validator<
