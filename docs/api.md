@@ -6,11 +6,11 @@ docs-baseline:
   signature/option/example checked against source and test/**/*.spec.ts, or run
   directly against the library) as of the commit and package version below.
 
-  git-commit: bb624a90e5df5ac55461ac65efbc059487421c03
-  package-version: 7.0.9
-  date: 2026-11-15
+  git-commit: 832693f64b8ffb7a1b2ea47a825a908965e53891
+  package-version: 7.0.10
+  date: 2026-11-20
 
-  To refresh after later changes: `git diff bb624a90e5df5ac55461ac65efbc059487421c03..HEAD -- src/`
+  To refresh after later changes: `git diff 832693f64b8ffb7a1b2ea47a825a908965e53891..HEAD -- src/`
   (or a narrower path for one category) to see what moved since this baseline, update the
   affected doc section(s), then bump git-commit/package-version/date above to the new HEAD.
 -->
